@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -75,7 +74,7 @@ class _MyBottomScreenState extends State<MyBottomScreen> {
             border: Border(top: BorderSide(color: AppColors.heading, width: 1)),
           ),
           child: BottomNavigationBar(
-            backgroundColor: AppColors.scaffoldBg,
+            backgroundColor: AppColors.background,
             currentIndex: selectIndex,
 
             selectedItemColor: const Color(0xff17221D),
@@ -177,6 +176,122 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  void showPropertyPopup() {
+    int selectedProperty = 0;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withOpacity(0.25),
+      builder: (bottomSheetContext) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(
+                left: 14.w,
+                right: 14.w,
+                top: 14.h,
+                bottom: MediaQuery.of(context).padding.bottom + 14.h,
+              ),
+              decoration: BoxDecoration(
+                color: const Color(0xffF8F5ED),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16.r),
+                  topRight: Radius.circular(16.r),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 25.h),
+                  Row(
+                    children: [
+                      Text(
+                        "MY PROPERTIES",
+                        style: GoogleFonts.outfit(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xff171717),
+                          letterSpacing: -0.54,
+                        ),
+                      ),
+
+                      const Spacer(),
+
+                      Text(
+                        "2 Properties",
+                        style: GoogleFonts.outfit(
+                          fontSize: 13.sp,
+                          color: Color.fromRGBO(0, 0, 0, 0.6),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: 32.h),
+                  propertyItem(
+                    "Apartment A-204",
+                    "Green Valley Residency - Jaipur",
+                    selectedProperty == 0,
+                    onTap: () {
+                      setModalState(() {
+                        selectedProperty = 0;
+                      });
+
+                      print("Apartment A-204 Selected");
+                    },
+                  ),
+
+                  SizedBox(height: 16.h),
+                  propertyItem(
+                    "Apartment B-104",
+                    "Sunrise Heights - Jaipur",
+                    selectedProperty == 1,
+                    onTap: () {
+                      setModalState(() {
+                        selectedProperty = 1;
+                      });
+
+                      print("Apartment B-104 Selected");
+                    },
+                  ),
+
+                  SizedBox(height: 16.h),
+                  GestureDetector(
+                    onTap: () {
+                      print("Add New Property");
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 34.h,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: const Color(0xff777777)),
+                      ),
+                      child: Text(
+                        "+  Add New Property",
+                        style: GoogleFonts.outfit(
+                          fontSize: 12.sp,
+                          color: const Color(0xff171717),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 30.h),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -285,53 +400,84 @@ class _HomeScreenState extends State<HomeScreen> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Positioned(
-                  left: 20.w,
-                  right: 20.w,
-                  top: 14.h,
+                Positioned.fill(
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20.w,
-                      vertical: 7.h,
-                    ),
                     decoration: BoxDecoration(
-                      color: Color(0xff171717),
-                      borderRadius: BorderRadius.circular(10.r),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xff101C16).withOpacity(0.0),
+                          Color(0xff101C16).withOpacity(0.0),
+                          Color(0xff101C16),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(30.r),
+                        bottomRight: Radius.circular(30.r),
+                      ),
                     ),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/Vector (1).png",
-                          height: 16.h,
-                          width: 15.w,
-                        ),
-                        SizedBox(width: 10.w),
-                        Text(
-                          "Apartment A-204",
-                          style: GoogleFonts.outfit(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.sp,
-                            color: Colors.white,
-                            letterSpacing: -0.54,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: GestureDetector(
+                    onTap: () {
+                      print("hello");
+
+                      showPropertyPopup();
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        left: 20.w,
+                        right: 20.w,
+                        top: 14.h,
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                        vertical: 7.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xff171717),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            "assets/Vector (1).png",
+                            height: 16.h,
+                            width: 15.w,
                           ),
-                        ),
-                        Spacer(),
-                        Container(
-                          height: 30.h,
-                          width: 30.w,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10.r),
+
+                          SizedBox(width: 10.w),
+
+                          Text(
+                            "Apartment A-204",
+                            style: GoogleFonts.outfit(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.sp,
+                              color: Colors.white,
+                              letterSpacing: -0.54,
+                            ),
                           ),
-                          child: Center(
+
+                          const Spacer(),
+
+                          Container(
+                            height: 30.h,
+                            width: 30.w,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
                             child: Icon(
                               Icons.keyboard_arrow_down,
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               size: 16.sp,
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -382,25 +528,25 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xff101C16).withOpacity(0.0),
-                          Color(0xff101C16).withOpacity(0.0),
-                          Color(0xff101C16),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(30.r),
-                        bottomRight: Radius.circular(30.r),
-                      ),
-                    ),
-                  ),
-                ),
+                // Positioned.fill(
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       gradient: LinearGradient(
+                //         begin: Alignment.topCenter,
+                //         end: Alignment.bottomCenter,
+                //         colors: [
+                //           Color(0xff101C16).withOpacity(0.0),
+                //           Color(0xff101C16).withOpacity(0.0),
+                //           Color(0xff101C16),
+                //         ],
+                //       ),
+                //       borderRadius: BorderRadius.only(
+                //         bottomLeft: Radius.circular(30.r),
+                //         bottomRight: Radius.circular(30.r),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Positioned(
                   left: 20.w,
                   right: 20.w,
@@ -845,7 +991,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: GoogleFonts.outfit(
                           fontWeight: FontWeight.w500,
                           color: Color(0xff2A2933),
-                          fontSize: 12.sp,
+                          fontSize: 13.sp,
                           letterSpacing: -0.24,
                         ),
                       ),
@@ -1319,6 +1465,89 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget propertyItem(
+    String title,
+    String subtitle,
+    bool selected, {
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 8.h),
+        decoration: BoxDecoration(
+          color: selected
+              ? Color.fromRGBO(23, 23, 23, 0.1)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(7.r),
+          border: Border.all(
+            color: selected ? const Color(0xff101010) : const Color(0xff777777),
+            width: selected ? 1.5 : 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10.r),
+              child: Image.asset(
+                "assets/home_img.png",
+                width: 79.w,
+                height: 64.h,
+                fit: BoxFit.cover,
+              ),
+            ),
+
+            SizedBox(width: 8.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: GoogleFonts.outfit(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xff2A2933),
+                      letterSpacing: -0.54,
+                    ),
+                  ),
+
+                  SizedBox(height: 5.h),
+
+                  Text(
+                    subtitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.outfit(
+                      fontSize: 12.sp,
+                      color: Color.fromRGBO(42, 41, 51, 0.7),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(width: 8.w),
+
+            /// Selected Circle
+            Container(
+              width: 36.w,
+              height: 36.w,
+              decoration: BoxDecoration(
+                color: selected ? const Color(0xff101010) : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(color: const Color(0xff101010)),
+              ),
+              child: selected
+                  ? Icon(Icons.check, color: Colors.white, size: 14.sp)
+                  : null,
+            ),
+          ],
+        ),
       ),
     );
   }

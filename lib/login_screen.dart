@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             SizedBox(
               width: double.infinity,
-              height: 180.h,
+              height: 170.h,
               child: Stack(
                 children: [
                   Positioned(
@@ -127,24 +127,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 10.h),
                   Container(
                     height: 44.h,
-                    decoration: BoxDecoration(color: Colors.transparent),
+                    decoration: const BoxDecoration(color: Colors.transparent),
                     child: TextField(
                       keyboardType: TextInputType.emailAddress,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration(
                         isDense: true,
 
-                        prefixIcon: Icon(
-                          Icons.mail_outline,
-                          color: const Color(0xff26332D),
-                          size: 21.sp,
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(left: 10.w),
+                          child: Icon(
+                            Icons.mail_outline,
+                            color: const Color(0xff26332D),
+                            size: 21.sp,
+                          ),
+                        ),
+
+                        prefixIconConstraints: BoxConstraints(
+                          minWidth: 41.w, // 10 left + 21 icon + 10 right
+                          minHeight: 44.h,
                         ),
 
                         hintText: "Enter Email or mobile number",
                         hintStyle: GoogleFonts.outfit(
                           fontSize: 13.sp,
                           fontWeight: FontWeight.w500,
-                          color: Color.fromRGBO(16, 28, 22, 0.6),
+                          color: const Color.fromRGBO(16, 28, 22, 0.6),
                         ),
 
                         focusedBorder: OutlineInputBorder(
@@ -154,10 +162,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(3.r),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Color.fromRGBO(16, 28, 22, 0.6),
                           ),
                         ),
+
                         contentPadding: EdgeInsets.symmetric(
                           horizontal: 10.w,
                           vertical: 0,
@@ -178,24 +187,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 10.h),
                   Container(
                     height: 44.h,
-                    decoration: BoxDecoration(color: Colors.transparent),
+                    decoration: const BoxDecoration(color: Colors.transparent),
                     child: TextField(
                       obscureText: !isPasswordVisible,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration(
                         isDense: true,
 
-                        prefixIcon: Icon(
-                          Icons.lock_outline,
-                          color: const Color(0xff26332D),
-                          size: 18.sp,
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(left: 10.w),
+                          child: Icon(
+                            Icons.lock_outline,
+                            color: const Color(0xff26332D),
+                            size: 18.sp,
+                          ),
                         ),
+
+                        prefixIconConstraints: BoxConstraints(
+                          minWidth: 38.w, // 10 left + 18 icon + 10 gap
+                          minHeight: 44.h,
+                        ),
+
                         hintText: "Enter your Password",
                         hintStyle: GoogleFonts.outfit(
                           fontSize: 13.sp,
                           fontWeight: FontWeight.w500,
                           color: const Color.fromRGBO(16, 28, 22, 0.6),
                         ),
+
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(3.r),
                           borderSide: BorderSide(color: AppColors.heading),
@@ -203,12 +222,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(3.r),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Color.fromRGBO(16, 28, 22, 0.6),
                           ),
                         ),
+
                         suffixIcon: IconButton(
                           padding: EdgeInsets.zero,
+                          constraints: BoxConstraints(
+                            minWidth: 40.w,
+                            minHeight: 44.h,
+                          ),
                           onPressed: () {
                             setState(() {
                               isPasswordVisible = !isPasswordVisible;
@@ -222,6 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             size: 16.sp,
                           ),
                         ),
+
                         contentPadding: EdgeInsets.symmetric(
                           horizontal: 10.w,
                           vertical: 0,
@@ -230,65 +255,68 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(height: 14.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 12.w,
-                            height: 12.h,
-                            child: Checkbox(
-                              value: rememberMe,
-                              onChanged: (value) {
-                                setState(() {
-                                  rememberMe = value ?? false;
-                                });
-                              },
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
-                              visualDensity: VisualDensity.compact,
-                              side: const BorderSide(
-                                color: AppColors.heading,
-                                width: 1.2,
+                  Padding(
+                    padding: EdgeInsets.only(left: 5.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 12.w,
+                              height: 12.h,
+                              child: Checkbox(
+                                value: rememberMe,
+                                onChanged: (value) {
+                                  setState(() {
+                                    rememberMe = value ?? false;
+                                  });
+                                },
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                visualDensity: VisualDensity.compact,
+                                side: const BorderSide(
+                                  color: AppColors.heading,
+                                  width: 1.2,
+                                ),
                               ),
                             ),
-                          ),
 
-                          SizedBox(width: 10.w),
+                            SizedBox(width: 10.w),
 
-                          Text(
-                            "Remember me",
+                            Text(
+                              "Remember me",
+                              style: GoogleFonts.outfit(
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.heading,
+                                letterSpacing: -0.39,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => ForgotPasswordScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Forgot Password?",
                             style: GoogleFonts.outfit(
-                              fontSize: 13.sp,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
-                              color: AppColors.heading,
+                              color: const Color(0xff101C16),
                               letterSpacing: -0.39,
                             ),
                           ),
-                        ],
-                      ),
-
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => ForgotPasswordScreen(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          "Forgot Password?",
-                          style: GoogleFonts.outfit(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xff101C16),
-                            letterSpacing: -0.39,
-                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   SizedBox(height: 30.h),
                   SizedBox(
