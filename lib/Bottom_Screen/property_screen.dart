@@ -312,7 +312,12 @@ class _PropertyScreenState extends State<PropertyScreen> {
               ),
               SizedBox(height: 30.h),
               Container(
-                padding: EdgeInsets.only(left: 10.w, top: 15.h, bottom: 15.w),
+                padding: EdgeInsets.only(
+                  left: 10.w,
+                  top: 15.h,
+                  bottom: 15.w,
+                  right: 10.w,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.r),
                   border: Border.all(color: AppColors.heading),
@@ -369,6 +374,65 @@ class _PropertyScreenState extends State<PropertyScreen> {
                   ),
                 ),
               ),
+              SizedBox(height: 30.h),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 9.h),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color.fromRGBO(42, 41, 51, 0.2)),
+                  borderRadius: BorderRadius.circular(6.r),
+                ),
+                child: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Current Care Package",
+                          style: GoogleFonts.outfit(
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromRGBO(42, 41, 51, 0.5),
+                            fontSize: 13.sp,
+                            letterSpacing: -0.34,
+                          ),
+                        ),
+                        SizedBox(height: 4.h),
+                        Text(
+                          "Premium Care",
+                          style: GoogleFonts.outfit(
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.heading,
+                            fontSize: 16.sp,
+                            letterSpacing: -0.34,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 25.w,
+                        vertical: 7.h,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.heading),
+                        borderRadius: BorderRadius.circular(50.r),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "ACTIVE",
+                          style: GoogleFonts.outfit(
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.heading,
+                            fontSize: 13.sp,
+                            letterSpacing: -0.24,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 30.h),
             ],
           ),
         ),
