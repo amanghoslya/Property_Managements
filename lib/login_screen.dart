@@ -1,0 +1,398 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:property_care/Home_screen/my_bottom_screen.dart';
+import 'package:property_care/core/constant/appColor.dart';
+import 'package:property_care/forgot_password/forgot_password_screen.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool isPasswordVisible = false;
+  bool rememberMe = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.scaffoldBg,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: 180.h,
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Image.asset(
+                      "assets/circuler_img.png",
+                      width: 146.w,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Image.asset(
+                      "assets/circuler_img.png",
+                      width: 177.w,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Center(
+              child: Column(
+                children: [
+                  ClipOval(
+                    child: Image.asset(
+                      "assets/property_img.png",
+                      width: 73.w,
+                      height: 73.w,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+
+                  SizedBox(height: 24.h),
+
+                  Text(
+                    "PROPERTY CARE 360°",
+                    style: GoogleFonts.uoqMunThenKhung(
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.heading,
+                      fontSize: 18.sp,
+                      letterSpacing: 1.04,
+                    ),
+                  ),
+
+                  SizedBox(height: 24.h),
+
+                  Text(
+                    "MANAGE • MAINTAIN • GROW",
+                    style: GoogleFonts.manrope(
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.heading,
+                      fontSize: 13.sp,
+                      letterSpacing: -0.39,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 30.h),
+            Padding(
+              padding: EdgeInsets.only(left: 20.w, right: 20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "WELCOME BACK",
+                    style: GoogleFonts.outfit(
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.heading,
+                      fontSize: 18.sp,
+                      letterSpacing: -0.39,
+                    ),
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    "Sign in to manage and monitor your property.",
+                    style: GoogleFonts.outfit(
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.heading,
+                      fontSize: 13.sp,
+                      letterSpacing: -0.39,
+                    ),
+                  ),
+                  SizedBox(height: 30.h),
+                  Text(
+                    "EMAIL OR MOBILE NUMBER",
+                    style: GoogleFonts.outfit(
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.heading,
+                      fontSize: 13.sp,
+                      letterSpacing: -0.39,
+                    ),
+                  ),
+                  SizedBox(height: 10.h),
+                  Container(
+                    height: 44.h,
+                    decoration: BoxDecoration(color: Colors.transparent),
+                    child: TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        isDense: true,
+
+                        prefixIcon: Icon(
+                          Icons.mail_outline,
+                          color: const Color(0xff26332D),
+                          size: 21.sp,
+                        ),
+
+                        hintText: "Enter Email or mobile number",
+                        hintStyle: GoogleFonts.outfit(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromRGBO(16, 28, 22, 0.6),
+                        ),
+
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(3.r),
+                          borderSide: BorderSide(color: AppColors.heading),
+                        ),
+
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(3.r),
+                          borderSide: BorderSide(
+                            color: Color.fromRGBO(16, 28, 22, 0.6),
+                          ),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
+                          vertical: 0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    "PASSWORD",
+                    style: GoogleFonts.outfit(
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.heading,
+                      fontSize: 13.sp,
+                      letterSpacing: -0.39,
+                    ),
+                  ),
+                  SizedBox(height: 10.h),
+                  Container(
+                    height: 44.h,
+                    decoration: BoxDecoration(color: Colors.transparent),
+                    child: TextField(
+                      obscureText: !isPasswordVisible,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        isDense: true,
+
+                        prefixIcon: Icon(
+                          Icons.lock_outline,
+                          color: const Color(0xff26332D),
+                          size: 18.sp,
+                        ),
+                        hintText: "Enter your Password",
+                        hintStyle: GoogleFonts.outfit(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w500,
+                          color: const Color.fromRGBO(16, 28, 22, 0.6),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(3.r),
+                          borderSide: BorderSide(color: AppColors.heading),
+                        ),
+
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(3.r),
+                          borderSide: BorderSide(
+                            color: Color.fromRGBO(16, 28, 22, 0.6),
+                          ),
+                        ),
+                        suffixIcon: IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            setState(() {
+                              isPasswordVisible = !isPasswordVisible;
+                            });
+                          },
+                          icon: Icon(
+                            isPasswordVisible
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                            color: AppColors.heading,
+                            size: 16.sp,
+                          ),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
+                          vertical: 0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 14.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 12.w,
+                            height: 12.h,
+                            child: Checkbox(
+                              value: rememberMe,
+                              onChanged: (value) {
+                                setState(() {
+                                  rememberMe = value ?? false;
+                                });
+                              },
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              visualDensity: VisualDensity.compact,
+                              side: const BorderSide(
+                                color: AppColors.heading,
+                                width: 1.2,
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(width: 10.w),
+
+                          Text(
+                            "Remember me",
+                            style: GoogleFonts.outfit(
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.heading,
+                              letterSpacing: -0.39,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => ForgotPasswordScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Forgot Password?",
+                          style: GoogleFonts.outfit(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xff101C16),
+                            letterSpacing: -0.39,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30.h),
+                  SizedBox(
+                    height: 41.h,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.heading,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => MyBottomScreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Login",
+                        style: GoogleFonts.outfit(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12.sp,
+                          color: Color(0xffFFFFFF),
+                          letterSpacing: -0.24,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 30.h),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(left: 38.w),
+                          height: 2.h,
+                          color: const Color(0xffB8BCB8),
+                        ),
+                      ),
+
+                      SizedBox(width: 17.w),
+
+                      Text(
+                        "OR",
+                        style: GoogleFonts.outfit(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xff101C16),
+                        ),
+                      ),
+
+                      SizedBox(width: 17.w),
+
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(right: 38.w),
+                          height: 2.h,
+                          color: const Color(0xffB8BCB8),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30.h),
+                  Container(
+                    height: 41.h,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.r),
+                      border: Border.all(color: AppColors.heading),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "LOGIN WITH OTP",
+                        style: GoogleFonts.outfit(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12.sp,
+                          color: AppColors.heading,
+                          letterSpacing: -0.24,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 56.h),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "SECURE PRIVATE PROPERTY MANAGEMENT",
+                      style: GoogleFonts.outfit(
+                        fontSize: 9.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromRGBO(16, 28, 22, 0.5),
+                        letterSpacing: 2.16,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 33.h),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
