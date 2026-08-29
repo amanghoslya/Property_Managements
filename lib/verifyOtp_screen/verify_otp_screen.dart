@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
-import 'package:property_care/Home_screen/my_bottom_screen.dart';
+import 'package:property_care/Bottom_Screen/Home_screen/my_bottom_screen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
 class VerifyOtpScreen extends StatefulWidget {

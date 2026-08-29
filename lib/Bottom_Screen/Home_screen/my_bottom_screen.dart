@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:property_care/Bottom_Screen/Complaints_screen.dart';
-import 'package:property_care/Bottom_Screen/document_screen.dart';
-import 'package:property_care/Bottom_Screen/profile_screen.dart';
-import 'package:property_care/Bottom_Screen/property_screen.dart';
+import 'package:property_care/Bottom_Screen/Complaint_Screen/Complaints_screen.dart';
+import 'package:property_care/Bottom_Screen/Document_Screen/document_screen.dart';
+import 'package:property_care/Bottom_Screen/Profile_Screen/profile_screen.dart';
+import 'package:property_care/Bottom_Screen/Property_Screen/property_screen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
 class MyBottomScreen extends StatefulWidget {

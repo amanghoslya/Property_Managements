@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:property_care/core/constant/appColor.dart';
-import 'package:property_care/document_details_screen/document_details_screen.dart';
+import 'package:property_care/Bottom_Screen/Document_Screen/document_details_screen.dart';
 
 class DocumentScreen extends StatefulWidget {
   const DocumentScreen({super.key});
