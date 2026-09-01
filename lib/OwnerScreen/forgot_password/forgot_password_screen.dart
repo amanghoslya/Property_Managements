@@ -126,6 +126,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     height: 44.h,
                     decoration: BoxDecoration(color: Colors.transparent),
                     child: TextField(
+                      cursorColor: AppColors.heading,
+                      cursorHeight: 18.h,
+                      cursorWidth: 1.5.w,
                       keyboardType: TextInputType.emailAddress,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration(

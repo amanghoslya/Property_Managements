@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Profile_Screen/ChagenPasswordScreen.dart';
+import 'package:property_care/OwnerScreen/Bottom_Screen/Profile_Screen/EditProfileScreen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -368,7 +369,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       image: "assets/SvgImage/editicon.svg",
                       name: "Edit Profile",
                       title: "Update your personal information",
-                      callback: () {},
+                      callback: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => Editprofilescreen(),
+                          ),
+                        );
+                      },
                     ),
                     Divider(color: Color.fromRGBO(42, 41, 51, 0.6)),
                     _accountSettingTab(
