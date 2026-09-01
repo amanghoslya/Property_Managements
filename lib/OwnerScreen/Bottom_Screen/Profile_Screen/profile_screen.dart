@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:property_care/OwnerScreen/Audit_Report/AuditReprot_Screen.dart';
+import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/NotificationScreen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Profile_Screen/ChagenPasswordScreen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Profile_Screen/EditProfileScreen.dart';
 import 'package:property_care/core/constant/appColor.dart';
@@ -404,7 +406,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       image: "assets/SvgImage/audit.svg",
                       name: "Audit Reports",
                       title: "Audit Reports history",
-                      callback: () {},
+                      callback: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => AuditreprotScreen(),
+                          ),
+                        );
+                      },
                     ),
                     Divider(color: Color.fromRGBO(42, 41, 51, 0.6)),
                     _accountSettingTab(
@@ -418,7 +427,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       image: "assets/SvgImage/notifi.svg",
                       name: "Notifications",
                       title: "Manage property notification preferences",
-                      callback: () {},
+                      callback: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => Notificationscreen(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
