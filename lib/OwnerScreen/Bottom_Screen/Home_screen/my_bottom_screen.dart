@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Complaint_Screen/Complaints_screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Document_Screen/document_screen.dart';
+import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/NotificationScreen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Profile_Screen/profile_screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Property_Screen/property_screen.dart';
 import 'package:property_care/core/constant/appColor.dart';
@@ -309,7 +311,6 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              /// LEFT TEXT
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -339,22 +340,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              Container(
-                height: 36.h,
-                width: 36.w,
-                decoration: BoxDecoration(
-                  color: AppColors.scaffoldBg,
-                  borderRadius: BorderRadius.circular(6.r),
-                  border: Border.all(
-                    color: const Color(0xffB8BCB8),
-                    width: 1.w,
+              GestureDetector(
+                onTap: () {
+                    Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => Notificationscreen(),
+                          ),
+                        );
+                },
+                child: Container(
+                  height: 36.h,
+                  width: 36.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.scaffoldBg,
+                    borderRadius: BorderRadius.circular(6.r),
+                    border: Border.all(
+                      color: const Color(0xffB8BCB8),
+                      width: 1.w,
+                    ),
                   ),
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.notifications_none_outlined,
-                    size: 24.sp,
-                    color: const Color(0xff101C16),
+                  child: Center(
+                    child: Icon(
+                      Icons.notifications_none_outlined,
+                      size: 24.sp,
+                      color: const Color(0xff101C16),
+                    ),
                   ),
                 ),
               ),

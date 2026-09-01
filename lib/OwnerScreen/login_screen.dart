@@ -129,6 +129,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 44.h,
                     decoration: const BoxDecoration(color: Colors.transparent),
                     child: TextField(
+                      cursorColor: AppColors.heading,
+                      cursorHeight: 18.h,
+                      cursorWidth: 1.5.w,
                       keyboardType: TextInputType.emailAddress,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration(
@@ -189,6 +192,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 44.h,
                     decoration: const BoxDecoration(color: Colors.transparent),
                     child: TextField(
+                      cursorColor: AppColors.heading,
+                      cursorHeight: 18.h,
+                      cursorWidth: 1.5.w,
                       obscureText: !isPasswordVisible,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration(
