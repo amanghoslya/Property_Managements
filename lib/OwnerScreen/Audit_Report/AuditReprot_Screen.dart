@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:property_care/OwnerScreen/Audit_Report/AuditReport_Details_Screen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
 class AuditreprotScreen extends StatefulWidget {
@@ -200,183 +202,193 @@ class _AuditreprotScreenState extends State<AuditreprotScreen> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                return Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 11.w,
-                    vertical: 15.h,
-                  ),
-                  margin: EdgeInsets.only(bottom: 20.h),
-                  decoration: BoxDecoration(
-                    color: const Color(0xffFFFDF0),
-                    border: Border.all(
-                      color: const Color(0xff101C16),
-                      width: 1.2,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => AuditreportDetailsScreen(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 11.w,
+                      vertical: 15.h,
                     ),
-                    borderRadius: BorderRadius.circular(13.r),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 49.w,
-                            height: 51.h,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: const Color(0xff101C16),
-                                width: 1.1,
-                              ),
-                              borderRadius: BorderRadius.circular(4.r),
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.article_outlined,
-                                size: 22.sp,
-                                color: const Color(0xff101C16),
-                              ),
-                            ),
-                          ),
-
-                          SizedBox(width: 14.w),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Property Audit Report",
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.outfit(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: const Color(0xff101C16),
-                                    letterSpacing: -0.2,
-                                  ),
+                    margin: EdgeInsets.only(bottom: 20.h),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffFFFDF0),
+                      border: Border.all(
+                        color: const Color(0xff101C16),
+                        width: 1.2,
+                      ),
+                      borderRadius: BorderRadius.circular(13.r),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 49.w,
+                              height: 51.h,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: const Color(0xff101C16),
+                                  width: 1.1,
                                 ),
-
-                                SizedBox(height: 7.h),
-
-                                Text(
-                                  "12 August 2026",
-                                  style: GoogleFonts.outfit(
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color.fromRGBO(16, 28, 22, 0.6),
-                                    letterSpacing: -0.2,
-                                  ),
+                                borderRadius: BorderRadius.circular(4.r),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.article_outlined,
+                                  size: 22.sp,
+                                  color: const Color(0xff101C16),
                                 ),
-                              ],
-                            ),
-                          ),
-
-                          SizedBox(width: 10.w),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 20.w,
-                              vertical: 5.h,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: const Color(0xff101C16),
-                              ),
-                              borderRadius: BorderRadius.circular(25.r),
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Completed",
-                              style: GoogleFonts.outfit(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xff101C16),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 14.h),
-                      Divider(
-                        height: 1,
-                        thickness: 1,
-                        color: const Color(0xff777970),
-                      ),
 
-                      SizedBox(height: 17.h),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: _infoItem(
-                              title: "AUDIT TYPE",
-                              value: "Property Audit",
-                            ),
-                          ),
+                            SizedBox(width: 14.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Property Audit Report",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color(0xff101C16),
+                                      letterSpacing: -0.2,
+                                    ),
+                                  ),
 
-                          SizedBox(width: 15.w),
+                                  SizedBox(height: 7.h),
 
-                          Expanded(
-                            child: _infoItem(
-                              title: "AUDIT DATE",
-                              value: "12 Aug 2026",
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(height: 14.h),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: _infoItem(
-                              title: "REPORT STATUS",
-                              value: "Completed",
-                            ),
-                          ),
-
-                          SizedBox(width: 15.w),
-
-                          Expanded(
-                            child: _infoItem(
-                              title: "FINDINGS",
-                              value: "Available",
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(height: 14.h),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              "Findings & recommendations available",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.outfit(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.heading,
-                                letterSpacing: -0.2,
+                                  Text(
+                                    "12 August 2026",
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color.fromRGBO(16, 28, 22, 0.6),
+                                      letterSpacing: -0.2,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                          GestureDetector(
-                            child: Text(
-                              "View Report →",
-                              style: GoogleFonts.outfit(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.heading,
-                                letterSpacing: -0.2,
+
+                            SizedBox(width: 10.w),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20.w,
+                                vertical: 5.h,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: const Color(0xff101C16),
+                                ),
+                                borderRadius: BorderRadius.circular(25.r),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Completed",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xff101C16),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                        SizedBox(height: 14.h),
+                        Divider(
+                          height: 1,
+                          thickness: 1,
+                          color: const Color(0xff777970),
+                        ),
+
+                        SizedBox(height: 17.h),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: _infoItem(
+                                title: "AUDIT TYPE",
+                                value: "Property Audit",
+                              ),
+                            ),
+
+                            SizedBox(width: 15.w),
+
+                            Expanded(
+                              child: _infoItem(
+                                title: "AUDIT DATE",
+                                value: "12 Aug 2026",
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: 14.h),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: _infoItem(
+                                title: "REPORT STATUS",
+                                value: "Completed",
+                              ),
+                            ),
+
+                            SizedBox(width: 15.w),
+
+                            Expanded(
+                              child: _infoItem(
+                                title: "FINDINGS",
+                                value: "Available",
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: 14.h),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                "Findings & recommendations available",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.outfit(
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.heading,
+                                  letterSpacing: -0.2,
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              child: Text(
+                                "View Report →",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.heading,
+                                  letterSpacing: -0.2,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

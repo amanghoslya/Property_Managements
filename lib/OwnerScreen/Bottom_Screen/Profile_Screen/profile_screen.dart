@@ -6,6 +6,7 @@ import 'package:property_care/OwnerScreen/Audit_Report/AuditReprot_Screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/NotificationScreen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Profile_Screen/ChagenPasswordScreen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Profile_Screen/EditProfileScreen.dart';
+import 'package:property_care/OwnerScreen/Tenant_Management_Screen/TenantManagement_Screen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -364,7 +365,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       image: "assets/SvgImage/addicon.svg",
                       name: "Tenant Management",
                       title: "Add or manage your tenant",
-                      callback: () {},
+                      callback: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => TenantmanagementScreen(),
+                          ),
+                        );
+                      },
                     ),
                     Divider(color: Color.fromRGBO(42, 41, 51, 0.6)),
                     _accountSettingTab(
