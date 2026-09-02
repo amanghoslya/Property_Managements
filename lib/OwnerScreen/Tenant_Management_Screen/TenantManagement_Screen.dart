@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:property_care/OwnerScreen/Tenant_Management_Screen/Add_Tenant_Screen.dart';
+import 'package:property_care/OwnerScreen/Tenant_Management_Screen/Tenant_Details_Screen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
 class TenantmanagementScreen extends StatefulWidget {
@@ -309,20 +310,30 @@ class _TenantmanagementScreenState extends State<TenantmanagementScreen> {
                   Row(
                     children: [
                       Expanded(
-                        child: Container(
-                          height: 29.h,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: AppColors.heading,
-                            borderRadius: BorderRadius.circular(7.r),
-                          ),
-                          child: Text(
-                            "View Tenant Details",
-                            style: GoogleFonts.outfit(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                              letterSpacing: -0.2,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => TenantDetailsScreen(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 29.h,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: AppColors.heading,
+                              borderRadius: BorderRadius.circular(7.r),
+                            ),
+                            child: Text(
+                              "View Tenant Details",
+                              style: GoogleFonts.outfit(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                                letterSpacing: -0.2,
+                              ),
                             ),
                           ),
                         ),
