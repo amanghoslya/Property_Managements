@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:property_care/OwnerScreen/Bottom_Screen/Property_Screen/property_status_screen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
 class PropertyScreen extends StatefulWidget {
@@ -221,93 +222,106 @@ class _PropertyScreenState extends State<PropertyScreen> {
                 ],
               ),
               SizedBox(height: 30.h),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFFDF1),
-                  border: Border.all(color: AppColors.heading),
-                  borderRadius: BorderRadius.circular(5.r),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 35.h,
-                      width: 37.w,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: const Color(0xFF30342E)),
-                        borderRadius: BorderRadius.circular(3.r),
-                      ),
-                      child: Center(
-                        child: Container(
-                          height: 17.h,
-                          width: 17.w,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: AppColors.heading),
-                          ),
-                          child: Center(
-                            child: Container(
-                              height: 12.h,
-                              width: 12.w,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.heading,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => PropertyStatusScreen(),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 14.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFDF1),
+                    border: Border.all(color: AppColors.heading),
+                    borderRadius: BorderRadius.circular(5.r),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 35.h,
+                        width: 37.w,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: const Color(0xFF30342E)),
+                          borderRadius: BorderRadius.circular(3.r),
+                        ),
+                        child: Center(
+                          child: Container(
+                            height: 17.h,
+                            width: 17.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: AppColors.heading),
+                            ),
+                            child: Center(
+                              child: Container(
+                                height: 12.h,
+                                width: 12.w,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors.heading,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 8.w),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Property Status",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.inter(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.heading,
-                              letterSpacing: -0.34,
+                      SizedBox(width: 8.w),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Property Status",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.inter(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.heading,
+                                letterSpacing: -0.34,
+                              ),
                             ),
-                          ),
 
-                          SizedBox(height: 7.h),
-                          Text(
-                            "View overall property condition",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.inter(
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromRGBO(41, 42, 51, 0.6),
+                            SizedBox(height: 7.h),
+                            Text(
+                              "View overall property condition",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.inter(
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromRGBO(41, 42, 51, 0.6),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(width: 15.w),
-                    Container(
-                      height: 34.h,
-                      width: 32.w,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.heading),
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.chevron_right,
-                          size: 16.sp,
-                          color: AppColors.heading,
+                          ],
                         ),
                       ),
-                    ),
-                  ],
+
+                      SizedBox(width: 15.w),
+                      Container(
+                        height: 34.h,
+                        width: 32.w,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: AppColors.heading),
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.chevron_right,
+                            size: 16.sp,
+                            color: AppColors.heading,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 30.h),

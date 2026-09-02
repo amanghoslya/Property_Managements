@@ -342,7 +342,6 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                                 borderRadius: BorderRadius.circular(5.r),
                               ),
                               child: Text(
-                                // IMPORTANT: yaha moveOutDate hoga
                                 formatDate(moveOutDate),
 
                                 style: GoogleFonts.inter(
