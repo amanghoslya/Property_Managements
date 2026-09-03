@@ -37,130 +37,100 @@ class _MyBottomScreenState extends State<MyBottomScreen> {
           });
           return false;
         }
-        final now = DateTime.now();
-        if (lastBackPressed == null ||
-            now.difference(lastBackPressed!) > Duration(seconds: 2)) {
-          lastBackPressed = now;
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              width: 200.w,
-              behavior: SnackBarBehavior.floating,
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50.r),
-              ),
-              content: Center(
-                child: Text(
-                  "Press back again to exit",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              duration: Duration(seconds: 1),
-            ),
-          );
-          return false;
-        }
         return true;
       },
       child: Scaffold(
         backgroundColor: AppColors.scaffoldBg,
         body: screen[selectIndex],
-        bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            color: AppColors.scaffoldBg,
-            border: Border(top: BorderSide(color: AppColors.heading, width: 1)),
+        bottomNavigationBar: SafeArea(
+          top: false,
+          child: Container(
+            width: double.infinity,
+            height: 70.h,
+            decoration: BoxDecoration(
+              color: Color(0xFFFFFCEB),
+              border: Border(
+                top: BorderSide(color: const Color(0xFF17221D), width: 1.w),
+              ),
+            ),
+            child: Row(
+              children: [
+                _bottomItem(
+                  index: 0,
+                  image: "assets/bottam_img.png",
+                  title: "Home",
+                ),
+                _bottomItem(
+                  index: 1,
+                  image: "assets/bottom_img2.png",
+                  title: "Property",
+                ),
+                _bottomItem(
+                  index: 2,
+                  image: "assets/bottom_img3.png",
+                  title: "Services",
+                ),
+                _bottomItem(
+                  index: 3,
+                  image: "assets/bottom_img4.png",
+                  title: "Documents",
+                ),
+                _bottomItem(
+                  index: 4,
+                  image: "assets/bottom_img5.png",
+                  title: "Profile",
+                ),
+              ],
+            ),
           ),
-          child: BottomNavigationBar(
-            backgroundColor: AppColors.background,
-            currentIndex: selectIndex,
+        ),
+      ),
+    );
+  }
 
-            selectedItemColor: const Color(0xff17221D),
-            unselectedItemColor: const Color(0xff7D848D),
-
-            selectedLabelStyle: GoogleFonts.manrope(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w600,
-              color: AppColors.heading,
-            ),
-
-            unselectedLabelStyle: GoogleFonts.manrope(
-              fontSize: 15.sp,
-              fontWeight: FontWeight.w500,
-              color: const Color(0xff7D848D),
-            ),
-
-            type: BottomNavigationBarType.fixed,
-
-            onTap: (index) {
-              setState(() {
-                selectIndex = index;
-              });
-            },
-
-            items: [
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  "assets/bottam_img.png",
+  Widget _bottomItem({
+    required int index,
+    required String image,
+    required String title,
+  }) {
+    final bool isSelected = selectIndex == index;
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            selectIndex = index;
+          });
+        },
+        child: SizedBox(
+          height: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedScale(
+                scale: isSelected ? 1.08 : 1.0,
+                duration: const Duration(milliseconds: 200),
+                child: Image.asset(
+                  image,
+                  color: isSelected
+                      ? const Color(0xff101C16)
+                      : const Color(0xffA0A5A2),
                   width: 30.w,
                   height: 30.h,
-                  color: selectIndex == 0
-                      ? const Color(0xff17221D)
-                      : const Color(0xff7D848D),
                 ),
-                label: "Home",
               ),
-
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  "assets/bottom_img2.png",
-                  width: 30.w,
-                  height: 30.h,
-                  color: selectIndex == 1
-                      ? const Color(0xff17221D)
-                      : const Color(0xff7D848D),
+              SizedBox(height: 2.h),
+              Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.outfit(
+                  fontSize: 16.sp,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                  color: isSelected
+                      ? Color(0xFF17221D)
+                      : const Color(0xffA0A5A2),
+                  letterSpacing: -0.4,
                 ),
-                label: "Property",
-              ),
-
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  "assets/bottom_img3.png",
-                  width: 30.w,
-                  height: 30.h,
-                  color: selectIndex == 2
-                      ? const Color(0xff17221D)
-                      : const Color(0xff7D848D),
-                ),
-                label: "Complaints",
-              ),
-
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  "assets/bottom_img4.png",
-                  width: 30.w,
-                  height: 30.h,
-                  color: selectIndex == 3
-                      ? const Color(0xff17221D)
-                      : const Color(0xff7D848D),
-                ),
-                label: "Documents",
-              ),
-
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  "assets/bottom_img5.png",
-                  width: 30.w,
-                  height: 30.h,
-                  color: selectIndex == 4
-                      ? const Color(0xff17221D)
-                      : const Color(0xff7D848D),
-                ),
-                label: "Profile",
               ),
             ],
           ),
@@ -342,12 +312,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                    Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => Notificationscreen(),
-                          ),
-                        );
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => Notificationscreen(),
+                    ),
+                  );
                 },
                 child: Container(
                   height: 36.h,

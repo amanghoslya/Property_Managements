@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:property_care/core/constant/appColor.dart';
 import 'package:property_care/OwnerScreen/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,9 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Future.delayed(const Duration(seconds: 3), () {
       if (!mounted) return;
-
       Navigator.pushReplacement(
-        context,
+        context, ////////// Owner
         MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     });
@@ -29,53 +27,31 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBg,
+      backgroundColor: Color(0xFF000000),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 119.h),
-
-            ClipOval(
-              child: Image.asset(
-                "assets/property_img.png",
-                width: 223.w,
-                height: 223.w,
-                fit: BoxFit.cover,
+            // SizedBox(height: 119.h),
+            Expanded(
+              child: Center(
+                child: ClipOval(
+                  child: Image.asset(
+                    "assets/logo.jpeg",
+                    width: 223.w,
+                    height: 223.w,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ),
-
-            SizedBox(height: 24.h),
-
-            Text(
-              "PROPERTY CARE 360°",
-              style: GoogleFonts.uoqMunThenKhung(
-                fontWeight: FontWeight.w400,
-                color: AppColors.heading,
-                fontSize: 18.sp,
-                letterSpacing: 1.04,
-              ),
-            ),
-
-            SizedBox(height: 24.h),
-
-            Text(
-              "MANAGE • MAINTAIN • GROW",
-              style: GoogleFonts.manrope(
-                fontWeight: FontWeight.w500,
-                color: AppColors.heading,
-                fontSize: 13.sp,
-                letterSpacing: -0.39,
-              ),
-            ),
-
-            const Spacer(),
-
+            // const Spacer(),
             Stack(
               clipBehavior: Clip.none,
               children: [
                 Image.asset(
-                  "assets/splase_img.png",
+                  // "assets/splase_img.png",
+                  "assets/splash_2.png",
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
@@ -91,8 +67,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       height: 50.w,
                       child: CircularProgressIndicator(
                         strokeWidth: 1.2.w,
-                        backgroundColor: const Color(0xffB8BCB8),
-                        color: const Color(0xff101C16),
+                        backgroundColor: const Color(0xff101C16),
+                        color: const Color(0xffFFFFFF),
                       ),
                     ),
                   ),
@@ -109,7 +85,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       style: GoogleFonts.outfit(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w500,
-                        color: const Color(0xff101C16),
+                        color: const Color(0xffFFFFFF),
                         letterSpacing: 1.04,
                         height: 1.0,
                       ),
@@ -128,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       style: GoogleFonts.outfit(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w500,
-                        color: const Color(0xff101C16),
+                        color: const Color(0xffFFFFFF),
                         letterSpacing: 1.04,
                         height: 1.0,
                       ),
