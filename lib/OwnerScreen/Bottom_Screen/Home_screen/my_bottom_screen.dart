@@ -7,6 +7,7 @@ import 'package:property_care/OwnerScreen/Bottom_Screen/Document_Screen/document
 import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/NotificationScreen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Profile_Screen/profile_screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Property_Screen/property_screen.dart';
+import 'package:property_care/OwnerScreen/ServiceRequest_Screen/Service_Request_Screen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
 class MyBottomScreen extends StatefulWidget {
@@ -68,7 +69,7 @@ class _MyBottomScreenState extends State<MyBottomScreen> {
                 _bottomItem(
                   index: 2,
                   image: "assets/bottom_img3.png",
-                  title: "Services",
+                  title: "Complaints",
                 ),
                 _bottomItem(
                   index: 3,
@@ -784,174 +785,184 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(height: 20.h),
-                  Container(
-                    padding: EdgeInsets.all(10.w),
-                    decoration: BoxDecoration(
-                      color: const Color(0xffF8F5ED),
-                      borderRadius: BorderRadius.circular(10.r),
-                      border: Border.all(
-                        color: const Color(0xff4F5752),
-                        width: 1,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => ServiceRequestScreen(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10.w),
+                      decoration: BoxDecoration(
+                        color: const Color(0xffF8F5ED),
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(
+                          color: const Color(0xff4F5752),
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 42.w,
-                              height: 42.h,
-                              decoration: BoxDecoration(
-                                color: const Color(0xffF8F5ED),
-                                borderRadius: BorderRadius.circular(7.r),
-                                border: Border.all(
-                                  color: const Color(0xff4F5752),
-                                  width: 1,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                width: 42.w,
+                                height: 42.h,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffF8F5ED),
+                                  borderRadius: BorderRadius.circular(7.r),
+                                  border: Border.all(
+                                    color: const Color(0xff4F5752),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.build_outlined,
+                                  size: 20.sp,
+                                  color: const Color(0xff303832),
                                 ),
                               ),
-                              child: Icon(
-                                Icons.build_outlined,
-                                size: 20.sp,
-                                color: const Color(0xff303832),
-                              ),
-                            ),
 
-                            SizedBox(width: 10.w),
-                            Expanded(
-                              child: Column(
+                              SizedBox(width: 10.w),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Service Requests",
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xff000000),
+                                        letterSpacing: -0.4,
+                                      ),
+                                    ),
+
+                                    SizedBox(height: 2.h),
+
+                                    Text(
+                                      "Raise & track property services",
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color.fromRGBO(0, 0, 0, 0.6),
+                                        letterSpacing: -0.24,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: 38.w,
+                                height: 38.h,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: const Color(0xff101C16),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.arrow_forward,
+                                  size: 18.sp,
+                                  color: const Color(0xff101C16),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(height: 8.h),
+
+                          Container(
+                            height: 1,
+                            width: double.infinity,
+                            color: const Color(0xff101C16),
+                          ),
+
+                          SizedBox(height: 10.h),
+
+                          Row(
+                            children: [
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Service Requests",
+                                    "Active Requests",
                                     style: GoogleFonts.outfit(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(0xff000000),
-                                      letterSpacing: -0.4,
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color.fromRGBO(0, 0, 0, 0.6),
                                     ),
                                   ),
 
                                   SizedBox(height: 2.h),
 
                                   Text(
-                                    "Raise & track property services",
+                                    "02",
                                     style: GoogleFonts.outfit(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromRGBO(0, 0, 0, 0.6),
-                                      letterSpacing: -0.24,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: 38.w,
-                              height: 38.h,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: const Color(0xff101C16),
-                                  width: 1,
-                                ),
-                              ),
-                              child: Icon(
-                                Icons.arrow_forward,
-                                size: 18.sp,
-                                color: const Color(0xff101C16),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        SizedBox(height: 8.h),
-
-                        Container(
-                          height: 1,
-                          width: double.infinity,
-                          color: const Color(0xff101C16),
-                        ),
-
-                        SizedBox(height: 10.h),
-
-                        Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Active Requests",
-                                  style: GoogleFonts.outfit(
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color.fromRGBO(0, 0, 0, 0.6),
-                                  ),
-                                ),
-
-                                SizedBox(height: 2.h),
-
-                                Text(
-                                  "02",
-                                  style: GoogleFonts.outfit(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: const Color(0xff101C16),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            SizedBox(width: 18.w),
-
-                            Container(
-                              height: 28.h,
-                              padding: EdgeInsets.symmetric(horizontal: 12.w),
-                              decoration: BoxDecoration(
-                                color: const Color(0xffE8E6DE),
-                                borderRadius: BorderRadius.circular(20.r),
-                                border: Border.all(
-                                  color: const Color(0xff101C16),
-                                  width: 1,
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    width: 4.w,
-                                    height: 4.h,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xff000000),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-
-                                  SizedBox(width: 6.w),
-
-                                  Text(
-                                    "In Progress",
-                                    style: GoogleFonts.outfit(
-                                      fontSize: 11.sp,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xff101C16),
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                            Spacer(),
-                            Text(
-                              "View All →",
-                              style: GoogleFonts.outfit(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xff101C16),
-                                letterSpacing: -0.34,
+
+                              SizedBox(width: 18.w),
+
+                              Container(
+                                height: 28.h,
+                                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffE8E6DE),
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  border: Border.all(
+                                    color: const Color(0xff101C16),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: 4.w,
+                                      height: 4.h,
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xff000000),
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+
+                                    SizedBox(width: 6.w),
+
+                                    Text(
+                                      "In Progress",
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 11.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xff101C16),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              Spacer(),
+                              Text(
+                                "View All →",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xff101C16),
+                                  letterSpacing: -0.34,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 18.h),

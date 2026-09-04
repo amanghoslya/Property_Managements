@@ -188,7 +188,6 @@ class _TenantmanagementScreenState extends State<TenantmanagementScreen> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // Profile Image
                       Container(
                         width: 51.w,
                         height: 51.w,

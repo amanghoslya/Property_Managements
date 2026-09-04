@@ -65,28 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
 
                   SizedBox(height: 24.h),
-
-                  Text(
-                    " joyful living….",
-                    style: GoogleFonts.uoqMunThenKhung(
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.heading,
-                      fontSize: 18.sp,
-                      letterSpacing: 1.04,
-                    ),
-                  ),
-
-                  SizedBox(height: 24.h),
-
-                  Text(
-                    "MANAGE • MAINTAIN • GROW",
-                    style: GoogleFonts.manrope(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.heading,
-                      fontSize: 13.sp,
-                      letterSpacing: -0.39,
-                    ),
-                  ),
                 ],
               ),
             ),

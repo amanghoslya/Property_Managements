@@ -401,6 +401,105 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                 ],
               ),
               SizedBox(height: 17.h),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 17.h),
+                decoration: BoxDecoration(
+                  color: const Color(0xffFFFDF0),
+                  border: Border.all(
+                    color: const Color(0xff999999),
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(18.r),
+                ),
+                child: Row(
+                  children: [
+                    Image.asset("assets/status.png", width: 44.w, height: 54.h),
+                    SizedBox(width: 13.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Bathroom plumbing repair",
+                            style: GoogleFonts.inter(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.heading,
+                              letterSpacing: -0.2,
+                            ),
+                          ),
+
+                          SizedBox(height: 4.h),
+                          Text(
+                            "Maintenance request is currently in progress and requires attention",
+                            style: GoogleFonts.outfit(
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromRGBO(42, 41, 51, 0.5),
+                              letterSpacing: -0.2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 13.w,
+                        vertical: 2.h,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.heading),
+                        borderRadius: BorderRadius.circular(50.r),
+                      ),
+                      child: Text(
+                        "In Progress",
+                        style: GoogleFonts.outfit(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.heading,
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 30.h),
+              Row(
+                children: [
+                  Text(
+                    "Latest Reports & Documents",
+                    style: GoogleFonts.outfit(
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.heading,
+                      fontSize: 16.sp,
+                      letterSpacing: -0.2,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    "View All",
+                    style: GoogleFonts.outfit(
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.heading,
+                      fontSize: 13.sp,
+                      letterSpacing: -0.2,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16.h),
+              _reportCard(
+                title: "Property Inspection Report",
+                subtitle: "15 Aug · Latest Inspection",
+              ),
+              SizedBox(height: 10.h),
+              _reportCard(
+                title: "Maintenance Report",
+                subtitle: "14 Aug · Recently uploaded",
+              ),
+              SizedBox(height: 30.h),
             ],
           ),
         ),
@@ -511,6 +610,79 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _reportCard({required String title, required String subtitle}) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color(0xff101C16), width: 1.2),
+        borderRadius: BorderRadius.circular(5.r),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 42.w,
+            height: 42.h,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: const Color(0xffE1E0D5),
+              borderRadius: BorderRadius.circular(4.r),
+            ),
+            child: Icon(
+              Icons.article_outlined,
+              size: 18.sp,
+              color: const Color(0xff5C5D58),
+            ),
+          ),
+
+          SizedBox(width: 10.w),
+
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.outfit(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xff292832),
+                    letterSpacing: -0.2,
+                  ),
+                ),
+
+                SizedBox(height: 2.h),
+
+                Text(
+                  subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.outfit(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w500,
+                    color: const Color.fromRGBO(42, 41, 51, 0.6),
+                    letterSpacing: -0.2,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          SizedBox(width: 8.w),
+
+          Icon(
+            Icons.arrow_forward,
+            size: 18.sp,
+            color: const Color(0xff101C16),
+          ),
+        ],
+      ),
     );
   }
 }
