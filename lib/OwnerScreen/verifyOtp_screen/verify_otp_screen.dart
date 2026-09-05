@@ -131,7 +131,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             Text(
               "VERIFY YOUR NUMBER",
               style: GoogleFonts.outfit(
-                fontSize: 18.sp,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
                 color: AppColors.heading,
                 letterSpacing: -0.54,
@@ -141,7 +141,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             Text(
               "We've sent a 6-digit verification code to",
               style: GoogleFonts.outfit(
-                fontSize: 13.sp,
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
                 color: AppColors.heading,
                 letterSpacing: -0.39,
@@ -150,7 +150,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             Text(
               "+91 98XXXXXX42",
               style: GoogleFonts.outfit(
-                fontSize: 13.sp,
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
                 color: AppColors.heading,
                 letterSpacing: -0.39,
@@ -160,7 +160,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             Text(
               "Enter OTP",
               style: GoogleFonts.outfit(
-                fontSize: 13.sp,
+                fontSize: 15.sp,
                 fontWeight: FontWeight.w500,
                 color: AppColors.heading,
                 letterSpacing: -0.39,
@@ -255,7 +255,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               child: Text(
                 "Didn't receive the code? Resend OTP",
                 style: GoogleFonts.outfit(
-                  fontSize: 13.sp,
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.w500,
                   color: seconds == 0
                       ? const Color(0xff101C16)
@@ -288,7 +288,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     "Verify",
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w700,
-                      fontSize: 12.sp,
+                      fontSize: 14.sp,
                       color: Color(0xffFFFFFF),
                       letterSpacing: -0.24,
                     ),

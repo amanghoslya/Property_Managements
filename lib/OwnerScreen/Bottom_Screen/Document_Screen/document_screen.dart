@@ -57,7 +57,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -109,7 +109,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                                   style: GoogleFonts.outfit(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white,
-                                    fontSize: 13.sp,
+                                    fontSize: 15.sp,
                                   ),
                                 ),
                               ),
@@ -127,7 +127,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                             Text(
                               "Apartment A-204",
                               style: GoogleFonts.outfit(
-                                fontSize: 16.sp,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xff101C16),
                                 letterSpacing: -0.54,
@@ -137,7 +137,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                             Text(
                               "Green Valley Residency · Jaipur",
                               style: GoogleFonts.outfit(
-                                fontSize: 13.sp,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Color.fromRGBO(42, 41, 51, 0.6),
                                 letterSpacing: -0.34,
@@ -152,7 +152,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                             Text(
                               "05",
                               style: GoogleFonts.outfit(
-                                fontSize: 16.sp,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xff101C16),
                                 letterSpacing: -0.54,
@@ -162,7 +162,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                             Text(
                               "Documents",
                               style: GoogleFonts.outfit(
-                                fontSize: 13.sp,
+                                fontSize: 15.sp,
                                 color: Color(0xff101C16),
                                 fontWeight: FontWeight.w500,
                                 letterSpacing: -0.34,
@@ -184,7 +184,6 @@ class _DocumentScreenState extends State<DocumentScreen> {
                 width: double.infinity,
                 padding: EdgeInsets.only(left: 16.w, right: 10.w),
                 decoration: BoxDecoration(
-                  color: const Color(0xffFFFDF2),
                   borderRadius: BorderRadius.circular(8.r),
                   border: Border.all(color: Color(0xff101C16), width: 1),
                 ),
@@ -258,7 +257,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                           child: Text(
                             filters[index],
                             style: GoogleFonts.outfit(
-                              fontSize: 13.sp,
+                              fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
                               color: isSelected
                                   ? Colors.white
@@ -283,7 +282,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: Color(0xff101C16),
-                      fontSize: 16.sp,
+                      fontSize: 15.sp,
                       letterSpacing: -0.54,
                     ),
                   ),
@@ -293,7 +292,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: Color(0xff101C16),
-                      fontSize: 12.sp,
+                      fontSize: 14.sp,
                       letterSpacing: -0.24,
                     ),
                   ),
@@ -354,7 +353,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                                 "Property Ownership Document",
                                 style: GoogleFonts.outfit(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 16.sp,
+                                  fontSize: 18.sp,
                                   color: Color(0xff101C16),
                                   letterSpacing: -0.54,
                                 ),
@@ -364,7 +363,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                                 "PDF · 2.4 MB · 10 Aug 2026",
                                 style: GoogleFonts.outfit(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 11.sp,
+                                  fontSize: 13.sp,
                                   color: Color.fromRGBO(42, 41, 51, 0.6),
                                   letterSpacing: -0.24,
                                 ),
@@ -374,7 +373,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                                 "PROPERTY DOCUMENT",
                                 style: GoogleFonts.outfit(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 10.sp,
+                                  fontSize: 12.sp,
                                   color: Color(0xff2A2933),
                                   letterSpacing: -0.24,
                                 ),
@@ -426,7 +425,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                         Text(
                           "Property Document Storage",
                           style: GoogleFonts.outfit(
-                            fontSize: 14.sp,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
                             color: const Color(0xff101C16),
                             letterSpacing: -0.34,
@@ -438,7 +437,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                         Text(
                           "8.4 MB / 25 MB",
                           style: GoogleFonts.outfit(
-                            fontSize: 11.sp,
+                            fontSize: 13.sp,
                             fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(0, 0, 0, 0.6),
                             letterSpacing: -0.3,

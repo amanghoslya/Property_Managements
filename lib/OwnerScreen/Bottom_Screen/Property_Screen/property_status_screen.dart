@@ -62,7 +62,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                   Text(
                     "CONSOLIDATED PROPERTY STATUS",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -115,7 +115,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                                   style: GoogleFonts.outfit(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white,
-                                    fontSize: 13.sp,
+                                    fontSize: 15.sp,
                                   ),
                                 ),
                               ),
@@ -133,7 +133,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                             Text(
                               "Apartment A-204",
                               style: GoogleFonts.outfit(
-                                fontSize: 16.sp,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xff101C16),
                                 letterSpacing: -0.54,
@@ -143,7 +143,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                             Text(
                               "Green Valley Residency · Jaipur",
                               style: GoogleFonts.outfit(
-                                fontSize: 13.sp,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Color.fromRGBO(42, 41, 51, 0.6),
                                 letterSpacing: -0.34,
@@ -177,7 +177,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                                 style: GoogleFonts.outfit(
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.heading,
-                                  fontSize: 13.sp,
+                                  fontSize: 15.sp,
                                   letterSpacing: -0.2,
                                 ),
                               ),
@@ -204,7 +204,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                               style: GoogleFonts.outfit(
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.heading,
-                                fontSize: 16.sp,
+                                fontSize: 18.sp,
                                 letterSpacing: -0.2,
                               ),
                             ),
@@ -220,7 +220,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                                 style: GoogleFonts.outfit(
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.heading,
-                                  fontSize: 16.sp,
+                                  fontSize: 18.sp,
                                   letterSpacing: -0.2,
                                 ),
                               ),
@@ -232,7 +232,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                                 style: GoogleFonts.outfit(
                                   fontWeight: FontWeight.w500,
                                   color: const Color.fromRGBO(42, 41, 51, 0.6),
-                                  fontSize: 13.sp,
+                                  fontSize: 15.sp,
                                   letterSpacing: -0.2,
                                 ),
                               ),
@@ -264,7 +264,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 16.sp,
+                      fontSize: 18.sp,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -274,7 +274,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 13.sp,
+                      fontSize: 15.sp,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -322,7 +322,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 16.sp,
+                      fontSize: 18.sp,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -332,7 +332,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 13.sp,
+                      fontSize: 15.sp,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -384,7 +384,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 16.sp,
+                      fontSize: 18.sp,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -394,7 +394,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 13.sp,
+                      fontSize: 15.sp,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -423,7 +423,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                           Text(
                             "Bathroom plumbing repair",
                             style: GoogleFonts.inter(
-                              fontSize: 16.sp,
+                              fontSize: 18.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.heading,
                               letterSpacing: -0.2,
@@ -434,7 +434,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                           Text(
                             "Maintenance request is currently in progress and requires attention",
                             style: GoogleFonts.outfit(
-                              fontSize: 11.sp,
+                              fontSize: 13.sp,
                               fontWeight: FontWeight.w500,
                               color: Color.fromRGBO(42, 41, 51, 0.5),
                               letterSpacing: -0.2,
@@ -455,7 +455,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                       child: Text(
                         "In Progress",
                         style: GoogleFonts.outfit(
-                          fontSize: 13.sp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.w500,
                           color: AppColors.heading,
                           letterSpacing: -0.2,
@@ -473,7 +473,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 16.sp,
+                      fontSize: 18.sp,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -483,7 +483,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 13.sp,
+                      fontSize: 15.sp,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -527,7 +527,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
           Text(
             value,
             style: GoogleFonts.outfit(
-              fontSize: 17.sp,
+              fontSize: 18.sp,
               fontWeight: FontWeight.w400,
               color: AppColors.heading,
             ),
@@ -536,7 +536,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
           Text(
             title,
             style: GoogleFonts.outfit(
-              fontSize: 13.sp,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w400,
               color: const Color(0xFF777777),
             ),
@@ -565,7 +565,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
           child: Text(
             icon,
             style: GoogleFonts.outfit(
-              fontSize: 16.sp,
+              fontSize: 18.sp,
               fontWeight: FontWeight.w500,
               color: AppColors.heading,
             ),
@@ -580,7 +580,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
               Text(
                 title,
                 style: GoogleFonts.inter(
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.2,
@@ -591,7 +591,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
               Text(
                 description,
                 style: GoogleFonts.outfit(
-                  fontSize: 11.sp,
+                  fontSize: 13.sp,
                   fontWeight: FontWeight.w500,
                   color: Color.fromRGBO(42, 41, 51, 0.5),
                   letterSpacing: -0.2,
@@ -603,7 +603,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
         Text(
           "2h",
           style: GoogleFonts.outfit(
-            fontSize: 13.sp,
+            fontSize: 15.sp,
             fontWeight: FontWeight.w500,
             color: Color.fromRGBO(42, 41, 51, 0.5),
             letterSpacing: -0.2,
@@ -650,7 +650,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.outfit(
-                    fontSize: 16.sp,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.w500,
                     color: const Color(0xff292832),
                     letterSpacing: -0.2,
@@ -664,7 +664,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.outfit(
-                    fontSize: 13.sp,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
                     color: const Color.fromRGBO(42, 41, 51, 0.6),
                     letterSpacing: -0.2,

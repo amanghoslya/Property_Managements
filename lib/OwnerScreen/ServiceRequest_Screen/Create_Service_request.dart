@@ -64,7 +64,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 Text(
                   "Add Attachment",
                   style: GoogleFonts.outfit(
-                    fontSize: 16.sp,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.w500,
                     color: const Color(0xff101C16),
                   ),
@@ -94,7 +94,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                   title: Text(
                     "Upload Image",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff101C16),
                     ),
@@ -102,7 +102,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                   subtitle: Text(
                     "JPG, JPEG or PNG",
                     style: GoogleFonts.outfit(
-                      fontSize: 10.sp,
+                      fontSize: 12.sp,
                       color: const Color(0xff777777),
                     ),
                   ),
@@ -136,7 +136,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                   title: Text(
                     "Upload Document",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff101C16),
                     ),
@@ -144,7 +144,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                   subtitle: Text(
                     "PDF, DOC or DOCX",
                     style: GoogleFonts.outfit(
-                      fontSize: 10.sp,
+                      fontSize: 11.sp,
                       color: const Color(0xff777777),
                     ),
                   ),
@@ -273,7 +273,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                   Text(
                     "REQUEST A PROPERTY SERVICE",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -324,7 +324,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(42, 41, 51, 0.5),
-                            fontSize: 11.sp,
+                            fontSize: 13.sp,
                             letterSpacing: -0.2,
                           ),
                         ),
@@ -333,7 +333,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
-                            fontSize: 16.sp,
+                            fontSize: 18.sp,
                             letterSpacing: -0.2,
                           ),
                         ),
@@ -342,7 +342,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(42, 41, 51, 0.5),
-                            fontSize: 11.sp,
+                            fontSize: 13.sp,
                             letterSpacing: -0.2,
                           ),
                         ),
@@ -357,7 +357,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -367,7 +367,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 13.sp,
+                  fontSize: 14.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -388,7 +388,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -501,7 +501,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.outfit(
-                                    fontSize: 16.sp,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.w500,
                                     color: service["color"],
                                     letterSpacing: -0.3,
@@ -515,7 +515,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.outfit(
-                                    fontSize: 12.sp,
+                                    fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
                                     color:
                                         service["color"] ==
@@ -540,7 +540,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -560,7 +560,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                     decoration: InputDecoration(
                       hintText: "e.g. Bathroom tap repair",
                       hintStyle: GoogleFonts.outfit(
-                        fontSize: 13.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                         color: const Color(0xff8B8D8B),
                       ),
@@ -581,7 +581,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -602,7 +602,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                   decoration: InputDecoration(
                     hintText: "Describe your service request...",
                     hintStyle: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: const Color(0xff8B8D8B),
                     ),
@@ -620,7 +620,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -718,7 +718,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                                     ? "10:10AM"
                                     : selectedTime!.format(context),
                                 style: GoogleFonts.outfit(
-                                  fontSize: 16.sp,
+                                  fontSize: 18.sp,
                                   fontWeight: FontWeight.w500,
                                   color: selectedTime == null
                                       ? const Color(0xff8B8D8B)
@@ -745,7 +745,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -755,7 +755,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
               Text(
                 "Attach Supporting Document / Image",
                 style: GoogleFonts.outfit(
-                  fontSize: 13.sp,
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.w500,
                   color: const Color(0xFF101C16),
                   letterSpacing: -0.3,
@@ -803,7 +803,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                                   Text(
                                     "Add Attachment",
                                     style: GoogleFonts.outfit(
-                                      fontSize: 13.sp,
+                                      fontSize: 15.sp,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xFF101C16),
                                       letterSpacing: -0.2,
@@ -813,7 +813,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                                   Text(
                                     "JPG, PNG or PDF · Max 10 MB",
                                     style: GoogleFonts.outfit(
-                                      fontSize: 13.sp,
+                                      fontSize: 15.sp,
                                       fontWeight: FontWeight.w500,
                                       color: Color.fromARGB(153, 42, 41, 51),
                                       letterSpacing: -0.2,
@@ -852,7 +852,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: GoogleFonts.outfit(
-                                      fontSize: 10.sp,
+                                      fontSize: 11.sp,
                                       fontWeight: FontWeight.w400,
                                       color: const Color(0xff101C16),
                                     ),
@@ -899,7 +899,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                   child: Text(
                     "Submit Complaint",
                     style: GoogleFonts.outfit(
-                      fontSize: 12.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
                       letterSpacing: -0.2,
@@ -940,7 +940,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
               "After submission, a unique complaint ID will be generated. "
               "You can use it to track the complaint status and resolution progress.",
               style: GoogleFonts.outfit(
-                fontSize: 10.sp,
+                fontSize: 11.sp,
                 fontWeight: FontWeight.w400,
                 color: const Color(0xFF2A2933),
                 letterSpacing: -0.2,
@@ -974,7 +974,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
           hint: Text(
             hint,
             style: GoogleFonts.outfit(
-              fontSize: 13.sp,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w500,
               color: Color.fromARGB(153, 42, 41, 51),
               letterSpacing: -0.3,
@@ -992,7 +992,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
               child: Text(
                 item,
                 style: GoogleFonts.outfit(
-                  fontSize: 13.sp,
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
                   letterSpacing: -0.3,
@@ -1040,7 +1040,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 child: Text(
                   priorities[index],
                   style: GoogleFonts.outfit(
-                    fontSize: 13.sp,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
                     color: isSelected
                         ? Color(0xFF2A2933)

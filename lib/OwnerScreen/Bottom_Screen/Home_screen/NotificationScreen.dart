@@ -60,7 +60,7 @@ class _NotificationscreenState extends State<Notificationscreen> {
                   Text(
                     "Notifications",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -70,7 +70,7 @@ class _NotificationscreenState extends State<Notificationscreen> {
                   Text(
                     "Stay updated with your propertys",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -87,58 +87,54 @@ class _NotificationscreenState extends State<Notificationscreen> {
         child: Column(
           children: [
             SizedBox(height: 16.h),
-            Row(
-              children: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(filters.length, (index) {
-                      final bool isSelected = selectedFilter == index;
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(filters.length, (index) {
+                  final bool isSelected = selectedFilter == index;
 
-                      return Padding(
-                        padding: EdgeInsets.only(right: 10.w),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedFilter = index;
-                            });
-                          },
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            // height: 27.h,
-                            padding: EdgeInsets.symmetric(
-                              vertical: 5.h,
-                              horizontal: 13.w,
-                            ),
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? const Color(0xff101C16)
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(40.r),
-                              border: Border.all(
-                                color: const Color(0xff101C16),
-                                width: 1,
-                              ),
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              filters[index],
-                              style: GoogleFonts.outfit(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                color: isSelected
-                                    ? Colors.white
-                                    : const Color(0xff101C16),
-                                letterSpacing: -0.3,
-                              ),
-                            ),
+                  return Padding(
+                    padding: EdgeInsets.only(right: 10.w),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedFilter = index;
+                        });
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        // height: 27.h,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 5.h,
+                          horizontal: 13.w,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? const Color(0xff101C16)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(40.r),
+                          border: Border.all(
+                            color: const Color(0xff101C16),
+                            width: 1,
                           ),
                         ),
-                      );
-                    }),
-                  ),
-                ),
-              ],
+                        alignment: Alignment.center,
+                        child: Text(
+                          filters[index],
+                          style: GoogleFonts.outfit(
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w500,
+                            color: isSelected
+                                ? Colors.white
+                                : const Color(0xff101C16),
+                            letterSpacing: -0.3,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ),
             ),
             SizedBox(height: 20.h),
             Row(
@@ -146,7 +142,7 @@ class _NotificationscreenState extends State<Notificationscreen> {
                 Text(
                   "Today",
                   style: GoogleFonts.outfit(
-                    fontSize: 13.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
                     color: AppColors.heading,
                     letterSpacing: -0.2,
@@ -156,7 +152,7 @@ class _NotificationscreenState extends State<Notificationscreen> {
                 Text(
                   "3 New",
                   style: GoogleFonts.outfit(
-                    fontSize: 11.sp,
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
                     color: AppColors.heading,
                     letterSpacing: -0.2,
@@ -178,7 +174,6 @@ class _NotificationscreenState extends State<Notificationscreen> {
                   ),
                   margin: EdgeInsets.only(bottom: 16.h),
                   decoration: BoxDecoration(
-                    color: const Color(0xffFFFDF0),
                     border: Border.all(color: const Color(0xff101010)),
                     borderRadius: BorderRadius.circular(8.r),
                   ),
@@ -219,7 +214,7 @@ class _NotificationscreenState extends State<Notificationscreen> {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: GoogleFonts.outfit(
-                                      fontSize: 16.sp,
+                                      fontSize: 17.sp,
                                       fontWeight: FontWeight.w500,
                                       color: AppColors.heading,
                                       letterSpacing: -0.3,
@@ -232,7 +227,7 @@ class _NotificationscreenState extends State<Notificationscreen> {
                                 Text(
                                   "09:45 AM",
                                   style: GoogleFonts.outfit(
-                                    fontSize: 9.sp,
+                                    fontSize: 11.sp,
                                     fontWeight: FontWeight.w500,
                                     color: AppColors.heading,
                                   ),
@@ -247,7 +242,7 @@ class _NotificationscreenState extends State<Notificationscreen> {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.outfit(
-                                fontSize: 12.sp,
+                                fontSize: 13.sp,
                                 fontWeight: FontWeight.w400,
                                 color: const Color.fromRGBO(0, 0, 0, 0.7),
                                 letterSpacing: -0.2,
@@ -269,7 +264,7 @@ class _NotificationscreenState extends State<Notificationscreen> {
                               child: Text(
                                 "Maintenance",
                                 style: GoogleFonts.outfit(
-                                  fontSize: 11.sp,
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xff101010),
                                   letterSpacing: -0.2,

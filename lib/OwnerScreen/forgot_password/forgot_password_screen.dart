@@ -95,7 +95,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   Text(
                     "FORGOT PASSWORD?",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
                       letterSpacing: -0.54,
@@ -105,7 +105,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   Text(
                     "No worries. Enter your registered email address or mobile number \nand we'll send you a secure reset code.",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
                       letterSpacing: -0.39,
@@ -115,7 +115,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   Text(
                     "Email or Mobile Number",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
                       letterSpacing: -0.39,
@@ -188,7 +188,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         "Send Reset OTP",
                         style: GoogleFonts.outfit(
                           fontWeight: FontWeight.w700,
-                          fontSize: 12.sp,
+                          fontSize: 13.sp,
                           color: Color(0xffFFFFFF),
                           letterSpacing: -0.24,
                         ),

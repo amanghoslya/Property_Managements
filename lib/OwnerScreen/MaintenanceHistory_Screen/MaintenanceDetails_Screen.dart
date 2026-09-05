@@ -84,7 +84,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                   Text(
                     "View complete maintenance information",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -137,7 +137,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                             Text(
                               "Electrical Maintenance",
                               style: GoogleFonts.outfit(
-                                fontSize: 16.sp,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
                                 color: const Color(0xff292832),
                                 letterSpacing: -0.64,
@@ -147,7 +147,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                             Text(
                               "Preventive Maintenance",
                               style: GoogleFonts.outfit(
-                                fontSize: 13.sp,
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w400,
                                 color: Color.fromRGBO(42, 41, 51, 0.6),
                                 letterSpacing: -0.24,
@@ -169,7 +169,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                             child: Text(
                               "Completed",
                               style: GoogleFonts.outfit(
-                                fontSize: 16.sp,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
                                 color: const Color(0xff292832),
                                 letterSpacing: -0.64,
@@ -187,7 +187,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                         Text(
                           "Maintenance ID",
                           style: GoogleFonts.outfit(
-                            fontSize: 13.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
                             letterSpacing: -0.24,
@@ -197,7 +197,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                         Text(
                           "MR-2048",
                           style: GoogleFonts.outfit(
-                            fontSize: 13.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
                             letterSpacing: -0.24,
@@ -212,7 +212,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
               Text(
                 "Maintenance Information",
                 style: GoogleFonts.outfit(
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.24,
@@ -263,7 +263,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
               Text(
                 "Work Details",
                 style: GoogleFonts.outfit(
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.24,
@@ -280,7 +280,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                 child: Text(
                   "Electrical inspection and preventive maintenance was completed for the apartment. Switch points and electrical connections were checked and required maintenance work was completed by the assigned maintenance team.",
                   style: GoogleFonts.outfit(
-                    fontSize: 10.sp,
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
                     color: AppColors.heading,
                     letterSpacing: -0.24,
@@ -291,7 +291,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
               Text(
                 "Maintenance Timeline",
                 style: GoogleFonts.outfit(
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.24,
@@ -321,7 +321,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
               Text(
                 "Assigned Team",
                 style: GoogleFonts.outfit(
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.24,
@@ -357,7 +357,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                         Text(
                           "Rahul Sharma",
                           style: GoogleFonts.outfit(
-                            fontSize: 16.sp,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.w500,
                             color: const Color(0xff292832),
                             letterSpacing: -0.64,
@@ -367,7 +367,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                         Text(
                           "Maintenance Supervisor",
                           style: GoogleFonts.outfit(
-                            fontSize: 13.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                             color: Color.fromRGBO(42, 41, 51, 0.6),
                             letterSpacing: -0.24,
@@ -379,7 +379,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                     Text(
                       "Assigned",
                       style: GoogleFonts.outfit(
-                        fontSize: 13.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         color: AppColors.heading,
                         letterSpacing: -0.24,
@@ -392,7 +392,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
               Text(
                 "Related Documents",
                 style: GoogleFonts.outfit(
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.24,
@@ -442,7 +442,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                     Text(
                       "View",
                       style: GoogleFonts.outfit(
-                        fontSize: 13.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         color: AppColors.heading,
                         letterSpacing: -0.24,
@@ -455,7 +455,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
               Text(
                 "Notes",
                 style: GoogleFonts.outfit(
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.24,
@@ -618,7 +618,7 @@ class _TimelineItem extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 16.sp,
+                      fontSize: 18.sp,
                       height: 1.1,
                       fontWeight: FontWeight.w500,
                       color: Color(0xFF101C16),
@@ -629,7 +629,7 @@ class _TimelineItem extends StatelessWidget {
                   Text(
                     date,
                     style: GoogleFonts.outfit(
-                      fontSize: 11.sp,
+                      fontSize: 12.sp,
                       height: 1.1,
                       fontWeight: FontWeight.w500,
                       color: Color.fromRGBO(42, 41, 51, 0.5),

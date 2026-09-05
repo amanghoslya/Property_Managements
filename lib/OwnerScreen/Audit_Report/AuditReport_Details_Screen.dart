@@ -52,7 +52,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                   Text(
                     "Audit Report Details",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -62,7 +62,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                   Text(
                     "COMPLETE AUDIT REPORT",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -84,7 +84,6 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 11.w, vertical: 15.h),
                 decoration: BoxDecoration(
-                  color: const Color(0xffFFFDF0),
                   border: Border.all(
                     color: const Color(0xff101C16),
                     width: 1.2,
@@ -126,7 +125,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.outfit(
-                                  fontSize: 16.sp,
+                                  fontSize: 17.sp,
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xff101C16),
                                   letterSpacing: -0.2,
@@ -226,7 +225,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -242,7 +241,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                   style: GoogleFonts.outfit(
                     fontWeight: FontWeight.w500,
                     color: Color.fromRGBO(42, 41, 51, 0.6),
-                    fontSize: 13.sp,
+                    fontSize: 14.sp,
                     letterSpacing: -0.2,
                   ),
                 ),
@@ -253,7 +252,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 16.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -262,7 +261,6 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 17.h),
                 decoration: BoxDecoration(
-                  color: const Color(0xffFFFDF0),
                   border: Border.all(
                     color: const Color(0xff999999),
                     width: 1.5,
@@ -318,7 +316,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 16.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -370,7 +368,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 16.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -390,7 +388,6 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // PDF Icon
                           Container(
                             width: 32.w,
                             height: 32.h,
@@ -410,7 +407,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                             "Audit Report",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              fontSize: 16.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.heading,
                             ),
@@ -420,7 +417,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                             "PDF",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              fontSize: 16.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.heading,
                               letterSpacing: -0.2,
@@ -447,7 +444,6 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // PDF Icon
                           Container(
                             width: 32.w,
                             height: 32.h,
@@ -474,7 +470,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                             "Audit Images",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              fontSize: 16.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.heading,
                             ),
@@ -484,7 +480,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                             "Images",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              fontSize: 16.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.heading,
                               letterSpacing: -0.2,
@@ -517,7 +513,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w700,
                             color: AppColors.heading,
-                            fontSize: 12.sp,
+                            fontSize: 13.sp,
                             letterSpacing: -0.2,
                           ),
                         ),
@@ -566,7 +562,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
         Text(
           title,
           style: GoogleFonts.outfit(
-            fontSize: 11.sp,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w500,
             color: Color.fromRGBO(16, 28, 22, 0.6),
             letterSpacing: -0.2,
@@ -617,14 +613,13 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
 
         SizedBox(width: 8.w),
 
-        // Text Section
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               title,
               style: GoogleFonts.outfit(
-                fontSize: 16.sp,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.w500,
                 color: AppColors.heading,
                 letterSpacing: -0.2,
@@ -634,6 +629,8 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
             SizedBox(height: 4.h),
             Text(
               description,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: GoogleFonts.outfit(
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w500,

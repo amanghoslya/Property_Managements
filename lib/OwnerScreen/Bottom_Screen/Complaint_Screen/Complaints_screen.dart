@@ -76,7 +76,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.outfit(
-                    fontSize: 13.sp,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w400,
                     color: Color.fromRGBO(42, 41, 51, 0.6),
                     letterSpacing: -0.24,
@@ -137,7 +137,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
           label: Text(
             "New Complaint",
             style: GoogleFonts.outfit(
-              fontSize: 12.sp,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w500,
               color: Colors.white,
               letterSpacing: -0.2,
@@ -204,7 +204,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
             Text(
               title,
               style: GoogleFonts.outfit(
-                fontSize: 14.sp,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
                 color: Color.fromARGB(178, 42, 41, 51),
               ),
@@ -291,7 +291,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
         Text(
           "My Complaints",
           style: GoogleFonts.outfit(
-            fontSize: 16.sp,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w500,
             color: Color(0xFF101C16),
             letterSpacing: -0.3,
@@ -301,7 +301,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
         Text(
           "03 Records",
           style: GoogleFonts.outfit(
-            fontSize: 12.sp,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w500,
             color: Color(0xFF101C16),
             letterSpacing: -0.3,
@@ -356,7 +356,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.outfit(
-                          fontSize: 16.sp,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
                           color: Color(0xFF101C16),
                           letterSpacing: -0.3,
@@ -366,7 +366,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
                       Text(
                         "Complaint ID · ${complaint["complaintId"]}",
                         style: GoogleFonts.outfit(
-                          fontSize: 11.sp,
+                          fontSize: 13.sp,
                           fontWeight: FontWeight.w500,
                           color: Color.fromARGB(178, 42, 41, 51),
                           letterSpacing: -0.3,
@@ -418,7 +418,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
                   child: Text(
                     complaint["status"],
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xFF101C16),
                       letterSpacing: -0.3,
@@ -429,7 +429,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
                 Text(
                   complaint["priority"],
                   style: GoogleFonts.outfit(
-                    fontSize: 11.sp,
+                    fontSize: 13.sp,
                     fontWeight: FontWeight.w500,
                     color: const Color(0xFF101C16),
                     letterSpacing: -0.3,
@@ -439,7 +439,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
                 Text(
                   complaint["date"],
                   style: GoogleFonts.outfit(
-                    fontSize: 11.sp,
+                    fontSize: 13.sp,
                     fontWeight: FontWeight.w500,
                     color: const Color(0xFF101C16),
                     letterSpacing: -0.3,

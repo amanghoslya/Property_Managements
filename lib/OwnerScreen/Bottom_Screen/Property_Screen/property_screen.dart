@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Property_Screen/property_status_screen.dart';
+import 'package:property_care/OwnerScreen/PropertyPerformanceScreen/Property_Performance_Screen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
 class PropertyScreen extends StatefulWidget {
@@ -47,7 +48,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w500,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -106,7 +107,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: Color(0xffFFFFFF),
-                            fontSize: 11.sp,
+                            fontSize: 13.sp,
                             letterSpacing: -0.24,
                           ),
                         ),
@@ -126,7 +127,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(255, 255, 255, 0.6),
-                            fontSize: 13.sp,
+                            fontSize: 15.sp,
                             letterSpacing: -0.34,
                           ),
                         ),
@@ -143,7 +144,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 16.sp,
+                      fontSize: 18.sp,
                       letterSpacing: -0.34,
                     ),
                   ),
@@ -153,7 +154,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 13.sp,
+                      fontSize: 15.sp,
                       letterSpacing: -0.34,
                     ),
                   ),
@@ -181,7 +182,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   letterSpacing: -0.34,
                 ),
               ),
@@ -237,7 +238,6 @@ class _PropertyScreenState extends State<PropertyScreen> {
                     vertical: 14.h,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFFDF1),
                     border: Border.all(color: AppColors.heading),
                     borderRadius: BorderRadius.circular(5.r),
                   ),
@@ -282,7 +282,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.inter(
-                                fontSize: 16.sp,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.heading,
                                 letterSpacing: -0.34,
@@ -295,7 +295,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.inter(
-                                fontSize: 13.sp,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Color.fromRGBO(41, 42, 51, 0.6),
                               ),
@@ -325,66 +325,76 @@ class _PropertyScreenState extends State<PropertyScreen> {
                 ),
               ),
               SizedBox(height: 30.h),
-              Container(
-                padding: EdgeInsets.only(
-                  left: 10.w,
-                  top: 15.h,
-                  bottom: 15.w,
-                  right: 10.w,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  border: Border.all(color: AppColors.heading),
-                ),
-                child: Center(
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 42.h,
-                        width: 42.w,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.heading,
-                            width: 1.5,
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            "86",
-                            style: GoogleFonts.outfit(
-                              fontWeight: FontWeight.w500,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => PropertyPerformanceScreen(),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.only(
+                    left: 10.w,
+                    top: 15.h,
+                    bottom: 15.w,
+                    right: 10.w,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    border: Border.all(color: AppColors.heading),
+                  ),
+                  child: Center(
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 42.h,
+                          width: 42.w,
+                          decoration: BoxDecoration(
+                            border: Border.all(
                               color: AppColors.heading,
-                              fontSize: 16.sp,
+                              width: 1.5,
+                            ),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              "86",
+                              style: GoogleFonts.outfit(
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.heading,
+                                fontSize: 18.sp,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(width: 8.w),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Property Score",
-                            style: GoogleFonts.outfit(
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.heading,
-                              fontSize: 16.sp,
-                              letterSpacing: -0.34,
+                        SizedBox(width: 8.w),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Property Score",
+                              style: GoogleFonts.outfit(
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.heading,
+                                fontSize: 16.sp,
+                                letterSpacing: -0.34,
+                              ),
                             ),
-                          ),
-                          Text(
-                            "Overall property performance based on maintenance,\n cleanliness, security and inspections.",
-                            style: GoogleFonts.outfit(
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromRGBO(42, 41, 51, 0.6),
-                              fontSize: 16.sp,
-                              letterSpacing: -0.34,
+                            Text(
+                              "Overall property performance based on maintenance,\n cleanliness, security and inspections.",
+                              style: GoogleFonts.outfit(
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromRGBO(42, 41, 51, 0.6),
+                                fontSize: 16.sp,
+                                letterSpacing: -0.34,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -405,7 +415,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(42, 41, 51, 0.5),
-                            fontSize: 13.sp,
+                            fontSize: 15.sp,
                             letterSpacing: -0.34,
                           ),
                         ),
@@ -415,7 +425,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
-                            fontSize: 16.sp,
+                            fontSize: 18.sp,
                             letterSpacing: -0.34,
                           ),
                         ),
@@ -437,7 +447,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
-                            fontSize: 13.sp,
+                            fontSize: 15.sp,
                             letterSpacing: -0.24,
                           ),
                         ),
@@ -480,7 +490,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.outfit(
-                  fontSize: 13.sp,
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.w500,
                   color: Color.fromRGBO(42, 41, 51, 0.6),
                   letterSpacing: -0.24,
@@ -505,7 +515,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.right,
               style: GoogleFonts.outfit(
-                fontSize: 13.sp,
+                fontSize: 15.sp,
                 fontWeight: FontWeight.w700,
                 color: AppColors.heading,
                 letterSpacing: -0.24,
@@ -531,7 +541,6 @@ class _PropertyScreenState extends State<PropertyScreen> {
         bottom: 10.h,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFDF1),
         border: Border.all(color: AppColors.heading),
         borderRadius: BorderRadius.circular(11.r),
       ),
@@ -553,13 +562,13 @@ class _PropertyScreenState extends State<PropertyScreen> {
             ),
           ),
 
-          SizedBox(height: 8.h),
+          SizedBox(height: 6.h),
           Text(
             subtitle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: GoogleFonts.inter(
-              fontSize: 13.sp,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w500,
               color: Color.fromRGBO(41, 42, 51, 0.6),
               letterSpacing: -0.34,

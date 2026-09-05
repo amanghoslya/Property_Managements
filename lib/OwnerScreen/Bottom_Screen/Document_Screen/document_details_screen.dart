@@ -71,7 +71,7 @@ class _DocumentDetailsScreenState extends State<DocumentDetailsScreen> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.outfit(
-                          fontSize: 13.sp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.w400,
                           color: Color.fromRGBO(42, 41, 51, 0.6),
                           letterSpacing: -0.24,
@@ -96,7 +96,7 @@ class _DocumentDetailsScreenState extends State<DocumentDetailsScreen> {
                 "Document Preview",
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   color: AppColors.heading,
                 ),
               ),
@@ -122,7 +122,7 @@ class _DocumentDetailsScreenState extends State<DocumentDetailsScreen> {
                 "Property Overview",
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   color: AppColors.heading,
                   letterSpacing: -0.54,
                 ),
@@ -158,7 +158,7 @@ class _DocumentDetailsScreenState extends State<DocumentDetailsScreen> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   letterSpacing: -0.54,
                 ),
               ),
@@ -175,7 +175,7 @@ class _DocumentDetailsScreenState extends State<DocumentDetailsScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
-                      fontSize: 13.sp,
+                      fontSize: 15.sp,
                       letterSpacing: -0.24,
                     ),
                   ),
@@ -204,7 +204,7 @@ class _DocumentDetailsScreenState extends State<DocumentDetailsScreen> {
                         label: Text(
                           "Share",
                           style: GoogleFonts.outfit(
-                            fontSize: 12.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w700,
                             color: AppColors.heading,
                           ),
@@ -237,7 +237,7 @@ class _DocumentDetailsScreenState extends State<DocumentDetailsScreen> {
                         label: Text(
                           "Download Document",
                           style: GoogleFonts.outfit(
-                            fontSize: 12.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w700,
                             color: Colors.white,
                             letterSpacing: -0.24,

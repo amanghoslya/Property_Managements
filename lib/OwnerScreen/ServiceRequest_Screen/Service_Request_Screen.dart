@@ -67,7 +67,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
                   Text(
                     "PROPERTY SERVICE MANAGEMENT",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -128,7 +128,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
                         Text(
                           "04",
                           style: GoogleFonts.outfit(
-                            fontSize: 16.sp,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
                             letterSpacing: -0.24,
@@ -138,7 +138,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
                         Text(
                           "TOTAL REQUES",
                           style: GoogleFonts.outfit(
-                            fontSize: 13.sp,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w400,
                             color: Color.fromRGBO(42, 41, 51, 0.6),
                             letterSpacing: -0.24,
@@ -165,7 +165,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
                         Text(
                           "02",
                           style: GoogleFonts.outfit(
-                            fontSize: 16.sp,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
                             letterSpacing: -0.24,
@@ -175,7 +175,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
                         Text(
                           "IN PROGRESS",
                           style: GoogleFonts.outfit(
-                            fontSize: 13.sp,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w400,
                             color: Color.fromRGBO(42, 41, 51, 0.6),
                             letterSpacing: -0.24,
@@ -202,7 +202,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
                         Text(
                           "01",
                           style: GoogleFonts.outfit(
-                            fontSize: 16.sp,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
                             letterSpacing: -0.24,
@@ -212,7 +212,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
                         Text(
                           "COMPLETED",
                           style: GoogleFonts.outfit(
-                            fontSize: 13.sp,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w400,
                             color: Color.fromRGBO(42, 41, 51, 0.6),
                             letterSpacing: -0.24,
@@ -332,7 +332,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: GoogleFonts.outfit(
-                                      fontSize: 16.sp,
+                                      fontSize: 18.sp,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xff101C16),
                                       letterSpacing: -0.2,
@@ -344,7 +344,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
                                   Text(
                                     "SR-2026-00128",
                                     style: GoogleFonts.outfit(
-                                      fontSize: 13.sp,
+                                      fontSize: 15.sp,
                                       fontWeight: FontWeight.w400,
                                       color: Color.fromRGBO(16, 28, 22, 0.6),
                                       letterSpacing: -0.2,
@@ -370,7 +370,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
                               child: Text(
                                 "IN PROGRESS",
                                 style: GoogleFonts.outfit(
-                                  fontSize: 13.sp,
+                                  fontSize: 15.sp,
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xff101C16),
                                 ),
@@ -382,7 +382,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
                         Text(
                           "Plumbing inspection and repair required for bathroom water leakage.",
                           style: GoogleFonts.outfit(
-                            fontSize: 13.sp,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w400,
                             color: Color.fromRGBO(16, 28, 22, 0.6),
                             letterSpacing: -0.2,
@@ -432,7 +432,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.outfit(
-                                  fontSize: 13.sp,
+                                  fontSize: 15.sp,
                                   fontWeight: FontWeight.w500,
                                   color: Color.fromRGBO(16, 28, 22, 0.6),
                                   letterSpacing: -0.2,
@@ -443,7 +443,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
                               child: Text(
                                 "View Details →",
                                 style: GoogleFonts.outfit(
-                                  fontSize: 13.sp,
+                                  fontSize: 15.sp,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.heading,
                                   letterSpacing: -0.2,
@@ -513,7 +513,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
         Text(
           title,
           style: GoogleFonts.outfit(
-            fontSize: 11.sp,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w500,
             color: Color.fromRGBO(16, 28, 22, 0.6),
             letterSpacing: -0.2,
@@ -526,7 +526,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
           value,
           overflow: TextOverflow.ellipsis,
           style: GoogleFonts.outfit(
-            fontSize: 15.sp,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w500,
             color: AppColors.heading,
             letterSpacing: -0.2,

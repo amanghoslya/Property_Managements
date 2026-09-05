@@ -54,7 +54,7 @@ class _AuditreprotScreenState extends State<AuditreprotScreen> {
                   Text(
                     "Audit Reports",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -111,7 +111,7 @@ class _AuditreprotScreenState extends State<AuditreprotScreen> {
                       Text(
                         "Apartment A-204",
                         style: GoogleFonts.outfit(
-                          fontSize: 16.sp,
+                          fontSize: 17.sp,
                           fontWeight: FontWeight.w500,
                           color: AppColors.heading,
                           letterSpacing: -0.2,
@@ -136,7 +136,7 @@ class _AuditreprotScreenState extends State<AuditreprotScreen> {
             Text(
               "Audit Reports",
               style: GoogleFonts.outfit(
-                fontSize: 16.sp,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.w500,
                 color: AppColors.heading,
                 letterSpacing: -0.2,
@@ -219,7 +219,6 @@ class _AuditreprotScreenState extends State<AuditreprotScreen> {
                     ),
                     margin: EdgeInsets.only(bottom: 20.h),
                     decoration: BoxDecoration(
-                      color: const Color(0xffFFFDF0),
                       border: Border.all(
                         color: const Color(0xff101C16),
                         width: 1.2,
@@ -261,7 +260,7 @@ class _AuditreprotScreenState extends State<AuditreprotScreen> {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: GoogleFonts.outfit(
-                                      fontSize: 16.sp,
+                                      fontSize: 17.sp,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xff101C16),
                                       letterSpacing: -0.2,
@@ -367,7 +366,7 @@ class _AuditreprotScreenState extends State<AuditreprotScreen> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.outfit(
-                                  fontSize: 13.sp,
+                                  fontSize: 14.sp,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.heading,
                                   letterSpacing: -0.2,
@@ -423,7 +422,7 @@ class _AuditreprotScreenState extends State<AuditreprotScreen> {
         child: Text(
           title,
           style: GoogleFonts.outfit(
-            fontSize: 13.sp,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w400,
             color: isSelected
                 ? const Color(0xff101C16)
@@ -442,7 +441,7 @@ class _AuditreprotScreenState extends State<AuditreprotScreen> {
         Text(
           title,
           style: GoogleFonts.outfit(
-            fontSize: 11.sp,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w500,
             color: Color.fromRGBO(16, 28, 22, 0.6),
             letterSpacing: -0.2,
@@ -455,7 +454,7 @@ class _AuditreprotScreenState extends State<AuditreprotScreen> {
           value,
           overflow: TextOverflow.ellipsis,
           style: GoogleFonts.outfit(
-            fontSize: 15.sp,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w500,
             color: AppColors.heading,
             letterSpacing: -0.2,

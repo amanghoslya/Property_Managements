@@ -120,7 +120,7 @@ class _EditprofilescreenState extends State<Editprofilescreen> {
                   Text(
                     "Update your personal information",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -189,7 +189,7 @@ class _EditprofilescreenState extends State<Editprofilescreen> {
                       child: Text(
                         "Update profile photo",
                         style: GoogleFonts.outfit(
-                          fontSize: 10.sp,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
                           color: const Color(0xff101C16),
                           letterSpacing: -0.3,
@@ -203,7 +203,7 @@ class _EditprofilescreenState extends State<Editprofilescreen> {
               Text(
                 "Personal Information",
                 style: GoogleFonts.outfit(
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
                   letterSpacing: -0.2,
@@ -260,7 +260,7 @@ class _EditprofilescreenState extends State<Editprofilescreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: Color(0xffFFFFFF),
-                      fontSize: 14.sp,
+                      fontSize: 16.sp,
                       letterSpacing: -0.34,
                     ),
                   ),
@@ -284,7 +284,7 @@ class _EditprofilescreenState extends State<Editprofilescreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 14.sp,
+                      fontSize: 16.sp,
                       letterSpacing: -0.34,
                     ),
                   ),
@@ -308,7 +308,7 @@ class _EditprofilescreenState extends State<Editprofilescreen> {
         Text(
           label,
           style: GoogleFonts.outfit(
-            fontSize: 16.sp,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w500,
             color: const Color(0xFF000000),
             letterSpacing: -0.2,

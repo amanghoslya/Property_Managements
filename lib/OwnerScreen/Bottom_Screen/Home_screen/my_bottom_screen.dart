@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:property_care/OwnerScreen/AIPropertyAssistant_Screen/AIProperty_Assistant_Screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Complaint_Screen/Complaints_screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Document_Screen/document_screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/NotificationScreen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Profile_Screen/profile_screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Property_Screen/property_screen.dart';
+import 'package:property_care/OwnerScreen/MaintenancePaymentStatusScreen/Maintenance_Payment_Status.dart';
 import 'package:property_care/OwnerScreen/ServiceRequest_Screen/Service_Request_Screen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
@@ -125,7 +127,7 @@ class _MyBottomScreenState extends State<MyBottomScreen> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.outfit(
-                  fontSize: 16.sp,
+                  fontSize: 17.sp,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                   color: isSelected
                       ? Color(0xFF17221D)
@@ -185,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "MY PROPERTIES",
                         style: GoogleFonts.outfit(
-                          fontSize: 18.sp,
+                          fontSize: 17.sp,
                           fontWeight: FontWeight.w500,
                           color: const Color(0xff171717),
                           letterSpacing: -0.54,
@@ -197,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "2 Properties",
                         style: GoogleFonts.outfit(
-                          fontSize: 13.sp,
+                          fontSize: 14.sp,
                           color: Color.fromRGBO(0, 0, 0, 0.6),
                           fontWeight: FontWeight.w500,
                         ),
@@ -248,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text(
                         "+  Add New Property",
                         style: GoogleFonts.outfit(
-                          fontSize: 12.sp,
+                          fontSize: 14.sp,
                           color: const Color(0xff171717),
                           fontWeight: FontWeight.w500,
                         ),
@@ -290,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       "Good Morning",
                       style: GoogleFonts.manrope(
-                        fontSize: 13.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         color: AppColors.heading,
                         letterSpacing: -0.39,
@@ -302,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       "HELLO, RAHUL 👋",
                       style: GoogleFonts.manrope(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                         color: AppColors.heading,
                         letterSpacing: -0.64,
@@ -437,7 +439,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             "Apartment A-204",
                             style: GoogleFonts.outfit(
                               fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
+                              fontSize: 17.sp,
                               color: Colors.white,
                               letterSpacing: -0.54,
                             ),
@@ -482,7 +484,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: GoogleFonts.outfit(
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
-                              fontSize: 11.sp,
+                              fontSize: 12.sp,
                               letterSpacing: -0.34,
                             ),
                           ),
@@ -502,7 +504,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: GoogleFonts.outfit(
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
-                              fontSize: 11.sp,
+                              fontSize: 12.sp,
                             ),
                           ),
                         ),
@@ -545,7 +547,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               "MY PROPERTY",
                               style: GoogleFonts.outfit(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 11.sp,
+                                fontSize: 12.sp,
                                 color: Colors.white,
                                 letterSpacing: -0.34,
                               ),
@@ -557,7 +559,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               "Apartment A-204",
                               style: GoogleFonts.outfit(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 21.sp,
+                                fontSize: 18.sp,
                                 color: Colors.white,
                                 letterSpacing: -0.7,
                               ),
@@ -569,7 +571,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               "Green Valley Residency · Jaipur",
                               style: GoogleFonts.outfit(
                                 fontWeight: FontWeight.w400,
-                                fontSize: 12.sp,
+                                fontSize: 13.sp,
                                 color: Colors.white.withOpacity(0.65),
                                 letterSpacing: -0.3,
                               ),
@@ -578,8 +580,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Container(
-                        height: 27.h,
-                        width: 82.w,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 18.w,
+                          vertical: 5.h,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color.fromRGBO(20, 30, 25, 0.65),
                           borderRadius: BorderRadius.circular(50.r),
@@ -589,7 +593,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Row(
                             children: [
                               Container(
-                                width: 45.w,
+                                width: 30.w,
                                 height: 16.h,
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
@@ -600,7 +604,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 "Good",
                                 style: GoogleFonts.outfit(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 12.sp,
+                                  fontSize: 13.sp,
                                   color: Colors.white,
                                   letterSpacing: -0.3,
                                 ),
@@ -628,7 +632,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             "Current Care Package",
                             style: GoogleFonts.outfit(
                               fontWeight: FontWeight.w500,
-                              fontSize: 13.sp,
+                              fontSize: 14.sp,
                               color: Color.fromRGBO(42, 41, 51, 0.6),
                               letterSpacing: -0.39,
                             ),
@@ -638,7 +642,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             "Premium Care",
                             style: GoogleFonts.outfit(
                               fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
+                              fontSize: 17.sp,
                               color: Color(0xff2A2933),
                               letterSpacing: -0.54,
                             ),
@@ -647,8 +651,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Spacer(),
                       Container(
-                        height: 31.h,
-                        width: 95.w,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 24.5.w,
+                          vertical: 6.5.h,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50.r),
                           border: Border.all(color: Color(0xff17221D)),
@@ -658,7 +664,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             "ACTIVE",
                             style: GoogleFonts.outfit(
                               fontWeight: FontWeight.w500,
-                              fontSize: 13.sp,
+                              fontSize: 14.sp,
                               color: Color(0xff17221D),
                               letterSpacing: -0.39,
                             ),
@@ -670,118 +676,135 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(height: 20.h),
                   Divider(thickness: 1, color: Colors.black),
                   SizedBox(height: 16.h),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.w,
-                      vertical: 12.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(184, 134, 11, 0.9),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Color(0xff000000)),
-                            borderRadius: BorderRadius.circular(10.r),
-                          ),
-                          child: Container(
-                            width: 39.w,
-                            height: 39.h,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => AipropertyAssistantScreen(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 14.w,
+                        vertical: 12.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(184, 134, 11, 0.9),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(2),
                             decoration: BoxDecoration(
-                              color: const Color(0xff000000),
+                              border: Border.all(color: Color(0xff000000)),
                               borderRadius: BorderRadius.circular(10.r),
-                              border: Border.all(color: Colors.black, width: 2),
+                            ),
+                            child: Container(
+                              width: 39.w,
+                              height: 39.h,
+                              decoration: BoxDecoration(
+                                color: const Color(0xff000000),
+                                borderRadius: BorderRadius.circular(10.r),
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 2,
+                                ),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.auto_awesome,
+                                  color: Colors.white,
+                                  size: 18.sp,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(width: 10.w),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Property Assistant",
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 17.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xff101010),
+                                        letterSpacing: -0.54,
+                                      ),
+                                    ),
+
+                                    SizedBox(width: 6.w),
+
+                                    Container(
+                                      height: 14.h,
+                                      width: 15.w,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xffAE8130),
+                                        borderRadius: BorderRadius.circular(
+                                          3.r,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "AI",
+                                          style: GoogleFonts.outfit(
+                                            fontSize: 10.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: const Color(0xff000000),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                SizedBox(height: 2.h),
+
+                                Text(
+                                  "Ask me anything about your property",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: const Color(0xff000000),
+                                    letterSpacing: -0.24,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          SizedBox(width: 8.w),
+
+                          Container(
+                            padding: EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              color: const Color(0xffC18D0B),
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 1.5,
+                              ),
                             ),
                             child: Center(
                               child: Icon(
-                                Icons.auto_awesome,
-                                color: Colors.white,
+                                Icons.arrow_forward,
+                                color: Colors.black,
                                 size: 18.sp,
                               ),
                             ),
                           ),
-                        ),
-
-                        SizedBox(width: 10.w),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "Property Assistant",
-                                    style: GoogleFonts.outfit(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(0xff101010),
-                                      letterSpacing: -0.54,
-                                    ),
-                                  ),
-
-                                  SizedBox(width: 6.w),
-
-                                  Container(
-                                    height: 14.h,
-                                    width: 15.w,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xffAE8130),
-                                      borderRadius: BorderRadius.circular(3.r),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "AI",
-                                        style: GoogleFonts.outfit(
-                                          fontSize: 10.sp,
-                                          fontWeight: FontWeight.w600,
-                                          color: const Color(0xff000000),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              SizedBox(height: 2.h),
-
-                              Text(
-                                "Ask me anything about your property",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.outfit(
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: const Color(0xff000000),
-                                  letterSpacing: -0.24,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: 8.w),
-
-                        Container(
-                          width: 41.w,
-                          height: 41.h,
-                          decoration: BoxDecoration(
-                            color: const Color(0xffC18D0B),
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.black, width: 1.5),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.arrow_forward,
-                              color: Colors.black,
-                              size: 22.sp,
-                            ),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20.h),
@@ -797,7 +820,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       padding: EdgeInsets.all(10.w),
                       decoration: BoxDecoration(
-                        color: const Color(0xffF8F5ED),
                         borderRadius: BorderRadius.circular(10.r),
                         border: Border.all(
                           color: const Color(0xff4F5752),
@@ -834,7 +856,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Text(
                                       "Service Requests",
                                       style: GoogleFonts.outfit(
-                                        fontSize: 16.sp,
+                                        fontSize: 17.sp,
                                         fontWeight: FontWeight.w500,
                                         color: const Color(0xff000000),
                                         letterSpacing: -0.4,
@@ -846,7 +868,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Text(
                                       "Raise & track property services",
                                       style: GoogleFonts.outfit(
-                                        fontSize: 12.sp,
+                                        fontSize: 13.sp,
                                         fontWeight: FontWeight.w500,
                                         color: Color.fromRGBO(0, 0, 0, 0.6),
                                         letterSpacing: -0.24,
@@ -892,7 +914,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Text(
                                     "Active Requests",
                                     style: GoogleFonts.outfit(
-                                      fontSize: 13.sp,
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.w400,
                                       color: Color.fromRGBO(0, 0, 0, 0.6),
                                     ),
@@ -903,7 +925,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Text(
                                     "02",
                                     style: GoogleFonts.outfit(
-                                      fontSize: 16.sp,
+                                      fontSize: 17.sp,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xff101C16),
                                     ),
@@ -914,8 +936,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               SizedBox(width: 18.w),
 
                               Container(
-                                height: 28.h,
-                                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 12.w,
+                                  vertical: 4.h,
+                                ),
                                 decoration: BoxDecoration(
                                   color: const Color(0xffE8E6DE),
                                   borderRadius: BorderRadius.circular(20.r),
@@ -941,7 +965,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Text(
                                       "In Progress",
                                       style: GoogleFonts.outfit(
-                                        fontSize: 11.sp,
+                                        fontSize: 13.sp,
                                         fontWeight: FontWeight.w500,
                                         color: const Color(0xff101C16),
                                       ),
@@ -953,10 +977,139 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(
                                 "View All →",
                                 style: GoogleFonts.outfit(
-                                  fontSize: 13.sp,
+                                  fontSize: 14.sp,
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xff101C16),
                                   letterSpacing: -0.34,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => MaintenancePaymentStatus(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(10.w),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.heading, width: 1),
+                        borderRadius: BorderRadius.circular(6.r),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: 34.h,
+                                width: 34.w,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: AppColors.heading),
+                                  borderRadius: BorderRadius.circular(5.r),
+                                ),
+                                child: Icon(
+                                  Icons.credit_card_outlined,
+                                  size: 20.sp,
+                                  color: AppColors.heading,
+                                ),
+                              ),
+
+                              SizedBox(width: 10.w),
+
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Maintenance Payment",
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 17.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xFF101C16),
+                                        letterSpacing: -0.2,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Monthly maintenance status",
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xFF777777),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 10.w,
+                                  vertical: 3.h,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: AppColors.heading),
+                                  borderRadius: BorderRadius.circular(50.r),
+                                ),
+                                child: Text(
+                                  "Paid",
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: const Color(0xFF101C16),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(height: 14.h),
+                          Row(
+                            children: [
+                              Expanded(child: _paymentAmountBox()),
+                              SizedBox(width: 12.w),
+                              Expanded(child: _paymentAmountBox()),
+                            ],
+                          ),
+
+                          SizedBox(height: 10.h),
+
+                          Row(
+                            children: [
+                              Expanded(child: _paymentAmountBox()),
+                              SizedBox(width: 12.w),
+                              Expanded(child: _paymentAmountBox()),
+                            ],
+                          ),
+
+                          SizedBox(height: 10.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Maintenance charges",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF777777),
+                                ),
+                              ),
+
+                              Text(
+                                "View All →",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF101C16),
+                                  letterSpacing: -0.2,
                                 ),
                               ),
                             ],
@@ -973,7 +1126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: GoogleFonts.outfit(
                           fontWeight: FontWeight.w500,
                           color: Color(0xff2A2933),
-                          fontSize: 16.sp,
+                          fontSize: 17.sp,
                           letterSpacing: -0.54,
                         ),
                       ),
@@ -983,7 +1136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: GoogleFonts.outfit(
                           fontWeight: FontWeight.w500,
                           color: Color(0xff2A2933),
-                          fontSize: 13.sp,
+                          fontSize: 14.sp,
                           letterSpacing: -0.24,
                         ),
                       ),
@@ -1027,7 +1180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text(
                           "PROPERTY AT A GLANCE",
                           style: GoogleFonts.outfit(
-                            fontSize: 13.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: Colors.white,
                             letterSpacing: -0.34,
@@ -1088,7 +1241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               "Everything is being monitored",
                               style: GoogleFonts.outfit(
-                                fontSize: 16.sp,
+                                fontSize: 17.sp,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.white,
                               ),
@@ -1110,8 +1263,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           fit: BoxFit.cover,
                         ),
                       ),
-
-                      // Gradient
                       Positioned.fill(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10.r),
@@ -1159,7 +1310,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               "PROPERTY REPORT",
                               style: GoogleFonts.outfit(
-                                fontSize: 12.sp,
+                                fontSize: 13.sp,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.white,
                                 letterSpacing: -0.24,
@@ -1174,7 +1325,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text(
                           "Property Audit Report",
                           style: GoogleFonts.outfit(
-                            fontSize: 16.sp,
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
                             color: Colors.white,
                             letterSpacing: -0.54,
@@ -1187,7 +1338,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text(
                           "Latest Property Audit",
                           style: GoogleFonts.outfit(
-                            fontSize: 13.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                             color: Color.fromRGBO(255, 255, 255, 0.6),
                           ),
@@ -1212,7 +1363,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Text(
                                   "86",
                                   style: GoogleFonts.outfit(
-                                    fontSize: 12.sp,
+                                    fontSize: 13.sp,
                                     fontWeight: FontWeight.w500,
                                     color: const Color(0xffD4B800),
                                   ),
@@ -1225,7 +1376,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               "OVERALL\nSCORE",
                               style: GoogleFonts.outfit(
-                                fontSize: 11.sp,
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.white,
                                 height: 1.15,
@@ -1252,14 +1403,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               TextSpan(
                                 text: "Audit Date: ",
                                 style: GoogleFonts.outfit(
-                                  fontSize: 13.sp,
+                                  fontSize: 14.sp,
                                   color: Colors.white.withOpacity(0.65),
                                 ),
                               ),
                               TextSpan(
                                 text: "15 August 2026",
                                 style: GoogleFonts.outfit(
-                                  fontSize: 13.sp,
+                                  fontSize: 14.sp,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white,
                                 ),
@@ -1274,7 +1425,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text(
                           "View Report →",
                           style: GoogleFonts.outfit(
-                            fontSize: 13.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: const Color(0xffD4B800),
                           ),
@@ -1323,7 +1474,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Text(
           value,
           style: GoogleFonts.outfit(
-            fontSize: 20.sp,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w500,
             color: Colors.white,
           ),
@@ -1332,7 +1483,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Text(
           title,
           style: GoogleFonts.outfit(
-            fontSize: 13.sp,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w400,
             color: Colors.white,
           ),
@@ -1434,7 +1585,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.outfit(
-                            fontSize: 13.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                             color: const Color(0xff8B8B8B),
                             letterSpacing: -0.25,
@@ -1447,7 +1598,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     time,
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff24242A),
                     ),
@@ -1501,7 +1652,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     title,
                     style: GoogleFonts.outfit(
-                      fontSize: 16.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff2A2933),
                       letterSpacing: -0.54,
@@ -1515,7 +1666,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 12.sp,
+                      fontSize: 13.sp,
                       color: Color.fromRGBO(42, 41, 51, 0.7),
                     ),
                   ),
@@ -1540,6 +1691,40 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _paymentAmountBox() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color(0xFF777777), width: 1),
+        borderRadius: BorderRadius.circular(6.r),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Outstanding",
+            style: GoogleFonts.outfit(
+              fontSize: 17.sp,
+              fontWeight: FontWeight.w500,
+              color: const Color(0xFF101C16),
+              letterSpacing: -0.2,
+            ),
+          ),
+          SizedBox(height: 3.h),
+          Text(
+            "₹0",
+            style: GoogleFonts.outfit(
+              fontSize: 17.sp,
+              fontWeight: FontWeight.w500,
+              color: const Color(0xFF101C16),
+            ),
+          ),
+        ],
       ),
     );
   }
