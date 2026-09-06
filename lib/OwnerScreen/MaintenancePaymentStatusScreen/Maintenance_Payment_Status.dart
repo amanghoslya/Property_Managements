@@ -53,7 +53,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
                   Text(
                     "Maintenance Payment Status",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -101,7 +101,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
                             Text(
                               "Apartment A-204",
                               style: GoogleFonts.outfit(
-                                fontSize: 18.sp,
+                                fontSize: 17.sp,
                                 fontWeight: FontWeight.w500,
                                 color: const Color(0xFF101C16),
                                 letterSpacing: -0.2,
@@ -111,7 +111,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
                             Text(
                               "Green Valley Residency",
                               style: GoogleFonts.outfit(
-                                fontSize: 14.sp,
+                                fontSize: 13.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Color.fromRGBO(0, 0, 0, 06),
                               ),
@@ -149,7 +149,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
                     Text(
                       "Outstanding Amount",
                       style: GoogleFonts.outfit(
-                        fontSize: 16.sp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xff2A2933),
                       ),
@@ -160,7 +160,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
                     Text(
                       "₹ 8,500",
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF101C16),
                         letterSpacing: -0.2,
@@ -173,7 +173,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
               Text(
                 "Current Status",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: const Color(0xFF101C16),
                   letterSpacing: -0.2,
@@ -251,7 +251,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
               Text(
                 "Reminder",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: const Color(0xFF101C16),
                   letterSpacing: -0.2,
@@ -271,7 +271,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
                     Text(
                       "Maintenance Payment Reminder",
                       style: GoogleFonts.outfit(
-                        fontSize: 15.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w700,
                         color: const Color(0xFF101C16),
                         letterSpacing: -0.2,
@@ -390,7 +390,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
                     Text(
                       month,
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF101C16),
                         letterSpacing: -0.2,
@@ -419,7 +419,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
                 child: Text(
                   status,
                   style: GoogleFonts.outfit(
-                    fontSize: 18.sp,
+                    fontSize: 17.sp,
                     fontWeight: FontWeight.w400,
                     color: isPaid ? Colors.green : Colors.red,
                   ),
@@ -439,7 +439,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
                     Text(
                       "Amount",
                       style: GoogleFonts.outfit(
-                        fontSize: 15.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                         color: Color.fromRGBO(42, 41, 51, 0.6),
                       ),
@@ -450,7 +450,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
                     Text(
                       "₹ $amount",
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF101C16),
                         letterSpacing: -0.2,
@@ -466,7 +466,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
                     Text(
                       rightTitle,
                       style: GoogleFonts.outfit(
-                        fontSize: 15.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                         color: Color.fromRGBO(42, 41, 51, 0.6),
                         letterSpacing: -0.2,
@@ -478,7 +478,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
                     Text(
                       rightValue,
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF101C16),
                         letterSpacing: -0.2,

@@ -84,7 +84,7 @@ class _AipropertyAssistantScreenState extends State<AipropertyAssistantScreen> {
                   Text(
                     "Your property information assistant",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,

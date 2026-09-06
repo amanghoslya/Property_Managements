@@ -407,7 +407,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                             "Audit Report",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              fontSize: 17.sp,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.heading,
                             ),
@@ -417,7 +417,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                             "PDF",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              fontSize: 17.sp,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.heading,
                               letterSpacing: -0.2,
@@ -470,7 +470,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                             "Audit Images",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              fontSize: 17.sp,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.heading,
                             ),
@@ -480,7 +480,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
                             "Images",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              fontSize: 17.sp,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.heading,
                               letterSpacing: -0.2,

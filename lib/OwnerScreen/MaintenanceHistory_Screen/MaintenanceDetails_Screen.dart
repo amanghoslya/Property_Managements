@@ -74,7 +74,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                   Text(
                     "Maintenance Details",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -137,7 +137,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                             Text(
                               "Electrical Maintenance",
                               style: GoogleFonts.outfit(
-                                fontSize: 18.sp,
+                                fontSize: 17.sp,
                                 fontWeight: FontWeight.w500,
                                 color: const Color(0xff292832),
                                 letterSpacing: -0.64,
@@ -169,7 +169,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                             child: Text(
                               "Completed",
                               style: GoogleFonts.outfit(
-                                fontSize: 18.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w500,
                                 color: const Color(0xff292832),
                                 letterSpacing: -0.64,
@@ -212,7 +212,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
               Text(
                 "Maintenance Information",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.24,
@@ -263,7 +263,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
               Text(
                 "Work Details",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.24,
@@ -291,7 +291,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
               Text(
                 "Maintenance Timeline",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.24,
@@ -321,7 +321,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
               Text(
                 "Assigned Team",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.24,
@@ -357,7 +357,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                         Text(
                           "Rahul Sharma",
                           style: GoogleFonts.outfit(
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
                             color: const Color(0xff292832),
                             letterSpacing: -0.64,
@@ -392,7 +392,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
               Text(
                 "Related Documents",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.24,
@@ -420,7 +420,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                         Text(
                           "Maintenance_Report_MR2048.pdf",
                           style: GoogleFonts.outfit(
-                            fontSize: 16.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: const Color(0xff292832),
                             letterSpacing: -0.64,
@@ -442,7 +442,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
                     Text(
                       "View",
                       style: GoogleFonts.outfit(
-                        fontSize: 14.sp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w500,
                         color: AppColors.heading,
                         letterSpacing: -0.24,
@@ -455,7 +455,7 @@ class _MaintenancedetailsScreenState extends State<MaintenancedetailsScreen> {
               Text(
                 "Notes",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.24,
@@ -618,7 +618,7 @@ class _TimelineItem extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       height: 1.1,
                       fontWeight: FontWeight.w500,
                       color: Color(0xFF101C16),
@@ -630,7 +630,6 @@ class _TimelineItem extends StatelessWidget {
                     date,
                     style: GoogleFonts.outfit(
                       fontSize: 12.sp,
-                      height: 1.1,
                       fontWeight: FontWeight.w500,
                       color: Color.fromRGBO(42, 41, 51, 0.5),
                       letterSpacing: -0.2,

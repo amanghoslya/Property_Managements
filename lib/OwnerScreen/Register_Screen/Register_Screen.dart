@@ -94,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text(
                     "Create Account",
                     style: GoogleFonts.uoqMunThenKhung(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w400,
                       color: const Color(0xFF000000),
                       letterSpacing: 1,
@@ -128,7 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text(
                     "ACCOUNT INFORMATION",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: Color(0xFF000000),
                       letterSpacing: -0.3,
@@ -183,7 +183,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text(
                     "PROPERTY INFORMATION",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: Color(0xFF000000),
                       letterSpacing: -0.3,
@@ -225,7 +225,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: RichText(
                           text: TextSpan(
                             style: GoogleFonts.outfit(
-                              fontSize: 15.sp,
+                              fontSize: 14.sp,
                               color: Color(0Xff000000),
                               fontWeight: FontWeight.w700,
                               letterSpacing: -0.2,
@@ -265,7 +265,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Text(
                         "CREATE ACCOUNT",
                         style: GoogleFonts.outfit(
-                          fontSize: 14.sp,
+                          fontSize: 13.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
                           letterSpacing: 0.1,
@@ -284,7 +284,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextSpan(
                       text: "Already have an account?  ",
                       style: GoogleFonts.outfit(
-                        fontSize: 16.sp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w500,
                         color: Color(0xFF000000),
                       ),
@@ -292,7 +292,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextSpan(
                       text: "Login",
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                         color: Color(0xFF000000),
                       ),
@@ -406,7 +406,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         obscureText: obscureText,
         keyboardType: keyboardType,
         style: GoogleFonts.outfit(
-          fontSize: 16.sp,
+          fontSize: 15.sp,
           color: const Color(0xff101C16),
         ),
         decoration: InputDecoration(

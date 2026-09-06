@@ -72,7 +72,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -84,7 +84,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -135,7 +135,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.outfit(
-                                  fontSize: 18.sp,
+                                  fontSize: 17.sp,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xFF101C16),
                                   letterSpacing: -0.3,
@@ -159,7 +159,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
                           child: Text(
                             "OPEN",
                             style: GoogleFonts.outfit(
-                              fontSize: 15.sp,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFF101C16),
                               letterSpacing: -0.3,
@@ -172,7 +172,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
                     Text(
                       "Your complaint has been received and is currently awaiting assignment to the maintenance team.",
                       style: GoogleFonts.outfit(
-                        fontSize: 16.sp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w500,
                         color: Color.fromARGB(178, 42, 41, 51),
                         letterSpacing: -0.2,
@@ -224,7 +224,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
                         Text(
                           "Apartment A-204",
                           style: GoogleFonts.outfit(
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF101C16),
                             letterSpacing: -0.3,
@@ -249,7 +249,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
               Text(
                 "Category",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
                   letterSpacing: -0.2,
@@ -289,7 +289,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
               Text(
                 "Complaint Description",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
                   letterSpacing: -0.2,
@@ -318,7 +318,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
               Text(
                 "Assigned To",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
                   letterSpacing: -0.2,
@@ -346,7 +346,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
                         Text(
                           "Raj Kumar",
                           style: GoogleFonts.outfit(
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF101C16),
                             letterSpacing: -0.2,
@@ -355,7 +355,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
                         Text(
                           "Maintenance Supervisor",
                           style: GoogleFonts.outfit(
-                            fontSize: 15.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(16, 28, 22, 0.5),
                             letterSpacing: -0.3,
@@ -389,7 +389,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
               Text(
                 "Assigned To",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
                   letterSpacing: -0.2,
@@ -430,7 +430,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
                         Text(
                           "Raj Kumar",
                           style: GoogleFonts.outfit(
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF101C16),
                             letterSpacing: -0.2,
@@ -439,7 +439,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
                         Text(
                           "Maintenance Supervisor",
                           style: GoogleFonts.outfit(
-                            fontSize: 15.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(16, 28, 22, 0.5),
                             letterSpacing: -0.3,
@@ -451,7 +451,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
                     Text(
                       "View",
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                         color: Color(0xFF101C16),
                         letterSpacing: -0.2,
@@ -464,7 +464,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
               Text(
                 "Complaint Activity",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
                   letterSpacing: -0.2,
@@ -570,7 +570,7 @@ class _ComplaintDetailScreenState extends State<ComplaintDetailScreen> {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.right,
               style: GoogleFonts.outfit(
-                fontSize: 15.sp,
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w700,
                 color: AppColors.heading,
                 letterSpacing: -0.24,
@@ -683,7 +683,7 @@ class _TimelineItem extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       height: 1.1,
                       fontWeight: FontWeight.w500,
                       color: Color(0xFF101C16),

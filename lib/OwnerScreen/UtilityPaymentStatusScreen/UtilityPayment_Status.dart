@@ -53,7 +53,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                   Text(
                     "UTILITY PAYMENT STATUS",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -63,7 +63,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                   Text(
                     "Track utility charge information",
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -106,6 +106,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                             ),
                           ),
                         ),
+                        SizedBox(width: 10.w),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +114,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                               Text(
                                 "Arjun Kapoor",
                                 style: GoogleFonts.outfit(
-                                  fontSize: 18.sp,
+                                  fontSize: 17.sp,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.heading,
                                   letterSpacing: -0.2,
@@ -125,7 +126,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                               Text(
                                 "Primary Tenant",
                                 style: GoogleFonts.outfit(
-                                  fontSize: 16.sp,
+                                  fontSize: 15.sp,
                                   fontWeight: FontWeight.w500,
                                   color: Color.fromRGBO(0, 0, 0, 0.6),
                                   letterSpacing: -0.2,
@@ -169,7 +170,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                         Text(
                           "Property",
                           style: GoogleFonts.outfit(
-                            fontSize: 16.sp,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
                             letterSpacing: -0.2,
@@ -179,7 +180,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                         Text(
                           "Apartment A-204",
                           style: GoogleFonts.outfit(
-                            fontSize: 16.sp,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
                             letterSpacing: -0.2,
@@ -204,7 +205,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                     Text(
                       "Current Outstanding Rent",
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF777777),
                       ),
@@ -215,7 +216,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                     Text(
                       "₹18,000",
                       style: GoogleFonts.outfit(
-                        fontSize: 20.sp,
+                        fontSize: 19.sp,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF101C16),
                         letterSpacing: -0.2,
@@ -261,7 +262,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
               Text(
                 "Current Utility Status",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: const Color(0xFF101C16),
                   letterSpacing: -0.2,
@@ -310,7 +311,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                   Text(
                     "Rent Payment History",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xFF101C16),
                       letterSpacing: -0.2,
@@ -404,7 +405,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
           Text(
             title,
             style: GoogleFonts.outfit(
-              fontSize: 16.sp,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w500,
               color: const Color(0xFF101C16),
               letterSpacing: -0.2,
@@ -416,7 +417,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
           Text(
             value,
             style: GoogleFonts.outfit(
-              fontSize: 18.sp,
+              fontSize: 17.sp,
               fontWeight: FontWeight.w500,
               color: const Color(0xFF101C16),
             ),
@@ -478,7 +479,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.right,
               style: GoogleFonts.outfit(
-                fontSize: 15.sp,
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w700,
                 color: color,
                 letterSpacing: -0.24,
@@ -512,7 +513,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                     Text(
                       month,
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF101C16),
                         letterSpacing: -0.2,
@@ -548,7 +549,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                     child: Text(
                       status,
                       style: GoogleFonts.outfit(
-                        fontSize: 15.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                         color: statusColor,
                         letterSpacing: -0.2,
@@ -561,7 +562,7 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                   Text(
                     amount,
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xFF101C16),
                       letterSpacing: -0.2,

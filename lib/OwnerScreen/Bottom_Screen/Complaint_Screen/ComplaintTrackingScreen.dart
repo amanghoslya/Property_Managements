@@ -92,7 +92,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -104,7 +104,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -155,7 +155,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.outfit(
-                                  fontSize: 18.sp,
+                                  fontSize: 17.sp,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xFF101C16),
                                   letterSpacing: -0.3,
@@ -179,7 +179,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                           child: Text(
                             "62% COMPLETE",
                             style: GoogleFonts.outfit(
-                              fontSize: 15.sp,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFF101C16),
                               letterSpacing: -0.3,
@@ -192,7 +192,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                     Text(
                       "Your complaint has been assigned to the maintenance team and the resolution process is currently underway.",
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
                         color: Color.fromARGB(178, 42, 41, 51),
                         letterSpacing: -0.2,
@@ -220,7 +220,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.outfit(
-                            fontSize: 15.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF101C16),
                             letterSpacing: -0.3,
@@ -231,7 +231,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.outfit(
-                            fontSize: 15.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF101C16),
                             letterSpacing: -0.3,
@@ -326,7 +326,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
               Text(
                 'Resolution Progress',
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
                   letterSpacing: -0.3,
@@ -354,7 +354,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                         Text(
                           'Overall Progress',
                           style: GoogleFonts.outfit(
-                            fontSize: 15.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF101C16),
                             letterSpacing: -0.3,
@@ -363,7 +363,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                         Text(
                           '$percentage%',
                           style: GoogleFonts.outfit(
-                            fontSize: 15.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF101C16),
                             letterSpacing: -0.3,
@@ -390,7 +390,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
               Text(
                 "Status Timeline",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
                   letterSpacing: -0.2,
@@ -441,7 +441,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                         Text(
                           "Apartment A-204",
                           style: GoogleFonts.outfit(
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF101C16),
                             letterSpacing: -0.2,
@@ -484,7 +484,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                         Text(
                           "Raj Kumar",
                           style: GoogleFonts.outfit(
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF101C16),
                             letterSpacing: -0.2,
@@ -493,7 +493,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                         Text(
                           "Maintenance Supervisor",
                           style: GoogleFonts.outfit(
-                            fontSize: 15.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(16, 28, 22, 0.5),
                             letterSpacing: -0.3,

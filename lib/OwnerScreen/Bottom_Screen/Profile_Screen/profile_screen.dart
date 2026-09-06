@@ -37,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text(
                   "MY PROFILE",
                   style: GoogleFonts.outfit(
-                    fontSize: 18.sp,
+                    fontSize: 17.sp,
                     fontWeight: FontWeight.w500,
                     color: const Color(0xff292832),
                     letterSpacing: -0.64,
@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.outfit(
-                    fontSize: 15.sp,
+                    fontSize: 13.sp,
                     fontWeight: FontWeight.w400,
                     color: Color.fromRGBO(42, 41, 51, 0.6),
                     letterSpacing: -0.24,
@@ -85,7 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Text(
                       "MD Sajiv",
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                         color: Color(0xFF000000),
                         letterSpacing: -0.3,
@@ -95,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Text(
                       "sajiv@gmail.com",
                       style: GoogleFonts.outfit(
-                        fontSize: 15.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         color: Color(0xFF000000),
                         letterSpacing: -0.3,
@@ -117,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Text(
                         "Property Owner",
                         style: GoogleFonts.outfit(
-                          fontSize: 15.sp,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: Color(0xFF000000),
                           letterSpacing: -0.3,
@@ -198,7 +198,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Text(
                               "Apartment A-204",
                               style: GoogleFonts.outfit(
-                                fontSize: 18.sp,
+                                fontSize: 17.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xFF101C16),
                                 letterSpacing: -0.2,
@@ -207,7 +207,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Text(
                               "Green Valley Residency",
                               style: GoogleFonts.outfit(
-                                fontSize: 14.sp,
+                                fontSize: 13.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xFF000000),
                                 letterSpacing: -0.2,
@@ -219,7 +219,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Text(
                           "Active",
                           style: GoogleFonts.outfit(
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFFAE8130),
                             letterSpacing: -0.2,
@@ -263,7 +263,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Text(
                             "Apartment",
                             style: GoogleFonts.outfit(
-                              fontSize: 18.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF101C16),
                               letterSpacing: -0.2,
@@ -274,7 +274,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Text(
                             "A-204",
                             style: GoogleFonts.outfit(
-                              fontSize: 18.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF101C16),
                               letterSpacing: -0.2,
@@ -318,7 +318,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Text(
                             "2nd Floor",
                             style: GoogleFonts.outfit(
-                              fontSize: 18.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF101C16),
                               letterSpacing: -0.2,
@@ -329,7 +329,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Text(
                             "Owner",
                             style: GoogleFonts.outfit(
-                              fontSize: 16.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF101C16),
                               letterSpacing: -0.2,
@@ -345,7 +345,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Text(
                 "Account Settings",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
                   letterSpacing: -0.2,
@@ -513,7 +513,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.right,
               style: GoogleFonts.outfit(
-                fontSize: 15.sp,
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w700,
                 color: AppColors.heading,
                 letterSpacing: -0.24,
@@ -558,7 +558,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text(
                   name,
                   style: GoogleFonts.outfit(
-                    fontSize: 18.sp,
+                    fontSize: 17.sp,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF000000),
                     letterSpacing: -0.2,
@@ -567,7 +567,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text(
                   title,
                   style: GoogleFonts.outfit(
-                    fontSize: 15.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
                     color: Color.fromRGBO(0, 0, 0, 0.7),
                     letterSpacing: -0.3,

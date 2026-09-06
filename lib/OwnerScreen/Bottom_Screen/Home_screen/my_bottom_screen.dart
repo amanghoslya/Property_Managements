@@ -1470,11 +1470,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _infoItem(String value, String title) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           value,
           style: GoogleFonts.outfit(
-            fontSize: 18.sp,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w500,
             color: Colors.white,
           ),
@@ -1513,46 +1514,36 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// LEFT TIMELINE
-          SizedBox(
-            width: 68.w,
-            child: Column(
-              children: [
-                /// CIRCLE
-                Container(
-                  width: 50.w,
-                  height: 50.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: isCompleted
-                        ? const Color(0xff101C16)
-                        : AppColors.scaffoldBg,
-                    border: isCompleted
-                        ? null
-                        : Border.all(
-                            color: const Color(0xff101C16),
-                            width: 1.5,
-                          ),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      icon,
-                      size: isCompleted ? 23.sp : 18.sp,
-                      color: isCompleted
-                          ? Colors.white
-                          : const Color(0xff101C16),
-                    ),
+          Column(
+            children: [
+              Container(
+                width: 50.w,
+                height: 50.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isCompleted
+                      ? const Color(0xff101C16)
+                      : AppColors.scaffoldBg,
+                  border: isCompleted
+                      ? null
+                      : Border.all(color: const Color(0xff101C16), width: 1.5),
+                ),
+                child: Center(
+                  child: Icon(
+                    icon,
+                    size: isCompleted ? 23.sp : 18.sp,
+                    color: isCompleted ? Colors.white : const Color(0xff101C16),
                   ),
                 ),
-                if (!isLast)
-                  Expanded(
-                    child: Container(
-                      width: 1.2.w,
-                      color: const Color(0xff303832),
-                    ),
+              ),
+              if (!isLast)
+                Expanded(
+                  child: Container(
+                    width: 1.2.w,
+                    color: const Color(0xff303832),
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
 
           SizedBox(width: 14.w),

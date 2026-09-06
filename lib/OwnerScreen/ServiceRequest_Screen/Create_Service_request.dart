@@ -64,7 +64,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 Text(
                   "Add Attachment",
                   style: GoogleFonts.outfit(
-                    fontSize: 18.sp,
+                    fontSize: 17.sp,
                     fontWeight: FontWeight.w500,
                     color: const Color(0xff101C16),
                   ),
@@ -144,7 +144,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                   subtitle: Text(
                     "PDF, DOC or DOCX",
                     style: GoogleFonts.outfit(
-                      fontSize: 11.sp,
+                      fontSize: 12.sp,
                       color: const Color(0xff777777),
                     ),
                   ),
@@ -263,7 +263,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                   Text(
                     "Create Service Request",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -333,7 +333,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             letterSpacing: -0.2,
                           ),
                         ),
@@ -357,7 +357,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -388,7 +388,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -501,7 +501,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.outfit(
-                                    fontSize: 18.sp,
+                                    fontSize: 17.sp,
                                     fontWeight: FontWeight.w500,
                                     color: service["color"],
                                     letterSpacing: -0.3,
@@ -540,7 +540,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -560,7 +560,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                     decoration: InputDecoration(
                       hintText: "e.g. Bathroom tap repair",
                       hintStyle: GoogleFonts.outfit(
-                        fontSize: 14.sp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w400,
                         color: const Color(0xff8B8D8B),
                       ),
@@ -581,7 +581,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -602,7 +602,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                   decoration: InputDecoration(
                     hintText: "Describe your service request...",
                     hintStyle: GoogleFonts.outfit(
-                      fontSize: 14.sp,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w400,
                       color: const Color(0xff8B8D8B),
                     ),
@@ -620,7 +620,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -718,7 +718,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                                     ? "10:10AM"
                                     : selectedTime!.format(context),
                                 style: GoogleFonts.outfit(
-                                  fontSize: 18.sp,
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
                                   color: selectedTime == null
                                       ? const Color(0xff8B8D8B)
@@ -745,7 +745,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -899,7 +899,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                   child: Text(
                     "Submit Complaint",
                     style: GoogleFonts.outfit(
-                      fontSize: 14.sp,
+                      fontSize: 13.sp,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
                       letterSpacing: -0.2,
@@ -966,7 +966,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
         borderRadius: BorderRadius.circular(4.r),
         border: Border.all(color: const Color(0xFF101C16), width: 1.w),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      padding: EdgeInsets.only(left: 15.w, right: 25.w),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,

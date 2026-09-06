@@ -34,7 +34,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -48,7 +48,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -117,7 +117,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: Color(0xffFFFFFF),
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             letterSpacing: -0.54,
                           ),
                         ),
@@ -127,7 +127,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(255, 255, 255, 0.6),
-                            fontSize: 15.sp,
+                            fontSize: 14.sp,
                             letterSpacing: -0.34,
                           ),
                         ),
@@ -144,7 +144,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       letterSpacing: -0.34,
                     ),
                   ),
@@ -154,7 +154,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       letterSpacing: -0.34,
                     ),
                   ),
@@ -182,7 +182,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.34,
                 ),
               ),
@@ -282,7 +282,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.inter(
-                                fontSize: 18.sp,
+                                fontSize: 17.sp,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.heading,
                                 letterSpacing: -0.34,
@@ -295,7 +295,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.inter(
-                                fontSize: 15.sp,
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Color.fromRGBO(41, 42, 51, 0.6),
                               ),
@@ -378,7 +378,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                               style: GoogleFonts.outfit(
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.heading,
-                                fontSize: 16.sp,
+                                fontSize: 15.sp,
                                 letterSpacing: -0.34,
                               ),
                             ),
@@ -387,7 +387,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                               style: GoogleFonts.outfit(
                                 fontWeight: FontWeight.w500,
                                 color: Color.fromRGBO(42, 41, 51, 0.6),
-                                fontSize: 16.sp,
+                                fontSize: 15.sp,
                                 letterSpacing: -0.34,
                               ),
                             ),
@@ -415,7 +415,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(42, 41, 51, 0.5),
-                            fontSize: 15.sp,
+                            fontSize: 14.sp,
                             letterSpacing: -0.34,
                           ),
                         ),
@@ -425,7 +425,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             letterSpacing: -0.34,
                           ),
                         ),
@@ -447,7 +447,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
-                            fontSize: 15.sp,
+                            fontSize: 14.sp,
                             letterSpacing: -0.24,
                           ),
                         ),
@@ -490,7 +490,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.outfit(
-                  fontSize: 15.sp,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
                   color: Color.fromRGBO(42, 41, 51, 0.6),
                   letterSpacing: -0.24,
@@ -515,7 +515,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.right,
               style: GoogleFonts.outfit(
-                fontSize: 15.sp,
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w700,
                 color: AppColors.heading,
                 letterSpacing: -0.24,
@@ -555,7 +555,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: GoogleFonts.inter(
-              fontSize: 16.sp,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w500,
               color: AppColors.heading,
               letterSpacing: -0.54,
@@ -568,7 +568,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: GoogleFonts.inter(
-              fontSize: 15.sp,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w500,
               color: Color.fromRGBO(41, 42, 51, 0.6),
               letterSpacing: -0.34,

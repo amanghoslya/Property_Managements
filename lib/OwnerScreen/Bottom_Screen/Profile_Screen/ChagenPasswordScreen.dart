@@ -55,7 +55,7 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
                   Text(
                     "SECURITY & PASSWORD",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -65,7 +65,7 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
                   Text(
                     "Manage your account security",
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -117,7 +117,7 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
                         Text(
                           "Security & Password",
                           style: GoogleFonts.outfit(
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF000000),
                             letterSpacing: -0.2,
@@ -126,7 +126,7 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
                         Text(
                           "Manage password and account security",
                           style: GoogleFonts.outfit(
-                            fontSize: 15.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(0, 0, 0, 0.7),
                             letterSpacing: -0.3,
@@ -166,7 +166,7 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
               Text(
                 "Change Password",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
                   letterSpacing: -0.2,
@@ -235,7 +235,7 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: Color(0xffFFFFFF),
-                      fontSize: 16.sp,
+                      fontSize: 15.sp,
                       letterSpacing: -0.34,
                     ),
                   ),
@@ -260,7 +260,7 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
         Text(
           label,
           style: GoogleFonts.outfit(
-            fontSize: 16.sp,
+            fontSize: 15.sp,
             fontWeight: FontWeight.w500,
             color: const Color(0xFF000000),
             letterSpacing: -0.2,
@@ -285,7 +285,7 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
               hintText: hintText,
 
               hintStyle: GoogleFonts.outfit(
-                fontSize: 13.sp,
+                fontSize: 15.sp,
                 fontWeight: FontWeight.w500,
                 color: const Color.fromRGBO(16, 28, 22, 0.6),
               ),

@@ -54,7 +54,7 @@ class _TenantmanagementScreenState extends State<TenantmanagementScreen> {
                   Text(
                     "Tenant Management",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -64,7 +64,7 @@ class _TenantmanagementScreenState extends State<TenantmanagementScreen> {
                   Text(
                     "Manage tenants for your property",
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -122,7 +122,7 @@ class _TenantmanagementScreenState extends State<TenantmanagementScreen> {
                         style: GoogleFonts.outfit(
                           fontWeight: FontWeight.w500,
                           color: AppColors.heading,
-                          fontSize: 18.sp,
+                          fontSize: 17.sp,
                           letterSpacing: -0.2,
                         ),
                       ),
@@ -158,7 +158,7 @@ class _TenantmanagementScreenState extends State<TenantmanagementScreen> {
                   style: GoogleFonts.outfit(
                     fontWeight: FontWeight.w500,
                     color: AppColors.heading,
-                    fontSize: 18.sp,
+                    fontSize: 17.sp,
                     letterSpacing: -0.2,
                   ),
                 ),
@@ -168,7 +168,7 @@ class _TenantmanagementScreenState extends State<TenantmanagementScreen> {
                   style: GoogleFonts.outfit(
                     fontWeight: FontWeight.w500,
                     color: AppColors.heading,
-                    fontSize: 18.sp,
+                    fontSize: 17.sp,
                     letterSpacing: -0.2,
                   ),
                 ),
@@ -209,7 +209,7 @@ class _TenantmanagementScreenState extends State<TenantmanagementScreen> {
                             Text(
                               "Arjun Kapoor",
                               style: GoogleFonts.outfit(
-                                fontSize: 18.sp,
+                                fontSize: 17.sp,
                                 fontWeight: FontWeight.w700,
                                 color: AppColors.heading,
                                 letterSpacing: -0.2,
@@ -375,7 +375,7 @@ class _TenantmanagementScreenState extends State<TenantmanagementScreen> {
                       Text(
                         "Current Rent Status",
                         style: GoogleFonts.outfit(
-                          fontSize: 18.sp,
+                          fontSize: 17.sp,
                           fontWeight: FontWeight.w500,
                           color: AppColors.heading,
                           letterSpacing: -0.2,
@@ -385,7 +385,7 @@ class _TenantmanagementScreenState extends State<TenantmanagementScreen> {
                       Text(
                         "Paid",
                         style: GoogleFonts.outfit(
-                          fontSize: 16.sp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.w500,
                           color: AppColors.heading,
                           letterSpacing: -0.2,
@@ -423,7 +423,7 @@ class _TenantmanagementScreenState extends State<TenantmanagementScreen> {
                       Text(
                         "₹18,000",
                         style: GoogleFonts.outfit(
-                          fontSize: 18.sp,
+                          fontSize: 17.sp,
                           fontWeight: FontWeight.w500,
                           color: AppColors.heading,
                           letterSpacing: -0.2,
@@ -433,7 +433,7 @@ class _TenantmanagementScreenState extends State<TenantmanagementScreen> {
                       Text(
                         "01 Aug 2026",
                         style: GoogleFonts.outfit(
-                          fontSize: 16.sp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.w500,
                           color: AppColors.heading,
                           letterSpacing: -0.2,
@@ -497,7 +497,7 @@ class _TenantmanagementScreenState extends State<TenantmanagementScreen> {
         Text(
           value,
           style: GoogleFonts.inter(
-            fontSize: 16.sp,
+            fontSize: 15.sp,
             fontWeight: FontWeight.w500,
             color: AppColors.heading,
             letterSpacing: -0.2,

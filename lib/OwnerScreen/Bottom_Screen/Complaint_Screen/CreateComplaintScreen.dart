@@ -73,7 +73,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                 Text(
                   "Add Attachment",
                   style: GoogleFonts.outfit(
-                    fontSize: 18.sp,
+                    fontSize: 17.sp,
                     fontWeight: FontWeight.w500,
                     color: const Color(0xff101C16),
                   ),
@@ -103,7 +103,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                   title: Text(
                     "Upload Image",
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff101C16),
                     ),
@@ -145,7 +145,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                   title: Text(
                     "Upload Document",
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff101C16),
                     ),
@@ -153,7 +153,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                   subtitle: Text(
                     "PDF, DOC or DOCX",
                     style: GoogleFonts.outfit(
-                      fontSize: 10.sp,
+                      fontSize: 12.sp,
                       color: const Color(0xff777777),
                     ),
                   ),
@@ -274,7 +274,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -286,7 +286,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -340,7 +340,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                                   style: GoogleFonts.outfit(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white,
-                                    fontSize: 15.sp,
+                                    fontSize: 14.sp,
                                   ),
                                 ),
                               ),
@@ -356,7 +356,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                         Text(
                           "Complaint For",
                           style: GoogleFonts.outfit(
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
                             color: Color(0xff101C16),
                             letterSpacing: -0.54,
@@ -366,7 +366,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                         Text(
                           "Apartment A-204 · Green Valley Residency",
                           style: GoogleFonts.outfit(
-                            fontSize: 15.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(42, 41, 51, 0.6),
                             letterSpacing: -0.34,
@@ -381,7 +381,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
               Text(
                 "Complaint Information",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
                   letterSpacing: -0.3,
@@ -417,17 +417,18 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
               _buildLabel("Description *"),
               SizedBox(height: 7.h),
               Container(
-                height: 112.h,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(4.r),
-                  border: Border.all(color: Color(0xFF101C16), width: 1.w),
+                  border: Border.all(
+                    color: const Color(0xFF101C16),
+                    width: 1.w,
+                  ),
                 ),
                 child: TextField(
                   controller: descriptionController,
-                  maxLines: null,
-                  expands: true,
+                  maxLines: 5,
                   textAlignVertical: TextAlignVertical.top,
                   style: GoogleFonts.outfit(
                     fontSize: 16.sp,
@@ -442,7 +443,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                     hintStyle: GoogleFonts.outfit(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.w500,
-                      color: Color.fromARGB(153, 41, 41, 51),
+                      color: const Color.fromARGB(153, 41, 41, 51),
                       letterSpacing: -0.3,
                     ),
                   ),
@@ -452,7 +453,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
               Text(
                 "Priority",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: const Color(0xFF101C16),
                   letterSpacing: -0.3,
@@ -522,7 +523,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                                   Text(
                                     "JPG, PNG or PDF · Max 10 MB",
                                     style: GoogleFonts.outfit(
-                                      fontSize: 15.sp,
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.w500,
                                       color: Color.fromARGB(153, 42, 41, 51),
                                       letterSpacing: -0.2,
@@ -650,7 +651,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
         borderRadius: BorderRadius.circular(4.r),
         border: Border.all(color: const Color(0xFF101C16), width: 1.w),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      padding: EdgeInsets.only(left: 15.w, right: 25.w),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,
@@ -658,7 +659,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
           hint: Text(
             hint,
             style: GoogleFonts.outfit(
-              fontSize: 15.sp,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w500,
               color: Color.fromARGB(153, 42, 41, 51),
               letterSpacing: -0.3,
@@ -724,7 +725,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                 child: Text(
                   priorities[index],
                   style: GoogleFonts.outfit(
-                    fontSize: 15.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
                     color: isSelected
                         ? Color(0xFF2A2933)

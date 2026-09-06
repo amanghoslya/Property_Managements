@@ -93,7 +93,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                   Text(
                     "Add Tenant",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -103,7 +103,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                   Text(
                     "Add tenant details for your property",
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -163,7 +163,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             letterSpacing: -0.2,
                           ),
                         ),
@@ -184,7 +184,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                       style: GoogleFonts.outfit(
                         fontWeight: FontWeight.w500,
                         color: Color(0xffAE8130),
-                        fontSize: 16.sp,
+                        fontSize: 15.sp,
                         letterSpacing: -0.2,
                       ),
                     ),
@@ -197,7 +197,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -246,7 +246,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -269,7 +269,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                           Text(
                             "Move-in Date",
                             style: GoogleFonts.inter(
-                              fontSize: 18.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.heading,
                               letterSpacing: -0.2,
@@ -295,7 +295,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                               child: Text(
                                 formatDate(moveInDate),
                                 style: GoogleFonts.inter(
-                                  fontSize: 18.sp,
+                                  fontSize: 17.sp,
                                   fontWeight: FontWeight.w400,
                                   color: moveInDate == null
                                       ? const Color(0xff8C8C8C)
@@ -317,7 +317,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                           Text(
                             "Expected Move-out",
                             style: GoogleFonts.inter(
-                              fontSize: 18.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.heading,
                               letterSpacing: -0.2,
@@ -345,7 +345,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                                 formatDate(moveOutDate),
 
                                 style: GoogleFonts.inter(
-                                  fontSize: 18.sp,
+                                  fontSize: 17.sp,
                                   fontWeight: FontWeight.w400,
                                   color: moveOutDate == null
                                       ? const Color(0xff8C8C8C)
@@ -364,7 +364,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
               Text(
                 "Rental Details",
                 style: GoogleFonts.inter(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.2,
@@ -413,7 +413,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                   child: Text(
                     "Save Tenant",
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                       letterSpacing: -0.2,
@@ -437,7 +437,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                   child: Text(
                     "Cancel",
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
                       letterSpacing: -0.2,

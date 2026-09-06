@@ -54,7 +54,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
                   Text(
                     "Property Performance",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -123,7 +123,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             letterSpacing: -0.2,
                           ),
                         ),
@@ -153,7 +153,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
                         style: GoogleFonts.outfit(
                           fontWeight: FontWeight.w500,
                           color: AppColors.heading,
-                          fontSize: 18.sp,
+                          fontSize: 17.sp,
                           letterSpacing: -0.2,
                         ),
                       ),
@@ -171,7 +171,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: Colors.black,
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -181,7 +181,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 16.sp,
+                      fontSize: 15.sp,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -230,7 +230,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: Colors.black,
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -275,7 +275,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: Colors.black,
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -285,7 +285,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
-                      fontSize: 16.sp,
+                      fontSize: 15.sp,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -307,7 +307,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
                         Text(
                           "Property Score",
                           style: GoogleFonts.outfit(
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF101C16),
                           ),
@@ -315,7 +315,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
                         Text(
                           "+8% improvement",
                           style: GoogleFonts.outfit(
-                            fontSize: 16.sp,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF101C16),
                           ),
@@ -371,7 +371,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
                     Text(
                       "Area to Improve",
                       style: GoogleFonts.outfit(
-                        fontSize: 16.sp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w700,
                         color: const Color(0xFF101C16),
                         letterSpacing: -0.2,
@@ -411,7 +411,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
           Text(
             "Overall Property Score",
             style: GoogleFonts.outfit(
-              fontSize: 18.sp,
+              fontSize: 17.sp,
               fontWeight: FontWeight.w500,
               color: const Color(0xFF101C16),
               letterSpacing: -0.2,
@@ -453,7 +453,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
                     Text(
                       "/100",
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w400,
                         color: const Color(0xFF101C16),
                       ),
@@ -474,7 +474,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
             child: Text(
               "Good Performance",
               style: GoogleFonts.outfit(
-                fontSize: 18.sp,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.w400,
                 color: const Color(0xFF101C16),
               ),
@@ -486,7 +486,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
           Text(
             "Last updated: 18 Aug 2026",
             style: GoogleFonts.outfit(
-              fontSize: 16.sp,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w500,
               color: Color(0xff2A2933),
             ),
@@ -566,7 +566,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
           Text(
             title,
             style: GoogleFonts.outfit(
-              fontSize: 18.sp,
+              fontSize: 17.sp,
               fontWeight: FontWeight.w500,
               color: const Color(0xFF101C16),
               letterSpacing: -0.2,
@@ -578,7 +578,7 @@ class _PropertyPerformanceScreenState extends State<PropertyPerformanceScreen> {
           Text(
             value,
             style: GoogleFonts.outfit(
-              fontSize: 18.sp,
+              fontSize: 17.sp,
               fontWeight: FontWeight.w500,
               color: const Color(0xFF101C16),
             ),

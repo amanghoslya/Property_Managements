@@ -64,7 +64,7 @@ class _AuditreprotScreenState extends State<AuditreprotScreen> {
                   Text(
                     "AUDIT REPORT HISTORY",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,

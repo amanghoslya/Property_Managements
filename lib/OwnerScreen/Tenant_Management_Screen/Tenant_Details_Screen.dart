@@ -54,7 +54,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                   Text(
                     "TENANT DETAILS",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -64,7 +64,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                   Text(
                     "View tenant and occupancy information",
                     style: GoogleFonts.outfit(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -101,7 +101,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                     Text(
                       "Arjun Kapoor",
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w700,
                         color: Color(0xFF000000),
                         letterSpacing: -0.3,
@@ -133,7 +133,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                       child: Text(
                         "Active Tenant",
                         style: GoogleFonts.outfit(
-                          fontSize: 15.sp,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: Color(0xFF000000),
                           letterSpacing: -0.3,
@@ -148,7 +148,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                 "Tenant Information",
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   color: AppColors.heading,
                   letterSpacing: -0.2,
                 ),
@@ -177,7 +177,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                 "Property Details",
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   color: AppColors.heading,
                   letterSpacing: -0.2,
                 ),
@@ -218,7 +218,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                             Text(
                               "Apartment A-204",
                               style: GoogleFonts.outfit(
-                                fontSize: 18.sp,
+                                fontSize: 17.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xFF101C16),
                                 letterSpacing: -0.2,
@@ -273,7 +273,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                           child: Text(
                             "Apartment",
                             style: GoogleFonts.outfit(
-                              fontSize: 18.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF101C16),
                               letterSpacing: -0.2,
@@ -284,7 +284,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                           child: Text(
                             "A-204",
                             style: GoogleFonts.outfit(
-                              fontSize: 18.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF101C16),
                               letterSpacing: -0.2,
@@ -328,7 +328,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                           child: Text(
                             "2nd Floor",
                             style: GoogleFonts.outfit(
-                              fontSize: 18.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF101C16),
                               letterSpacing: -0.2,
@@ -339,7 +339,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                           child: Text(
                             "Tenant",
                             style: GoogleFonts.outfit(
-                              fontSize: 18.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF101C16),
                               letterSpacing: -0.2,
@@ -354,16 +354,19 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
               SizedBox(height: 16.h),
               GestureDetector(
                 onTap: () {
-                   Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) => UtilitypaymentStatus(),
-                        ),
-                      );
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => UtilitypaymentStatus(),
+                    ),
+                  );
                 },
                 child: Container(
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 10.h,
+                  ),
                   decoration: BoxDecoration(
                     border: Border.all(color: AppColors.heading, width: 1),
                     borderRadius: BorderRadius.circular(9.r),
@@ -386,9 +389,9 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                               color: AppColors.heading,
                             ),
                           ),
-                
+
                           SizedBox(width: 10.w),
-                
+
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -396,7 +399,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                                 Text(
                                   "Utility Payment Status",
                                   style: GoogleFonts.outfit(
-                                    fontSize: 18.sp,
+                                    fontSize: 17.sp,
                                     fontWeight: FontWeight.w500,
                                     color: const Color(0xFF101C16),
                                   ),
@@ -404,7 +407,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                                 Text(
                                   "Current utility payment overview",
                                   style: GoogleFonts.outfit(
-                                    fontSize: 16.sp,
+                                    fontSize: 15.sp,
                                     fontWeight: FontWeight.w500,
                                     color: AppColors.heading,
                                   ),
@@ -412,7 +415,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                               ],
                             ),
                           ),
-                
+
                           Container(
                             padding: EdgeInsets.symmetric(
                               horizontal: 13.w,
@@ -425,14 +428,14 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                             child: Text(
                               "Paid",
                               style: GoogleFonts.outfit(
-                                fontSize: 15.sp,
+                                fontSize: 14.sp,
                                 color: const Color(0xFF101C16),
                               ),
                             ),
                           ),
                         ],
                       ),
-                
+
                       SizedBox(height: 10.h),
                       Divider(
                         height: 1,
@@ -440,7 +443,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                         color: const Color(0xFF999999),
                       ),
                       SizedBox(height: 8.h),
-                
+
                       _utilityRow(
                         icon: Icons.bolt,
                         title: "Electricity",
@@ -459,7 +462,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                         status: "Unpaid",
                         amount: "₹600",
                       ),
-                
+
                       SizedBox(height: 7.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -471,25 +474,25 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                               Text(
                                 "Total Outstanding",
                                 style: GoogleFonts.outfit(
-                                  fontSize: 16.sp,
+                                  fontSize: 15.sp,
                                   color: Color.fromRGBO(42, 41, 51, 0.6),
                                 ),
                               ),
                               Text(
                                 "₹600",
                                 style: GoogleFonts.outfit(
-                                  fontSize: 16.sp,
+                                  fontSize: 15.sp,
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF101C16),
                                 ),
                               ),
                             ],
                           ),
-                
+
                           Text(
                             "View Details →",
                             style: GoogleFonts.outfit(
-                              fontSize: 16.sp,
+                              fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFF101C16),
                             ),
@@ -504,7 +507,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
               Text(
                 "Contact Information",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
                   letterSpacing: -0.2,
@@ -555,7 +558,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                           Text(
                             "+91 98XXXXXX42",
                             style: GoogleFonts.outfit(
-                              fontSize: 18.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.heading,
                               letterSpacing: -0.2,
@@ -571,7 +574,6 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                     child: Container(
                       padding: EdgeInsets.all(16.w),
                       decoration: BoxDecoration(
-                        color: const Color(0xffFFFCEF),
                         border: Border.all(color: AppColors.heading),
                         borderRadius: BorderRadius.circular(12.r),
                       ),
@@ -606,7 +608,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
                           Text(
                             "arjun@example.com",
                             style: GoogleFonts.outfit(
-                              fontSize: 18.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.heading,
                               letterSpacing: -0.2,
@@ -622,7 +624,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
               Text(
                 "Additional Information",
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
                   letterSpacing: -0.2,
@@ -744,7 +746,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
             child: Text(
               title,
               style: GoogleFonts.outfit(
-                fontSize: 18.sp,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.w500,
                 color: const Color(0xFF101C16),
               ),
@@ -757,7 +759,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
               Text(
                 status,
                 style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: const Color(0xFF101C16),
                 ),
@@ -765,7 +767,7 @@ class _TenantDetailsScreenState extends State<TenantDetailsScreen> {
               Text(
                 amount,
                 style: GoogleFonts.outfit(
-                  fontSize: 16.sp,
+                  fontSize: 15.sp,
                   color: Color.fromRGBO(42, 41, 51, 0.6),
                   fontWeight: FontWeight.w500,
                   letterSpacing: -0.2,

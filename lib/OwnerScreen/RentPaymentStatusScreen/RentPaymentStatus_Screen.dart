@@ -53,7 +53,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                   Text(
                     "RENT PAYMENT STATUS",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -98,7 +98,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w500,
                             color: AppColors.heading,
-                            fontSize: 18.sp,
+                            fontSize: 17.sp,
                             letterSpacing: -0.2,
                           ),
                         ),
@@ -128,7 +128,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                         style: GoogleFonts.outfit(
                           fontWeight: FontWeight.w500,
                           color: AppColors.heading,
-                          fontSize: 18.sp,
+                          fontSize: 17.sp,
                           letterSpacing: -0.2,
                         ),
                       ),
@@ -150,7 +150,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                     Text(
                       "Total Outstanding Utility Charges",
                       style: GoogleFonts.outfit(
-                        fontSize: 16.sp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF101C16),
                         letterSpacing: -0.2,
@@ -162,7 +162,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                     Text(
                       "₹3,240",
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF101C16),
                         letterSpacing: -0.2,
@@ -174,7 +174,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                     Text(
                       "Current unpaid utility charges",
                       style: GoogleFonts.outfit(
-                        fontSize: 16.sp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w400,
                         color: const Color(0xFF101C16),
                         letterSpacing: -0.2,
@@ -211,7 +211,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w500,
                   color: AppColors.heading,
-                  fontSize: 18.sp,
+                  fontSize: 17.sp,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -321,7 +321,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
           Text(
             value,
             style: GoogleFonts.outfit(
-              fontSize: 18.sp,
+              fontSize: 17.sp,
               fontWeight: FontWeight.w500,
               color: const Color(0xFF101C16),
             ),
@@ -366,7 +366,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                     Text(
                       title,
                       style: GoogleFonts.outfit(
-                        fontSize: 19.sp,
+                        fontSize: 17.sp,
                         color: const Color(0xFF101C16),
                       ),
                     ),
@@ -460,7 +460,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                     Text(
                       month,
                       style: GoogleFonts.outfit(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF101C16),
                         letterSpacing: -0.2,

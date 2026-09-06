@@ -54,7 +54,7 @@ class _MaintenancehistoryScreenState extends State<MaintenancehistoryScreen> {
                   Text(
                     "Maintenance History",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
@@ -64,7 +64,7 @@ class _MaintenancehistoryScreenState extends State<MaintenancehistoryScreen> {
                   Text(
                     "View previous and current maintenance activities",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -98,7 +98,7 @@ class _MaintenancehistoryScreenState extends State<MaintenancehistoryScreen> {
                             Text(
                               "Apartment A-204",
                               style: GoogleFonts.outfit(
-                                fontSize: 18.sp,
+                                fontSize: 17.sp,
                                 fontWeight: FontWeight.w500,
                                 color: const Color(0xff292832),
                                 letterSpacing: -0.64,
@@ -130,7 +130,7 @@ class _MaintenancehistoryScreenState extends State<MaintenancehistoryScreen> {
                             child: Text(
                               "Active",
                               style: GoogleFonts.outfit(
-                                fontSize: 17.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w500,
                                 color: const Color(0xff292832),
                                 letterSpacing: -0.64,
@@ -169,7 +169,7 @@ class _MaintenancehistoryScreenState extends State<MaintenancehistoryScreen> {
                                 Text(
                                   "12",
                                   style: GoogleFonts.outfit(
-                                    fontSize: 18.sp,
+                                    fontSize: 17.sp,
                                     fontWeight: FontWeight.w500,
                                     color: AppColors.heading,
                                     letterSpacing: -0.24,
@@ -206,7 +206,7 @@ class _MaintenancehistoryScreenState extends State<MaintenancehistoryScreen> {
                                 Text(
                                   "12",
                                   style: GoogleFonts.outfit(
-                                    fontSize: 18.sp,
+                                    fontSize: 17.sp,
                                     fontWeight: FontWeight.w500,
                                     color: AppColors.heading,
                                     letterSpacing: -0.24,
@@ -227,7 +227,7 @@ class _MaintenancehistoryScreenState extends State<MaintenancehistoryScreen> {
                   Text(
                     "Maintenance Records",
                     style: GoogleFonts.outfit(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.heading,
                       letterSpacing: -0.24,
@@ -237,10 +237,10 @@ class _MaintenancehistoryScreenState extends State<MaintenancehistoryScreen> {
                   Text(
                     "Filter ▾",
                     style: GoogleFonts.outfit(
-                      fontSize: 16.sp,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w700,
                       color: AppColors.heading,
-                      letterSpacing: -0.24,
+                      letterSpacing: -0.2,
                     ),
                   ),
                 ],
@@ -289,7 +289,7 @@ class _MaintenancehistoryScreenState extends State<MaintenancehistoryScreen> {
                                   Text(
                                     "AC Servicing",
                                     style: GoogleFonts.outfit(
-                                      fontSize: 18.sp,
+                                      fontSize: 17.sp,
                                       fontWeight: FontWeight.w500,
                                       color: AppColors.heading,
                                       letterSpacing: -0.2,
@@ -327,7 +327,7 @@ class _MaintenancehistoryScreenState extends State<MaintenancehistoryScreen> {
                                 "Completed",
                                 style: GoogleFonts.outfit(
                                   fontSize: 14.sp,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w500,
                                   color: AppColors.heading,
                                   letterSpacing: -0.2,
                                 ),
@@ -406,7 +406,7 @@ class _MaintenancehistoryScreenState extends State<MaintenancehistoryScreen> {
                             child: Text(
                               "View Maintenance Details →",
                               style: GoogleFonts.outfit(
-                                fontSize: 15.sp,
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                                 letterSpacing: -0.2,
@@ -445,7 +445,7 @@ class _MaintenancehistoryScreenState extends State<MaintenancehistoryScreen> {
         Text(
           value,
           style: GoogleFonts.inter(
-            fontSize: 18.sp,
+            fontSize: 17.sp,
             fontWeight: FontWeight.w500,
             color: AppColors.heading,
             letterSpacing: -0.2,

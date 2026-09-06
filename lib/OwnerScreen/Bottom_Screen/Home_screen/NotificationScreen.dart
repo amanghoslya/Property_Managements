@@ -199,7 +199,7 @@ class _NotificationscreenState extends State<Notificationscreen> {
                         ),
                       ),
 
-                      SizedBox(width: 27.w),
+                      SizedBox(width: 20.w),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,8 +237,7 @@ class _NotificationscreenState extends State<Notificationscreen> {
 
                             SizedBox(height: 5.h),
                             Text(
-                              "Your monthly maintenance charge is pending. Please contact the "
-                              "administration for payment details.",
+                              "Your monthly maintenance charge is pending. Please contact the administration for payment details.",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.outfit(
