@@ -335,46 +335,49 @@ class _PropertyScreenState extends State<PropertyScreen> {
                   );
                 },
                 child: Container(
-                  padding: EdgeInsets.only(
-                    left: 10.w,
-                    top: 15.h,
-                    bottom: 15.w,
-                    right: 10.w,
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 15.h,
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.r),
                     border: Border.all(color: AppColors.heading),
                   ),
-                  child: Center(
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 42.h,
-                          width: 42.w,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.heading,
-                              width: 1.5,
-                            ),
-                            shape: BoxShape.circle,
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 42.h,
+                        width: 42.w,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: AppColors.heading,
+                            width: 1.5,
                           ),
-                          child: Center(
-                            child: Text(
-                              "86",
-                              style: GoogleFonts.outfit(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.heading,
-                                fontSize: 18.sp,
-                              ),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            "86",
+                            style: GoogleFonts.outfit(
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.heading,
+                              fontSize: 18.sp,
                             ),
                           ),
                         ),
-                        SizedBox(width: 8.w),
-                        Column(
+                      ),
+
+                      SizedBox(width: 8.w),
+
+                      Expanded(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Property Score",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.outfit(
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.heading,
@@ -382,19 +385,24 @@ class _PropertyScreenState extends State<PropertyScreen> {
                                 letterSpacing: -0.34,
                               ),
                             ),
+
+                            SizedBox(height: 2.h),
+
                             Text(
-                              "Overall property performance based on maintenance,\n cleanliness, security and inspections.",
+                              "Overall property performance based on maintenance, cleanliness, security and inspections.",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.outfit(
                                 fontWeight: FontWeight.w500,
-                                color: Color.fromRGBO(42, 41, 51, 0.6),
+                                color: const Color.fromRGBO(42, 41, 51, 0.6),
                                 fontSize: 14.sp,
                                 letterSpacing: -0.34,
                               ),
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
