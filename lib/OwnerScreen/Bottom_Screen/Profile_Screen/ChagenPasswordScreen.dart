@@ -113,7 +113,7 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
                       ),
                       child: Center(
                         child: SvgPicture.asset(
-                          "assets/SvgImage/lockicon.svg",
+                          "assets/SvgImage/lock.svg",
                           width: 20.w,
                           height: 20.h,
                         ),

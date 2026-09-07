@@ -391,7 +391,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Divider(color: Color.fromRGBO(42, 41, 51, 0.6)),
                     _accountSettingTab(
-                      image: "assets/SvgImage/lockicon.svg",
+                      image: "assets/SvgImage/lock.svg",
                       name: "Security & Password",
                       title: "Manage password and account security",
                       callback: () {
