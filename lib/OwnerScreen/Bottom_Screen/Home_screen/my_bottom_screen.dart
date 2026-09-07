@@ -11,6 +11,7 @@ import 'package:property_care/OwnerScreen/Bottom_Screen/Property_Screen/property
 import 'package:property_care/OwnerScreen/MaintenancePaymentStatusScreen/Maintenance_Payment_Status.dart';
 import 'package:property_care/OwnerScreen/ServiceRequest_Screen/Service_Request_Screen.dart';
 import 'package:property_care/core/constant/appColor.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 class MyBottomScreen extends StatefulWidget {
   const MyBottomScreen({super.key});
@@ -60,27 +61,28 @@ class _MyBottomScreenState extends State<MyBottomScreen> {
               children: [
                 _bottomItem(
                   index: 0,
-                  image: "assets/bottam_img.png",
+                  image: "assets/SvgImage/bottom.svg",
                   title: "Home",
                 ),
                 _bottomItem(
                   index: 1,
-                  image: "assets/bottom_img2.png",
+                  image: "assets/SvgImage/bottom2.svg",
                   title: "Property",
                 ),
                 _bottomItem(
                   index: 2,
-                  image: "assets/bottom_img3.png",
+                  image: "assets/SvgImage/bottom3.svg",
                   title: "Complaints",
                 ),
+                SizedBox(width: 7.w),
                 _bottomItem(
                   index: 3,
-                  image: "assets/bottom_img4.png",
+                  image: "assets/SvgImage/bottom4.svg",
                   title: "Documents",
                 ),
                 _bottomItem(
                   index: 4,
-                  image: "assets/bottom_img5.png",
+                  image: "assets/SvgImage/bottom5.svg",
                   title: "Profile",
                 ),
               ],
@@ -112,7 +114,7 @@ class _MyBottomScreenState extends State<MyBottomScreen> {
               AnimatedScale(
                 scale: isSelected ? 1.08 : 1.0,
                 duration: const Duration(milliseconds: 200),
-                child: Image.asset(
+                child: SvgPicture.asset(
                   image,
                   color: isSelected
                       ? const Color(0xff101C16)
@@ -127,7 +129,7 @@ class _MyBottomScreenState extends State<MyBottomScreen> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.outfit(
-                  fontSize: 17.sp,
+                  fontSize: 16.sp,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                   color: isSelected
                       ? Color(0xFF17221D)
@@ -629,7 +631,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Current Care Package",
+                            "Current Package",
                             style: GoogleFonts.outfit(
                               fontWeight: FontWeight.w500,
                               fontSize: 14.sp,
@@ -1150,7 +1152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Image.asset(
                           "assets/vector_img.png",
                           width: double.infinity,
-                          height: 182.h,
+                          height: 190.h,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -1214,7 +1216,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       Positioned(
                         left: 19.w,
-                        bottom: 30.h,
+                        bottom: 25.h,
                         child: Row(
                           children: [
                             Container(
@@ -1244,6 +1246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontSize: 17.sp,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.white,
+                                letterSpacing: -0.2,
                               ),
                             ),
                           ],
@@ -1285,7 +1288,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Positioned(
                         left: 15.w,
-                        top: 16.h,
+                        top: 20.h,
                         child: Row(
                           children: [
                             Container(
@@ -1328,25 +1331,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
                             color: Colors.white,
-                            letterSpacing: -0.54,
+                            letterSpacing: -0.3,
                           ),
                         ),
                       ),
                       Positioned(
                         left: 15.w,
-                        top: 70.h,
+                        top: 75.h,
                         child: Text(
                           "Latest Property Audit",
                           style: GoogleFonts.outfit(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                             color: Color.fromRGBO(255, 255, 255, 0.6),
+                            letterSpacing: -0.2,
                           ),
                         ),
                       ),
                       Positioned(
                         left: 15.w,
-                        top: 93.h,
+                        top: 100.h,
                         child: Row(
                           children: [
                             Container(
@@ -1379,7 +1383,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.white,
-                                height: 1.15,
+                                letterSpacing: -0.2,
                               ),
                             ),
                           ],
@@ -1405,6 +1409,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: GoogleFonts.outfit(
                                   fontSize: 14.sp,
                                   color: Colors.white.withOpacity(0.65),
+                                  letterSpacing: -0.2,
                                 ),
                               ),
                               TextSpan(
@@ -1413,6 +1418,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white,
+                                  letterSpacing: -0.2,
                                 ),
                               ),
                             ],
@@ -1428,6 +1434,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: const Color(0xffD4B800),
+                            letterSpacing: -0.2,
                           ),
                         ),
                       ),
@@ -1478,6 +1485,7 @@ class _HomeScreenState extends State<HomeScreen> {
             fontSize: 16.sp,
             fontWeight: FontWeight.w500,
             color: Colors.white,
+            letterSpacing: -0.2,
           ),
         ),
         SizedBox(height: 2.h),
@@ -1487,6 +1495,7 @@ class _HomeScreenState extends State<HomeScreen> {
             fontSize: 14.sp,
             fontWeight: FontWeight.w400,
             color: Colors.white,
+            letterSpacing: -0.2,
           ),
         ),
       ],

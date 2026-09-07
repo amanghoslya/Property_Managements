@@ -462,43 +462,48 @@ class _AipropertyAssistantScreenState extends State<AipropertyAssistantScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: SizedBox(
-                      height: 35.h,
-                      child: TextField(
-                        cursorHeight: 18.h,
-                        cursorColor: AppColors.heading,
-                        cursorWidth: 1.5.w,
-                        controller: messageController,
-                        textInputAction: TextInputAction.send,
-                        onSubmitted: (_) {
-                          sendMessage();
-                        },
-                        decoration: InputDecoration(
-                          isDense: true,
+                    child: TextField(
+                      controller: messageController,
 
-                          hintText: "Ask about your property...",
-                          hintStyle: GoogleFonts.outfit(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500,
-                            color: const Color.fromRGBO(16, 28, 22, 0.6),
-                          ),
+                      // Text ko vertically center rakhega
+                      textAlignVertical: TextAlignVertical.center,
 
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.r),
-                            borderSide: BorderSide(color: AppColors.heading),
-                          ),
+                      cursorHeight: 23.h,
+                      cursorColor: AppColors.heading,
+                      cursorWidth: 1.5.w,
 
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.r),
-                            borderSide: const BorderSide(
-                              color: Color.fromRGBO(16, 28, 22, 0.6),
-                            ),
-                          ),
+                      textInputAction: TextInputAction.send,
 
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 10.w,
-                            vertical: 6.h,
+                      onSubmitted: (_) {
+                        sendMessage();
+                      },
+
+                      decoration: InputDecoration(
+                        isDense: true,
+
+                        hintText: "Ask about your property...",
+                        hintStyle: GoogleFonts.outfit(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500,
+                          color: const Color.fromRGBO(16, 28, 22, 0.6),
+                        ),
+
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.r),
+                          borderSide: BorderSide(color: AppColors.heading),
+                        ),
+
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.r),
+                          borderSide: const BorderSide(
+                            color: Color.fromRGBO(16, 28, 22, 0.6),
                           ),
+                        ),
+
+                        // Important
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
+                          vertical: 10.h,
                         ),
                       ),
                     ),
@@ -509,7 +514,7 @@ class _AipropertyAssistantScreenState extends State<AipropertyAssistantScreen> {
                   GestureDetector(
                     onTap: sendMessage,
                     child: Container(
-                      height: 35.h,
+                      height: 47.h,
                       width: 60.w,
                       decoration: BoxDecoration(
                         color: const Color(0xFF10201A),

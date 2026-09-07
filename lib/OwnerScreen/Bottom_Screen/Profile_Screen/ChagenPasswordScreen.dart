@@ -85,77 +85,100 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
             children: [
               SizedBox(height: 20.h),
               Container(
+                width: double.infinity,
                 padding: EdgeInsets.symmetric(
                   horizontal: 10.w,
                   vertical: 8.5.h,
                 ),
-                width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4.r),
-                  border: Border.all(color: Color(0xFF000000), width: 1.w),
+                  border: Border.all(
+                    color: const Color(0xFF000000),
+                    width: 1.w,
+                  ),
                 ),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    // Lock Icon
                     Container(
                       width: 37.w,
                       height: 37.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(3.r),
                         border: Border.all(
-                          color: Color(0xFF000000),
+                          color: const Color(0xFF000000),
                           width: 1.w,
                         ),
                       ),
                       child: Center(
-                        child: SvgPicture.asset("assets/SvgImage/lockicon.svg"),
+                        child: SvgPicture.asset(
+                          "assets/SvgImage/lockicon.svg",
+                          width: 20.w,
+                          height: 20.h,
+                        ),
                       ),
                     ),
+
                     SizedBox(width: 11.w),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Security & Password",
-                          style: GoogleFonts.outfit(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF000000),
-                            letterSpacing: -0.2,
+
+                    // Text Area
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Security & Password",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.outfit(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF000000),
+                              letterSpacing: -0.2,
+                            ),
                           ),
-                        ),
-                        Text(
-                          "Manage password and account security",
-                          style: GoogleFonts.outfit(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(0, 0, 0, 0.7),
-                            letterSpacing: -0.3,
+
+                          SizedBox(height: 2.h),
+
+                          Text(
+                            "Manage password and account security",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.outfit(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                              color: const Color.fromRGBO(0, 0, 0, 0.7),
+                              letterSpacing: -0.3,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    Spacer(),
+
+                    SizedBox(width: 8.w),
+
+                    // Secure Button
                     Container(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
+                        horizontal: 12.w,
                         vertical: 6.h,
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.r),
                         border: Border.all(
-                          color: Color(0xFF000000),
+                          color: const Color(0xFF000000),
                           width: 1.w,
                         ),
                       ),
-                      child: Center(
-                        child: Text(
-                          "Secure",
-                          style: GoogleFonts.outfit(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF000000),
-                            letterSpacing: -0.2,
-                          ),
+                      child: Text(
+                        "Secure",
+                        style: GoogleFonts.outfit(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF000000),
+                          letterSpacing: -0.2,
                         ),
                       ),
                     ),

@@ -104,361 +104,273 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 16.h),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 10.w,
-                      vertical: 12.h,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.heading),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "04",
-                          style: GoogleFonts.outfit(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.heading,
-                            letterSpacing: -0.24,
-                          ),
-                        ),
-                        SizedBox(height: 6.h),
-                        Text(
-                          "TOTAL REQUES",
-                          style: GoogleFonts.outfit(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(42, 41, 51, 0.6),
-                            letterSpacing: -0.24,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10.w),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 10.w,
-                      vertical: 12.h,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.heading),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "02",
-                          style: GoogleFonts.outfit(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.heading,
-                            letterSpacing: -0.24,
-                          ),
-                        ),
-                        SizedBox(height: 6.h),
-                        Text(
-                          "IN PROGRESS",
-                          style: GoogleFonts.outfit(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(42, 41, 51, 0.6),
-                            letterSpacing: -0.24,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10.w),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 10.w,
-                      vertical: 12.h,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.heading),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "01",
-                          style: GoogleFonts.outfit(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.heading,
-                            letterSpacing: -0.24,
-                          ),
-                        ),
-                        SizedBox(height: 6.h),
-                        Text(
-                          "COMPLETED",
-                          style: GoogleFonts.outfit(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(42, 41, 51, 0.6),
-                            letterSpacing: -0.24,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 16.h),
-            Container(
-              height: 55.h,
-              width: double.infinity,
-              padding: EdgeInsets.only(left: 16.w, right: 10.w),
-              decoration: BoxDecoration(
-                color: const Color(0xffFFFDF2),
-                borderRadius: BorderRadius.circular(8.r),
-                border: Border.all(color: Color(0xff101C16), width: 1),
-              ),
-              child: Row(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 16.h),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
-                    Icons.search,
-                    size: 25.sp,
-                    color: const Color(0xff8B8D8B),
+                  Expanded(
+                    child: _requestCountBox(
+                      count: "04",
+                      title: "TOTAL REQUEST",
+                    ),
                   ),
 
                   SizedBox(width: 10.w),
 
                   Expanded(
-                    child: TextField(
-                      textAlignVertical: TextAlignVertical.center,
-                      decoration: InputDecoration(
-                        hintText: "Search documents...",
-                        hintStyle: GoogleFonts.outfit(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w400,
-                          color: const Color(0xff8B8D8B),
-                        ),
-                        border: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        isDense: true,
-                        contentPadding: EdgeInsets.zero,
-                      ),
-                    ),
+                    child: _requestCountBox(count: "02", title: "IN PROGRESS"),
+                  ),
+
+                  SizedBox(width: 10.w),
+
+                  Expanded(
+                    child: _requestCountBox(count: "01", title: "COMPLETED"),
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: 20.h),
-            _buildFilters(),
-            SizedBox(height: 20.h),
-            ListView.builder(
-              itemCount: 2,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => ServiceRequestDetails(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 11.w,
-                      vertical: 15.h,
+              SizedBox(height: 16.h),
+              Container(
+                height: 55.h,
+                width: double.infinity,
+                padding: EdgeInsets.only(left: 16.w, right: 10.w),
+                decoration: BoxDecoration(
+                  color: const Color(0xffFFFDF2),
+                  borderRadius: BorderRadius.circular(8.r),
+                  border: Border.all(color: Color(0xff101C16), width: 1),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.search,
+                      size: 25.sp,
+                      color: const Color(0xff8B8D8B),
                     ),
-                    margin: EdgeInsets.only(bottom: 20.h),
-                    decoration: BoxDecoration(
-                      color: const Color(0xffFFFDF0),
-                      border: Border.all(
-                        color: const Color(0xff101C16),
-                        width: 1.2,
-                      ),
-                      borderRadius: BorderRadius.circular(13.r),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 49.w,
-                              height: 51.h,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: const Color(0xff101C16),
-                                  width: 1.1,
-                                ),
-                                borderRadius: BorderRadius.circular(4.r),
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.article_outlined,
-                                  size: 22.sp,
-                                  color: const Color(0xff101C16),
-                                ),
-                              ),
-                            ),
 
-                            SizedBox(width: 14.w),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Bathroom Plumbing Service",
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.outfit(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(0xff101C16),
-                                      letterSpacing: -0.2,
-                                    ),
-                                  ),
+                    SizedBox(width: 10.w),
 
-                                  SizedBox(height: 6.h),
-
-                                  Text(
-                                    "SR-2026-00128",
-                                    style: GoogleFonts.outfit(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color.fromRGBO(16, 28, 22, 0.6),
-                                      letterSpacing: -0.2,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            SizedBox(width: 10.w),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 20.w,
-                                vertical: 5.h,
-                              ),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: const Color(0xff101C16),
-                                ),
-                                borderRadius: BorderRadius.circular(25.r),
-                              ),
-                              alignment: Alignment.center,
-                              child: Text(
-                                "IN PROGRESS",
-                                style: GoogleFonts.outfit(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xff101C16),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 14.h),
-                        Text(
-                          "Plumbing inspection and repair required for bathroom water leakage.",
-                          style: GoogleFonts.outfit(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(16, 28, 22, 0.6),
-                            letterSpacing: -0.2,
+                    Expanded(
+                      child: TextField(
+                        textAlignVertical: TextAlignVertical.center,
+                        decoration: InputDecoration(
+                          hintText: "Search documents...",
+                          hintStyle: GoogleFonts.outfit(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w400,
+                            color: const Color(0xff8B8D8B),
                           ),
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          isDense: true,
+                          contentPadding: EdgeInsets.zero,
                         ),
-                        SizedBox(height: 14.h),
-                        Divider(
-                          height: 1,
-                          thickness: 1,
-                          color: const Color(0xff777970),
-                        ),
-
-                        SizedBox(height: 17.h),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: _infoItem(
-                                title: "Category",
-                                value: "Plumbing",
-                              ),
-                            ),
-
-                            SizedBox(width: 15.w),
-                            Expanded(
-                              child: _infoItem(
-                                title: "Priority",
-                                value: "High",
-                              ),
-                            ),
-                            SizedBox(width: 15.w),
-
-                            Expanded(
-                              child: _infoItem(
-                                title: "Requested",
-                                value: "21 Aug 2026",
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 14.h),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "Updated 2 hrs ago",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.outfit(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromRGBO(16, 28, 22, 0.6),
-                                  letterSpacing: -0.2,
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              child: Text(
-                                "View Details →",
-                                style: GoogleFonts.outfit(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.heading,
-                                  letterSpacing: -0.2,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
-          ],
+                  ],
+                ),
+              ),
+              SizedBox(height: 20.h),
+              _buildFilters(),
+              SizedBox(height: 20.h),
+              ListView.builder(
+                itemCount: 2,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => ServiceRequestDetails(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 11.w,
+                        vertical: 15.h,
+                      ),
+                      margin: EdgeInsets.only(bottom: 20.h),
+                      decoration: BoxDecoration(
+                        color: const Color(0xffFFFDF0),
+                        border: Border.all(
+                          color: const Color(0xff101C16),
+                          width: 1.2,
+                        ),
+                        borderRadius: BorderRadius.circular(13.r),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 36.w,
+                                height: 36.h,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: const Color(0xff101C16),
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(4.r),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.article_outlined,
+                                    size: 22.sp,
+                                    color: const Color(0xff101C16),
+                                  ),
+                                ),
+                              ),
+
+                              SizedBox(width: 10.w),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Bathroom Plumbing Service",
+                                      // maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xff101C16),
+                                        letterSpacing: -0.2,
+                                      ),
+                                    ),
+
+                                    SizedBox(height: 6.h),
+
+                                    Text(
+                                      "SR-2026-00128",
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color.fromRGBO(16, 28, 22, 0.6),
+                                        letterSpacing: -0.2,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              SizedBox(width: 10.w),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                  vertical: 5.h,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: const Color(0xff101C16),
+                                  ),
+                                  borderRadius: BorderRadius.circular(25.r),
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "IN PROGRESS",
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: const Color(0xff101C16),
+                                    letterSpacing: -0.2,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 14.h),
+                          Text(
+                            "Plumbing inspection and repair required for bathroom water leakage.",
+                            style: GoogleFonts.outfit(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromRGBO(16, 28, 22, 0.6),
+                              letterSpacing: -0.2,
+                            ),
+                          ),
+                          SizedBox(height: 14.h),
+                          Divider(
+                            height: 1,
+                            thickness: 1,
+                            color: const Color(0xff777970),
+                          ),
+
+                          SizedBox(height: 17.h),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: _infoItem(
+                                  title: "Category",
+                                  value: "Plumbing",
+                                ),
+                              ),
+
+                              SizedBox(width: 15.w),
+                              Expanded(
+                                child: _infoItem(
+                                  title: "Priority",
+                                  value: "High",
+                                ),
+                              ),
+                              SizedBox(width: 15.w),
+
+                              Expanded(
+                                child: _infoItem(
+                                  title: "Requested",
+                                  value: "21 Aug 2026",
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 14.h),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  "Updated 2 hrs ago",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromRGBO(16, 28, 22, 0.6),
+                                    letterSpacing: -0.2,
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                child: Text(
+                                  "View Details →",
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.heading,
+                                    letterSpacing: -0.2,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -533,6 +445,48 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _requestCountBox({required String count, required String title}) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.heading, width: 1.w),
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            count,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.outfit(
+              fontSize: 17.sp,
+              fontWeight: FontWeight.w500,
+              color: AppColors.heading,
+              letterSpacing: -0.24,
+            ),
+          ),
+
+          SizedBox(height: 6.h),
+
+          Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.outfit(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w400,
+              color: const Color.fromRGBO(42, 41, 51, 0.6),
+              letterSpacing: -0.24,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

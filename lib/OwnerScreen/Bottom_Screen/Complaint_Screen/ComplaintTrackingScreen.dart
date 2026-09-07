@@ -243,8 +243,10 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                     Row(
                       children: [
                         Container(
-                          width: 117.w,
-                          height: 27.h,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12.w,
+                            vertical: 6.w,
+                          ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6.r),
                             border: Border.all(
@@ -280,8 +282,10 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                           ),
                         ),
                         Container(
-                          width: 117.w,
-                          height: 27.h,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12.w,
+                            vertical: 6.w,
+                          ),
                           margin: EdgeInsets.only(left: 5.w),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6.r),

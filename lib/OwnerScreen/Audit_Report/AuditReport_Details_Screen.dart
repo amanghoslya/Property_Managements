@@ -597,7 +597,7 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
           width: 36.w,
           height: 36.h,
           decoration: BoxDecoration(
-            color: Color.fromRGBO(16, 28, 22, 0.2),
+            color: const Color.fromRGBO(16, 28, 22, 0.2),
             borderRadius: BorderRadius.circular(3.r),
           ),
           alignment: Alignment.center,
@@ -613,32 +613,38 @@ class _AuditreportDetailsScreenState extends State<AuditreportDetailsScreen> {
 
         SizedBox(width: 8.w),
 
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: GoogleFonts.outfit(
-                fontSize: 17.sp,
-                fontWeight: FontWeight.w500,
-                color: AppColors.heading,
-                letterSpacing: -0.2,
+        // IMPORTANT: Expanded
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.outfit(
+                  fontSize: 17.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.heading,
+                  letterSpacing: -0.2,
+                ),
               ),
-            ),
 
-            SizedBox(height: 4.h),
-            Text(
-              description,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.outfit(
-                fontSize: 11.sp,
-                fontWeight: FontWeight.w500,
-                color: Color.fromRGBO(42, 41, 51, 0.5),
-                letterSpacing: -0.2,
+              SizedBox(height: 4.h),
+
+              Text(
+                description,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.outfit(
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.w500,
+                  color: const Color.fromRGBO(42, 41, 51, 0.5),
+                  letterSpacing: -0.2,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

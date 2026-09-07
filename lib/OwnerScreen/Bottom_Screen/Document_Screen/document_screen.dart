@@ -158,7 +158,6 @@ class _DocumentScreenState extends State<DocumentScreen> {
                                 letterSpacing: -0.54,
                               ),
                             ),
-                            // SizedBox(height: 5.h),
                             Text(
                               "Documents",
                               style: GoogleFonts.outfit(
@@ -238,7 +237,6 @@ class _DocumentScreenState extends State<DocumentScreen> {
                         },
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 200),
-                          // height: 27.h,
                           padding: EdgeInsets.symmetric(
                             vertical: 5.h,
                             horizontal: 13.w,
@@ -282,7 +280,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w500,
                       color: Color(0xff101C16),
-                      fontSize: 15.sp,
+                      fontSize: 16.sp,
                       letterSpacing: -0.54,
                     ),
                   ),
@@ -319,79 +317,105 @@ class _DocumentScreenState extends State<DocumentScreen> {
                     child: Container(
                       margin: EdgeInsets.only(bottom: 10.h),
                       padding: EdgeInsets.symmetric(
-                        vertical: 13.w,
-                        horizontal: 12,
+                        vertical: 13.h,
+                        horizontal: 12.w,
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6.r),
                         border: Border.all(
-                          color: Color.fromRGBO(16, 28, 22, 0.6),
+                          color: const Color.fromRGBO(16, 28, 22, 0.6),
                         ),
                       ),
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          // Document Icon
                           Container(
                             height: 50.h,
                             width: 50.w,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(3.r),
-                              border: Border.all(color: Color(0xff101C16)),
+                              border: Border.all(
+                                color: const Color(0xff101C16),
+                              ),
                             ),
                             child: Center(
-                              child: Image.asset(
-                                "assets/document1_img.png",
-                                width: 21.w,
-                                height: 21.h,
+                              child: Icon(
+                                Icons.description,
+                                color: AppColors.heading,
+                                size: 20.sp,
                               ),
                             ),
                           ),
-                          SizedBox(width: 5.w),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Property Ownership Document",
-                                style: GoogleFonts.outfit(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 17.sp,
-                                  color: Color(0xff101C16),
-                                  letterSpacing: -0.54,
+
+                          SizedBox(width: 8.w),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "Property Ownership Document",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.outfit(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17.sp,
+                                    color: const Color(0xff101C16),
+                                    letterSpacing: -0.54,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 5.h),
-                              Text(
-                                "PDF · 2.4 MB · 10 Aug 2026",
-                                style: GoogleFonts.outfit(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.sp,
-                                  color: Color.fromRGBO(42, 41, 51, 0.6),
-                                  letterSpacing: -0.24,
+
+                                SizedBox(height: 5.h),
+
+                                Text(
+                                  "PDF · 2.4 MB · 10 Aug 2026",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.outfit(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14.sp,
+                                    color: const Color.fromRGBO(
+                                      42,
+                                      41,
+                                      51,
+                                      0.6,
+                                    ),
+                                    letterSpacing: -0.24,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 5.h),
-                              Text(
-                                "PROPERTY DOCUMENT",
-                                style: GoogleFonts.outfit(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13.sp,
-                                  color: Color(0xff2A2933),
-                                  letterSpacing: -0.24,
+
+                                SizedBox(height: 5.h),
+
+                                Text(
+                                  "PROPERTY DOCUMENT",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.outfit(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13.sp,
+                                    color: const Color(0xff2A2933),
+                                    letterSpacing: -0.24,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Spacer(),
+
+                          SizedBox(width: 8.w),
                           Container(
                             height: 36.w,
                             width: 36.w,
                             decoration: BoxDecoration(
-                              border: Border.all(color: Color(0xff101C16)),
+                              border: Border.all(
+                                color: const Color(0xff101C16),
+                              ),
                               shape: BoxShape.circle,
                             ),
                             child: Center(
                               child: Icon(
                                 Icons.arrow_forward_ios,
-                                color: Color(0xff101C16),
+                                color: const Color(0xff101C16),
                                 size: 17.sp,
                               ),
                             ),

@@ -387,7 +387,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                               style: GoogleFonts.outfit(
                                 fontWeight: FontWeight.w500,
                                 color: Color.fromRGBO(42, 41, 51, 0.6),
-                                fontSize: 15.sp,
+                                fontSize: 14.sp,
                                 letterSpacing: -0.34,
                               ),
                             ),
