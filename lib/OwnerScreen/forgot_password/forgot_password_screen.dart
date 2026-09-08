@@ -25,6 +25,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               width: double.infinity,
               height: 180.h,
               child: Stack(
+                clipBehavior: Clip.none,
                 children: [
                   Positioned(
                     top: 0,

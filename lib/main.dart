@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:property_care/splash_screen.dart';
+import 'core/Utils/key.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -27,6 +29,8 @@ class MyApp extends StatelessWidget {
           child: SafeArea(
             top: false,
             child: MaterialApp(
+              navigatorKey: navigatorKey,
+              scaffoldMessengerKey: snackBarKey,
               debugShowCheckedModeBanner: false,
               title: 'Property Care',
               theme: ThemeData(

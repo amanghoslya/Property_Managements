@@ -29,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
               width: double.infinity,
               height: 170.h,
               child: Stack(
+                clipBehavior: Clip.none,
                 children: [
                   Positioned(
                     top: 0,
@@ -311,6 +312,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       onPressed: () {
+                        
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
