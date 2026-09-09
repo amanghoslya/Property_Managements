@@ -1,24 +1,48 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/my_bottom_screen.dart';
+import 'package:property_care/OwnerScreen/verifyOtp_screen/resetPasswordScreen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
-class VerifyOtpScreen extends StatefulWidget {
-  const VerifyOtpScreen({super.key});
+import '../../core/AuthService/AuthServiceProvider.dart';
+import '../../core/Utils/showMessage.dart';
+
+class VerifyOtpScreen extends ConsumerStatefulWidget {
+  final String email;
+  const VerifyOtpScreen({super.key, required this.email});
 
   @override
-  State<VerifyOtpScreen> createState() => _VerifyOtpScreenState();
+  ConsumerState<VerifyOtpScreen> createState() => _VerifyOtpScreenState();
 }
 
-class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
+class _VerifyOtpScreenState extends ConsumerState<VerifyOtpScreen> {
+  bool isLoading = false;
+  bool isResending = false;
   String otp = "";
   Timer? timer;
   int seconds = 30;
+  final TextEditingController otpController = TextEditingController();
+
+  String getMaskedContact() {
+    final contact = widget.email.trim();
+    // Check if the contact is a phone number (contains digits, optionally starting with +)
+    final isPhone = RegExp(r'^\+?[0-9]+$').hasMatch(contact);
+    if (isPhone && contact.length >= 4) {
+      String firstTwo = contact.substring(0, 2);
+      String lastTwo = contact.substring(contact.length - 2);
+      String mask = List.generate(contact.length - 4, (index) => 'X').join('');
+      return "$firstTwo$mask$lastTwo";
+    }
+    // Return email as is
+    return contact;
+  }
 
   void startTimer() {
     timer?.cancel();
@@ -47,6 +71,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   @override
   void dispose() {
     timer?.cancel();
+    otpController.dispose();
     super.dispose();
   }
 
@@ -149,7 +174,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               ),
             ),
             Text(
-              "+91 98XXXXXX42",
+              getMaskedContact(),
               style: GoogleFonts.outfit(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
@@ -171,6 +196,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 40.w),
               child: Pinput(
+                controller: otpController,
                 length: 6,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 keyboardType: TextInputType.number,
@@ -248,17 +274,39 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
             SizedBox(height: 14.h),
             GestureDetector(
-              onTap: seconds == 0
-                  ? () {
-                      startTimer();
+              onTap: seconds == 0 && !isResending
+                  ? () async {
+                      try {
+                        setState(() {
+                          isResending = true;
+                        });
+                        final service = ref.read(authServiceProvider);
+                        final response = await service.forgotPassword(
+                          email: widget.email,
+                        );
+                        if (response.status == true) {
+                          startTimer();
+                          showSuccessSnackBar("Resend OTP Sucessfull");
+                        }
+                      } catch (e) {
+                        log(e.toString());
+                      } finally {
+                        if (mounted) {
+                          setState(() {
+                            isResending = false;
+                          });
+                        }
+                      }
                     }
                   : null,
               child: Text(
-                "Didn't receive the code? Resend OTP",
+                isResending
+                    ? "Sending OTP..."
+                    : "Didn't receive the code? Resend OTP",
                 style: GoogleFonts.outfit(
                   fontSize: 15.sp,
                   fontWeight: FontWeight.w500,
-                  color: seconds == 0
+                  color: seconds == 0 && !isResending
                       ? const Color(0xff101C16)
                       : const Color(0xff999999),
                 ),
@@ -277,23 +325,70 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => MyBottomScreen(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    "Verify",
-                    style: GoogleFonts.outfit(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14.sp,
-                      color: Color(0xffFFFFFF),
-                      letterSpacing: -0.24,
-                    ),
-                  ),
+
+                  onPressed: isLoading
+                      ? null
+                      : () async {
+                          try {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            final service = ref.read(authServiceProvider);
+                            final response = await service.verifyOTP(
+                              email: widget.email,
+                              otp: otp,
+                            );
+                            if (response.status == true) {
+                              if (context.mounted) {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => ResetPasswordScreen(
+                                      email: widget.email,
+                                    ),
+                                  ),
+                                );
+                              }
+                            } else {
+                              setState(() {
+                                otp = "";
+                                otpController.clear();
+                              });
+                            }
+                          } catch (e) {
+                            log(e.toString());
+                            setState(() {
+                              otp = "";
+                              otpController.clear();
+                            });
+                          } finally {
+                            if (mounted) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                            }
+                          }
+                        },
+                  child: isLoading
+                      ? Center(
+                          child: SizedBox(
+                            width: 20.w,
+                            height: 20.h,
+                            child: CircularProgressIndicator(
+                              color: AppColors.heading,
+                              strokeWidth: 1.5,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          "Verify",
+                          style: GoogleFonts.outfit(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14.sp,
+                            color: Color(0xffFFFFFF),
+                            letterSpacing: -0.24,
+                          ),
+                        ),
                 ),
               ),
             ),

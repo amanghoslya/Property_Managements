@@ -6,18 +6,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:property_care/OwnerScreen/ServiceRequest_Screen/Provider/getServiceProvider.dart';
+import 'package:property_care/core/Utils/showMessage.dart';
 import 'package:property_care/core/constant/appColor.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:property_care/core/AuthService/AuthServiceProvider.dart';
+import 'package:dio/dio.dart';
 
-class CreateServiceRequest extends StatefulWidget {
+class CreateServiceRequest extends ConsumerStatefulWidget {
   const CreateServiceRequest({super.key});
 
   @override
-  State<CreateServiceRequest> createState() => _CreateServiceRequestState();
+  ConsumerState<CreateServiceRequest> createState() =>
+      _CreateServiceRequestState();
 }
 
-class _CreateServiceRequestState extends State<CreateServiceRequest> {
+class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
   int selectedPriority = 1;
   final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+
+  bool isLoading = false;
 
   final List<String> priorities = ["Low", "Medium", "High"];
   int selectedIndex = -1;
@@ -173,7 +182,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
       final int fileSize = await file.length();
       const int maxSize = 10 * 1024 * 1024;
       if (fileSize > maxSize) {
-        _showError("Image size must be less than 10 MB.");
+        showErrorSnackBar("Image size must be less than 10 MB.");
         return;
       }
       setState(() {
@@ -182,7 +191,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
         selectedFileType = "image";
       });
     } catch (e) {
-      _showError("Unable to select image.");
+      showErrorSnackBar("Unable to select image.");
     }
   }
 
@@ -197,14 +206,14 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
       }
       final PlatformFile fileData = result.files.single;
       if (fileData.path == null) {
-        _showError("Unable to select document.");
+        showErrorSnackBar("Unable to select document.");
         return;
       }
       final File file = File(fileData.path!);
       final int fileSize = await file.length();
       const int maxSize = 10 * 1024 * 1024;
       if (fileSize > maxSize) {
-        _showError("Document size must be less than 10 MB.");
+        showErrorSnackBar("Document size must be less than 10 MB.");
         return;
       }
       setState(() {
@@ -213,13 +222,14 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
         selectedFileType = "document";
       });
     } catch (e) {
-      _showError("Unable to select document.");
+      showErrorSnackBar("Unable to select document.");
     }
   }
 
   @override
   void dispose() {
     descriptionController.dispose();
+    titleController.dispose();
     super.dispose();
   }
 
@@ -556,6 +566,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 ),
                 child: Center(
                   child: TextField(
+                    controller: titleController,
                     textAlignVertical: TextAlignVertical.center,
                     decoration: InputDecoration(
                       hintText: "e.g. Bathroom tap repair",
@@ -595,6 +606,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                   border: Border.all(color: const Color(0xff101C16), width: 1),
                 ),
                 child: TextField(
+                  controller: descriptionController,
                   minLines: 5,
                   maxLines: 7,
                   textAlignVertical: TextAlignVertical.top,
@@ -837,12 +849,18 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                                     ),
                                     borderRadius: BorderRadius.circular(5.r),
                                   ),
-                                  child: Icon(
-                                    selectedFileType == "image"
-                                        ? Icons.image_outlined
-                                        : Icons.description_outlined,
-                                    size: 20.sp,
-                                    color: const Color(0xff101C16),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(4.r),
+                                    child: selectedFileType == "image" && selectedFile != null
+                                        ? Image.file(
+                                            selectedFile!,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Icon(
+                                            Icons.description_outlined,
+                                            size: 20.sp,
+                                            color: const Color(0xff101C16),
+                                          ),
                                   ),
                                 ),
                                 SizedBox(width: 10.w),
@@ -887,7 +905,7 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                 width: double.infinity,
                 height: 49.h,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF101C16),
                     foregroundColor: Colors.white,
@@ -896,15 +914,26 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                   ),
-                  child: Text(
-                    "Submit Complaint",
-                    style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                      letterSpacing: -0.2,
-                    ),
-                  ),
+                  child: isLoading
+                      ? Center(
+                          child: SizedBox(
+                            width: 20.w,
+                            height: 20.h,
+                            child: CircularProgressIndicator(
+                              color: AppColors.heading,
+                              strokeWidth: 1.5,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          "Submit Complaint",
+                          style: GoogleFonts.outfit(
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                            letterSpacing: -0.2,
+                          ),
+                        ),
                 ),
               ),
               SizedBox(height: 30.h),
@@ -913,6 +942,82 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
         ),
       ),
     );
+  }
+
+  Future<void> _submitForm() async {
+    if (selectedCategory == null) {
+      showErrorSnackBar("Please select a service category");
+      return;
+    }
+    if (selectedIndex == -1) {
+      showErrorSnackBar("Please select a service type");
+      return;
+    }
+    if (titleController.text.trim().isEmpty) {
+      showErrorSnackBar("Please enter a service title");
+      return;
+    }
+    if (descriptionController.text.trim().isEmpty) {
+      showErrorSnackBar("Please enter service details");
+      return;
+    }
+    if (selectedDate == null) {
+      showErrorSnackBar("Please select a preferred date");
+      return;
+    }
+    if (selectedTime == null) {
+      showErrorSnackBar("Please select a preferred time");
+      return;
+    }
+
+    final servicesList = ["Plumbing", "Electrical", "AC Service", "General"];
+
+    String formattedDate =
+        "${selectedDate!.year}-"
+        "${selectedDate!.month.toString().padLeft(2, '0')}-"
+        "${selectedDate!.day.toString().padLeft(2, '0')}";
+    String formattedTime = selectedTime!.format(context);
+
+    MultipartFile? attachment;
+    if (selectedFile != null) {
+      attachment = await MultipartFile.fromFile(
+        selectedFile!.path,
+        filename: selectedFileName,
+      );
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final service = ref.read(authServiceProvider);
+      await service.createService(
+        serviceCategory: selectedCategory!,
+        serviceType: servicesList[selectedIndex],
+        title: titleController.text.trim(),
+        details: descriptionController.text.trim(),
+        preferredDate: formattedDate,
+        preferredTime: formattedTime,
+        priority: priorities[selectedPriority],
+        attachment: attachment,
+        type: "service_request",
+      );
+      ref.invalidate(
+        getServiceRequestProvider((
+          statusFilter: "",
+          search: "",
+          type: "service_request",
+        )),
+      );
+      Navigator.pop(context);
+    } catch (e) {
+      showErrorSnackBar("Failed to submit request.");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   Widget _buildInfoBox() {
@@ -1052,16 +1157,6 @@ class _CreateServiceRequestState extends State<CreateServiceRequest> {
           ),
         );
       }),
-    );
-  }
-
-  void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message, style: GoogleFonts.outfit(fontSize: 12.sp)),
-        backgroundColor: const Color(0xff101C16),
-        behavior: SnackBarBehavior.floating,
-      ),
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:property_care/OwnerScreen/login_screen.dart';
+import 'package:property_care/core/Utils/showMessage.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
 import '../../core/AuthService/AuthServiceProvider.dart';
@@ -178,6 +179,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     customTextField(
                       controller: mobileController,
                       hintText: "Enter Your Mobile Number ",
+                      keyboardType: TextInputType.phone,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please enter your mobile number";
@@ -256,13 +258,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           icon: Icon(
                             Icons.keyboard_arrow_down,
                             color: const Color(0xFF000000),
-                            size: 24.sp,
+                            size: 20.sp,
                           ),
                           style: GoogleFonts.outfit(
                             fontSize: 15.sp,
                             color: const Color(0xff101C16),
                           ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
+                            isDense: true,
                             hintText: 'Select Flat',
                             hintStyle: GoogleFonts.outfit(
                               fontSize: 13.sp,
@@ -272,7 +276,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             ),
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: 10.w,
-                              vertical: 12.h,
+                              vertical: 10.h,
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(4.r),
@@ -308,11 +312,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                 color: const Color(0xFF000000),
                                 width: 1.w,
                               ),
-                            ),
-                            errorStyle: GoogleFonts.outfit(
-                              fontSize: 12.sp,
-                              color: Colors.red,
-                              letterSpacing: -0.3,
                             ),
                           ),
                           items: data.data?.map((flat) {
@@ -397,6 +396,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                 if (!_formKey.currentState!.validate()) {
                                   return;
                                 }
+                                if (ownerAgreeTerms == false) {
+                                  showErrorSnackBar(
+                                    "Please agree to the terms and conditions",
+                                  );
+                                  return;
+                                }
                                 try {
                                   setState(() {
                                     isLoading = true;
@@ -414,14 +419,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                         .trim(),
                                     role: 'property_owner',
                                   );
-
                                   if (response.status == true) {
+                                    showSuccessSnackBar(
+                                      response.message ?? "Sucess",
+                                    );
                                     if (context.mounted) {
-                                      Navigator.push(
+                                      Navigator.pushAndRemoveUntil(
                                         context,
                                         CupertinoPageRoute(
                                           builder: (context) => LoginScreen(),
                                         ),
+                                        (route) => false,
                                       );
                                     }
                                   }
@@ -565,11 +573,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       obscureText: obscureText,
       keyboardType: keyboardType,
       validator: validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       style: GoogleFonts.outfit(
         fontSize: 15.sp,
         color: const Color(0xff101C16),
+        letterSpacing: -0.2,
       ),
       decoration: InputDecoration(
+        isDense: true,
         hintText: hintText,
         hintStyle: GoogleFonts.outfit(
           fontSize: 13.sp,
@@ -577,7 +588,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           color: Color.fromRGBO(0, 0, 0, 0.6),
           letterSpacing: -0.3,
         ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
         suffixIcon: showVisibilityIcon
             ? InkWell(
                 onTap: onVisibilityTap,
@@ -608,16 +619,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.r),
-          borderSide: BorderSide(color: Color(0xFF000000), width: 1.w),
+          borderSide: BorderSide(color: Colors.red, width: 1.w),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.r),
-          borderSide: BorderSide(color: Color(0xFF000000), width: 1.w),
-        ),
-        errorStyle: GoogleFonts.outfit(
-          fontSize: 12.sp,
-          color: Colors.red,
-          letterSpacing: -0.3,
+          borderSide: BorderSide(color: Colors.red, width: 1.w),
         ),
       ),
     );

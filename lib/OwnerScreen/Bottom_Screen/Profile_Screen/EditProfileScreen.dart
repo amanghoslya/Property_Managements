@@ -1,20 +1,32 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:property_care/OwnerScreen/Bottom_Screen/Profile_Screen/Provider/getProfileProvider.dart';
+import 'package:property_care/core/Utils/showMessage.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
-class Editprofilescreen extends StatefulWidget {
+import '../../../core/AuthService/AuthServiceProvider.dart';
+
+class Editprofilescreen extends ConsumerStatefulWidget {
   const Editprofilescreen({super.key});
 
   @override
-  State<Editprofilescreen> createState() => _EditprofilescreenState();
+  ConsumerState<Editprofilescreen> createState() => _EditprofilescreenState();
 }
 
-class _EditprofilescreenState extends State<Editprofilescreen> {
+class _EditprofilescreenState extends ConsumerState<Editprofilescreen> {
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final accountTypeController = TextEditingController();
+  bool isLoading = false;
   final ImagePicker _picker = ImagePicker();
 
   File? selectedImage;
@@ -68,6 +80,26 @@ class _EditprofilescreenState extends State<Editprofilescreen> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchProfile();
+    });
+  }
+
+  void fetchProfile() async {
+    final data = await ref.read(getProfileProvider);
+    data.whenData((value) {
+      nameController.text = value.data?.name ?? "";
+      emailController.text = value.data?.email ?? "";
+      phoneController.text = value.data?.phone ?? "";
+      accountTypeController.text = value.data?.role ?? "";
+      // selectedImage = value.data?.avatarUrl ?? "";
+    });
   }
 
   @override
@@ -154,11 +186,23 @@ class _EditprofilescreenState extends State<Editprofilescreen> {
                                   height: 80.r,
                                   fit: BoxFit.cover,
                                 )
-                              : Image.asset(
-                                  "assets/profile (2).png",
+                              : Container(
                                   width: 80.r,
                                   height: 80.r,
-                                  fit: BoxFit.cover,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: const Color(0xff101C16),
+                                      width: 1.w,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.person,
+                                      color: AppColors.heading,
+                                      size: 35.sp,
+                                    ),
+                                  ),
                                 ),
                         ),
                         Positioned(
@@ -222,23 +266,33 @@ class _EditprofilescreenState extends State<Editprofilescreen> {
                   children: [
                     _buildTextfield(
                       label: "Full Name",
-                      hintText: "Enter Name",
+                      hintText: "Enter Full Name",
                       keyboardType: TextInputType.name,
+                      controller: nameController,
                     ),
+                    SizedBox(height: 14.h),
                     _buildTextfield(
                       label: "Email Address",
-                      hintText: "juned@example.com",
+                      hintText: "Email Address",
                       keyboardType: TextInputType.emailAddress,
+                      controller: emailController,
+                      isReadOnly: true,
                     ),
+                    SizedBox(height: 14.h),
                     _buildTextfield(
                       label: "Phone Number",
-                      hintText: "+91 98XXXXXX42",
+                      hintText: "Enter Phone Number",
                       keyboardType: TextInputType.number,
+                      controller: phoneController,
+                      isReadOnly: true,
                     ),
+                    SizedBox(height: 14.h),
                     _buildTextfield(
                       label: "Account Type",
-                      hintText: "Property Owner",
+                      hintText: "Enter Account Type",
                       keyboardType: TextInputType.streetAddress,
+                      controller: accountTypeController,
+                      isReadOnly: true,
                     ),
                   ],
                 ),
@@ -254,16 +308,52 @@ class _EditprofilescreenState extends State<Editprofilescreen> {
                       borderRadius: BorderRadius.circular(6.r),
                     ),
                   ),
-                  onPressed: () {},
-                  child: Text(
-                    "Save",
-                    style: GoogleFonts.outfit(
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xffFFFFFF),
-                      fontSize: 15.sp,
-                      letterSpacing: -0.34,
-                    ),
-                  ),
+                  onPressed: () async {
+                    try {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      final service = ref.read(authServiceProvider);
+                      final response = await service.editProfile(
+                        phone: phoneController.text.trim(),
+                        name: nameController.text.trim(),
+                        image: selectedImage != null
+                            ? await MultipartFile.fromFile(selectedImage!.path)
+                            : null,
+                      );
+                      if (response.status == true) {
+                        showSuccessSnackBar(response.message ?? "Sucess");
+                        ref.invalidate(getProfileProvider);
+                        Navigator.pop(context);
+                      }
+                    } catch (e) {
+                      log(e.toString());
+                    } finally {
+                      if (mounted) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                      }
+                    }
+                  },
+                  child: isLoading
+                      ? SizedBox(
+                          height: 20.h,
+                          width: 20.w,
+                          child: CircularProgressIndicator(
+                            color: AppColors.scaffoldBg,
+                            strokeWidth: 1.5,
+                          ),
+                        )
+                      : Text(
+                          "Save",
+                          style: GoogleFonts.outfit(
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xffFFFFFF),
+                            fontSize: 15.sp,
+                            letterSpacing: -0.34,
+                          ),
+                        ),
                 ),
               ),
               SizedBox(height: 10.h),
@@ -278,7 +368,9 @@ class _EditprofilescreenState extends State<Editprofilescreen> {
                       side: BorderSide(color: AppColors.heading),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   child: Text(
                     "Cancel",
                     style: GoogleFonts.outfit(
@@ -301,6 +393,8 @@ class _EditprofilescreenState extends State<Editprofilescreen> {
     required String label,
     required String hintText,
     required TextInputType keyboardType,
+    required TextEditingController controller,
+    bool? isReadOnly = false,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -316,42 +410,45 @@ class _EditprofilescreenState extends State<Editprofilescreen> {
         ),
 
         SizedBox(height: 7.h),
+        TextFormField(
+          cursorHeight: 24.h,
+          cursorColor: AppColors.heading,
+          controller: controller,
+          cursorWidth: 2.w,
+          keyboardType: keyboardType,
+          textAlignVertical: TextAlignVertical.center,
+          style: GoogleFonts.outfit(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w500,
+            color: AppColors.heading,
+            letterSpacing: -0.2,
+          ),
+          readOnly: isReadOnly ?? false,
+          decoration: InputDecoration(
+            isDense: true,
 
-        Container(
-          height: 44.h,
-          decoration: const BoxDecoration(color: Colors.transparent),
-          child: TextField(
-            cursorHeight: 18.h,
-            cursorColor: AppColors.heading,
-            cursorWidth: 1.5.w,
-            keyboardType: keyboardType,
-            textAlignVertical: TextAlignVertical.center,
-            decoration: InputDecoration(
-              isDense: true,
+            hintText: hintText,
+            hintStyle: GoogleFonts.outfit(
+              fontSize: 15.sp,
+              fontWeight: FontWeight.w500,
+              color: const Color.fromRGBO(16, 28, 22, 0.6),
+            ),
 
-              hintText: hintText,
-              hintStyle: GoogleFonts.outfit(
-                fontSize: 15.sp,
-                fontWeight: FontWeight.w500,
-                color: const Color.fromRGBO(16, 28, 22, 0.6),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.r),
+              borderSide: BorderSide(color: AppColors.heading),
+            ),
+
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.r),
+              borderSide: const BorderSide(
+                color: Color.fromRGBO(16, 28, 22, 0.6),
               ),
+            ),
 
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5.r),
-                borderSide: BorderSide(color: AppColors.heading),
-              ),
-
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5.r),
-                borderSide: const BorderSide(
-                  color: Color.fromRGBO(16, 28, 22, 0.6),
-                ),
-              ),
-
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: 10.w,
-                vertical: 6.h,
-              ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 10.w,
+              vertical: 8.h,
             ),
           ),
         ),

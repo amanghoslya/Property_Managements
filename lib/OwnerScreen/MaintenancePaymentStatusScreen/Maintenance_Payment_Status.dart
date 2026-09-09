@@ -419,7 +419,7 @@ class _MaintenancePaymentStatusState extends State<MaintenancePaymentStatus> {
                 child: Text(
                   status,
                   style: GoogleFonts.outfit(
-                    fontSize: 17.sp,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w400,
                     color: isPaid ? Colors.green : Colors.red,
                   ),

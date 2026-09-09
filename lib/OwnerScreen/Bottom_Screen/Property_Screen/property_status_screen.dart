@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
-class PropertyStatusScreen extends StatefulWidget {
+import 'Provider/propertyConsolidatedStatusProvider.dart';
+
+class PropertyStatusScreen extends ConsumerStatefulWidget {
   const PropertyStatusScreen({super.key});
 
   @override
-  State<PropertyStatusScreen> createState() => _PropertyStatusScreenState();
+  ConsumerState<PropertyStatusScreen> createState() =>
+      _PropertyStatusScreenState();
 }
 
-class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
-  final double progress = 0.62;
+class _PropertyStatusScreenState extends ConsumerState<PropertyStatusScreen> {
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(consolidatedStateProvider);
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       appBar: AppBar(
@@ -74,435 +78,524 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            children: [
-              SizedBox(height: 16.h),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 13.h),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  border: Border.all(color: const Color(0xff101C16), width: 1),
-                ),
-                child: Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8.r),
-                      child: Stack(
-                        children: [
-                          Image.asset(
-                            "assets/document_img.png",
-                            width: double.infinity,
-                            height: 151.h,
-                            fit: BoxFit.cover,
-                          ),
-                          Positioned(
-                            left: 12.w,
-                            top: 10.h,
-                            child: Container(
-                              width: 72.w,
-                              height: 30.h,
-                              decoration: BoxDecoration(
-                                color: Color(0xff101C16),
-                                borderRadius: BorderRadius.circular(50.r),
+      body: state.when(
+        loading: () => Center(
+          child: CircularProgressIndicator(color: const Color(0xff171717)),
+        ),
+        error: (error, stackTrace) => Center(child: Text("Error loading data")),
+        data: (modelData) {
+          final data = modelData.data;
+          if (data == null) return Center(child: Text("No Data Available"));
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Column(
+                children: [
+                  SizedBox(height: 16.h),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 14.w,
+                      vertical: 13.h,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.r),
+                      border: Border.all(
+                        color: const Color(0xff101C16),
+                        width: 1,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8.r),
+                          child: Stack(
+                            children: [
+                              Image.network(
+                                data.propertyBanner?.imageUrl ?? "",
+                                width: double.infinity,
+                                height: 151.h,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(
+                                      width: double.infinity,
+                                      height: 151.h,
+                                      color: Colors.grey,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          8.r,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Icon(Icons.error_outline),
+                                      ),
+                                    ),
                               ),
-                              child: Center(
-                                child: Text(
-                                  "A-204",
-                                  style: GoogleFonts.outfit(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                    fontSize: 14.sp,
+                              Positioned(
+                                left: 12.w,
+                                top: 10.h,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10.w,
+                                  ),
+                                  height: 30.h,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff101C16),
+                                    borderRadius: BorderRadius.circular(50.r),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      data.propertyBanner?.propertyName ?? "",
+                                      style: GoogleFonts.outfit(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                        fontSize: 14.sp,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
+                        SizedBox(height: 16.h),
+                        Row(
                           children: [
-                            Text(
-                              "Apartment A-204",
-                              style: GoogleFonts.outfit(
-                                fontSize: 17.sp,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xff101C16),
-                                letterSpacing: -0.54,
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    data.propertyBanner?.propertyName ?? "",
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xff101C16),
+                                      letterSpacing: -0.54,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5.h),
+                                  Text(
+                                    data.propertyBanner?.complexLocation ?? "",
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromRGBO(42, 41, 51, 0.6),
+                                      letterSpacing: -0.34,
+                                      height: 1.2,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            SizedBox(height: 5.h),
-                            Text(
-                              "Green Valley Residency · Jaipur",
-                              style: GoogleFonts.outfit(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                                color: Color.fromRGBO(42, 41, 51, 0.6),
-                                letterSpacing: -0.34,
+
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 17.w,
+                                vertical: 5.h,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: AppColors.heading),
+                                borderRadius: BorderRadius.circular(50.r),
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 7.h,
+                                    width: 7.h,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.heading,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  SizedBox(width: 3.w),
+                                  Text(
+                                    data.propertyBanner?.statusBubble ?? "",
+                                    style: GoogleFonts.outfit(
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.heading,
+                                      fontSize: 14.sp,
+                                      letterSpacing: -0.2,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
-                        Spacer(),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 17.w,
-                            vertical: 5.h,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.heading),
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                height: 7.h,
-                                width: 7.h,
-                                decoration: BoxDecoration(
-                                  color: AppColors.heading,
-                                  shape: BoxShape.circle,
+                        SizedBox(height: 10.h),
+                        Divider(color: Color.fromRGBO(42, 41, 51, 0.6)),
+                        SizedBox(height: 10.h),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(12.w),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: AppColors.heading),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "${data.propertyBanner?.score ?? 0}",
+                                  style: GoogleFonts.outfit(
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.heading,
+                                    fontSize: 17.sp,
+                                    letterSpacing: -0.2,
+                                  ),
                                 ),
                               ),
-                              SizedBox(width: 3.w),
-                              Text(
-                                "Good",
-                                style: GoogleFonts.outfit(
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.heading,
-                                  fontSize: 14.sp,
-                                  letterSpacing: -0.2,
-                                ),
+                            ),
+                            SizedBox(width: 10.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Property Status",
+                                    style: GoogleFonts.outfit(
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.heading,
+                                      fontSize: 17.sp,
+                                      letterSpacing: -0.2,
+                                    ),
+                                  ),
+
+                                  SizedBox(height: 3.h),
+
+                                  Text(
+                                    data.propertyBanner?.statusText ?? "",
+                                    style: GoogleFonts.outfit(
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color.fromRGBO(
+                                        42,
+                                        41,
+                                        51,
+                                        0.6,
+                                      ),
+                                      fontSize: 14.sp,
+                                      letterSpacing: -0.2,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 16.h),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: LinearProgressIndicator(
+                            value: ((data.propertyBanner?.score ?? 0) / 100)
+                                .toDouble()
+                                .clamp(0.0, 1.0),
+                            minHeight: 3.h,
+                            backgroundColor: const Color(0xff919191),
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                              Color(0xFF101C16),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10.h),
-                    Divider(color: Color.fromRGBO(42, 41, 51, 0.6)),
-                    SizedBox(height: 10.h),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(12.w),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.heading),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: Text(
-                              "86",
-                              style: GoogleFonts.outfit(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.heading,
-                                fontSize: 17.sp,
-                                letterSpacing: -0.2,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10.w),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Property Status",
-                                style: GoogleFonts.outfit(
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.heading,
-                                  fontSize: 17.sp,
-                                  letterSpacing: -0.2,
-                                ),
-                              ),
-
-                              SizedBox(height: 3.h),
-
-                              Text(
-                                "Your property is currently in good condition. There are some ongoing activities that need attention.",
-                                style: GoogleFonts.outfit(
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color.fromRGBO(42, 41, 51, 0.6),
-                                  fontSize: 14.sp,
-                                  letterSpacing: -0.2,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: LinearProgressIndicator(
-                        value: progress.clamp(0.0, 1.0),
-                        minHeight: 3.h,
-                        backgroundColor: const Color(0xff919191),
-                        valueColor: const AlwaysStoppedAnimation<Color>(
-                          Color(0xFF101C16),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30.h),
-              Row(
-                children: [
-                  Text(
-                    "Current Status",
-                    style: GoogleFonts.outfit(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.heading,
-                      fontSize: 17.sp,
-                      letterSpacing: -0.2,
-                    ),
                   ),
-                  Spacer(),
-                  Text(
-                    "View All",
-                    style: GoogleFonts.outfit(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.heading,
-                      fontSize: 15.sp,
-                      letterSpacing: -0.2,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.h),
-              GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 21.w,
-                mainAxisSpacing: 17.h,
-                childAspectRatio: 2.08,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  _infoCard(
-                    icon: Icons.priority_high,
-                    value: "2",
-                    title: "Pending Issues",
-                  ),
-
-                  _infoCard(
-                    icon: Icons.arrow_forward,
-                    value: "1",
-                    title: "Open Service Requests",
-                  ),
-
-                  _infoCard(
-                    icon: Icons.access_time,
-                    value: "15 Aug",
-                    title: "Recent Inspection",
-                  ),
-
-                  _infoCard(
-                    icon: Icons.check,
-                    value: "3",
-                    title: "Completed Work",
-                  ),
-                ],
-              ),
-              SizedBox(height: 30.h),
-              Row(
-                children: [
-                  Text(
-                    "Maintenance Activities",
-                    style: GoogleFonts.outfit(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.heading,
-                      fontSize: 17.sp,
-                      letterSpacing: -0.2,
-                    ),
-                  ),
-                  Spacer(),
-                  Text(
-                    "See All",
-                    style: GoogleFonts.outfit(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.heading,
-                      fontSize: 15.sp,
-                      letterSpacing: -0.2,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.h),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 17.h),
-                decoration: BoxDecoration(
-                  color: const Color(0xffFFFDF0),
-                  border: Border.all(
-                    color: const Color(0xff999999),
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(18.r),
-                ),
-                child: Column(
-                  children: [
-                    _auditItem(
-                      icon: "✓",
-                      title: "Bathroom maintenance updated",
-                      description: "Plumbing repair is currently in progress.",
-                    ),
-
-                    SizedBox(height: 12.h),
-
-                    // Divider
-                    Container(
-                      width: double.infinity,
-                      height: 1.h,
-                      color: const Color(0xff202820),
-                    ),
-
-                    SizedBox(height: 12.h),
-                    _auditItem(
-                      icon: "✓",
-                      title: "AC maintenance completed",
-                      description: "Scheduled maintenance work completed.",
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30.h),
-              Row(
-                children: [
-                  Text(
-                    "Important Property Issues",
-                    style: GoogleFonts.outfit(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.heading,
-                      fontSize: 17.sp,
-                      letterSpacing: -0.2,
-                    ),
-                  ),
-                  Spacer(),
-                  Text(
-                    "View All",
-                    style: GoogleFonts.outfit(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.heading,
-                      fontSize: 15.sp,
-                      letterSpacing: -0.2,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 17.h),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 17.h),
-                decoration: BoxDecoration(
-                  color: const Color(0xffFFFDF0),
-                  border: Border.all(
-                    color: const Color(0xff999999),
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(18.r),
-                ),
-                child: Row(
-                  children: [
-                    Image.asset("assets/status.png", width: 44.w, height: 54.h),
-                    SizedBox(width: 13.w),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Bathroom plumbing repair",
-                            style: GoogleFonts.inter(
-                              fontSize: 17.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.heading,
-                              letterSpacing: -0.2,
-                            ),
-                          ),
-
-                          SizedBox(height: 4.h),
-                          Text(
-                            "Maintenance request is currently in progress and requires attention",
-                            style: GoogleFonts.outfit(
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromRGBO(42, 41, 51, 0.5),
-                              letterSpacing: -0.2,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 13.w,
-                        vertical: 2.h,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.heading),
-                        borderRadius: BorderRadius.circular(50.r),
-                      ),
-                      child: Text(
-                        "In Progress",
+                  SizedBox(height: 30.h),
+                  Row(
+                    children: [
+                      Text(
+                        "Current Status",
                         style: GoogleFonts.outfit(
-                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: AppColors.heading,
+                          fontSize: 17.sp,
                           letterSpacing: -0.2,
                         ),
                       ),
+                      Spacer(),
+                      Text(
+                        "View All",
+                        style: GoogleFonts.outfit(
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.heading,
+                          fontSize: 15.sp,
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.h),
+                  GridView.count(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 21.w,
+                    mainAxisSpacing: 17.h,
+                    childAspectRatio: 2.h,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      _infoCard(
+                        icon: Icons.priority_high,
+                        value: "${data.currentStatus?.pendingIssues ?? 0}",
+                        title: "Pending Issues",
+                      ),
+
+                      _infoCard(
+                        icon: Icons.arrow_forward,
+                        value:
+                            "${data.currentStatus?.openServiceRequests ?? 0}",
+                        title: "Open Service Requests",
+                      ),
+
+                      _infoCard(
+                        icon: Icons.access_time,
+                        value: data.currentStatus?.recentInspectionDate ?? "",
+                        title: "Recent Inspection",
+                      ),
+
+                      _infoCard(
+                        icon: Icons.check,
+                        value: "${data.currentStatus?.completedWork ?? 0}",
+                        title: "Completed Work",
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30.h),
+                  Row(
+                    children: [
+                      Text(
+                        "Maintenance Activities",
+                        style: GoogleFonts.outfit(
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.heading,
+                          fontSize: 17.sp,
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                      Spacer(),
+                      Text(
+                        "See All",
+                        style: GoogleFonts.outfit(
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.heading,
+                          fontSize: 15.sp,
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.h),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 17.h,
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30.h),
-              Row(
-                children: [
-                  Text(
-                    "Latest Reports & Documents",
-                    style: GoogleFonts.outfit(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.heading,
-                      fontSize: 17.sp,
-                      letterSpacing: -0.2,
+                    decoration: BoxDecoration(
+                      color: const Color(0xffFFFDF0),
+                      border: Border.all(
+                        color: const Color(0xff999999),
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(18.r),
+                    ),
+                    child: Column(
+                      children: List.generate(
+                        (data.maintenanceActivities ?? []).length,
+                        (index) {
+                          final activity = data.maintenanceActivities![index];
+                          return Column(
+                            children: [
+                              _auditItem(
+                                icon: "✓",
+                                title: activity.title ?? "",
+                                description: activity.description ?? "",
+                                timeAgo: activity.timeAgo ?? "",
+                              ),
+                              if (index !=
+                                  data.maintenanceActivities!.length - 1) ...[
+                                SizedBox(height: 12.h),
+                                Container(
+                                  width: double.infinity,
+                                  height: 1.h,
+                                  color: const Color(0xff202820),
+                                ),
+                                SizedBox(height: 12.h),
+                              ],
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ),
-                  Spacer(),
-                  Text(
-                    "View All",
-                    style: GoogleFonts.outfit(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.heading,
-                      fontSize: 15.sp,
-                      letterSpacing: -0.2,
-                    ),
+                  SizedBox(height: 30.h),
+                  Row(
+                    children: [
+                      Text(
+                        "Important Property Issues",
+                        style: GoogleFonts.outfit(
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.heading,
+                          fontSize: 17.sp,
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                      Spacer(),
+                      Text(
+                        "View All",
+                        style: GoogleFonts.outfit(
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.heading,
+                          fontSize: 15.sp,
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                    ],
                   ),
+                  SizedBox(height: 17.h),
+                  ...List.generate(
+                    (data.importantPropertyIssues ?? []).length,
+                    (index) {
+                      final issue = data.importantPropertyIssues![index];
+                      return Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(bottom: 10.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 17.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xffFFFDF0),
+                          border: Border.all(
+                            color: const Color(0xff999999),
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.circular(18.r),
+                        ),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10.r),
+                              child: Image.network(
+                                issue.imageUrl ?? "",
+                                width: 44.w,
+                                height: 54.h,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(
+                                      width: 44.w,
+                                      height: 54.h,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          10.r,
+                                        ),
+                                        color: Colors.grey.shade100,
+                                        border: Border.all(
+                                          color: Colors.grey.shade200,
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        Icons.error_outline,
+                                        color: AppColors.heading,
+                                        size: 20.sp,
+                                      ),
+                                    ),
+                              ),
+                            ),
+                            SizedBox(width: 13.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    issue.title ?? "",
+                                    style: GoogleFonts.inter(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.heading,
+                                      letterSpacing: -0.2,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4.h),
+                                  Text(
+                                    issue.description ?? "",
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromRGBO(42, 41, 51, 0.5),
+                                      letterSpacing: -0.2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 13.w,
+                                vertical: 2.h,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: AppColors.heading),
+                                borderRadius: BorderRadius.circular(50.r),
+                              ),
+                              child: Text(
+                                issue.statusLabel ?? "",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.heading,
+                                  letterSpacing: -0.2,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(height: 30.h),
+                  Row(
+                    children: [
+                      Text(
+                        "Latest Reports & Documents",
+                        style: GoogleFonts.outfit(
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.heading,
+                          fontSize: 17.sp,
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                      Spacer(),
+                      Text(
+                        "View All",
+                        style: GoogleFonts.outfit(
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.heading,
+                          fontSize: 15.sp,
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.h),
+                  ...List.generate((data.latestReportsDocuments ?? []).length, (
+                    index,
+                  ) {
+                    final doc = data.latestReportsDocuments![index];
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 10.h),
+                      child: _reportCard(
+                        title: doc.title ?? "",
+                        subtitle: doc.subtitle ?? "",
+                      ),
+                    );
+                  }),
+                  SizedBox(height: 30.h),
                 ],
               ),
-              SizedBox(height: 16.h),
-              _reportCard(
-                title: "Property Inspection Report",
-                subtitle: "15 Aug · Latest Inspection",
-              ),
-              SizedBox(height: 10.h),
-              _reportCard(
-                title: "Maintenance Report",
-                subtitle: "14 Aug · Recently uploaded",
-              ),
-              SizedBox(height: 30.h),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -535,10 +628,13 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
 
           Text(
             title,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
             style: GoogleFonts.outfit(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               color: const Color(0xFF777777),
+              letterSpacing: -0.3,
             ),
           ),
         ],
@@ -550,6 +646,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
     required String icon,
     required String title,
     required String description,
+    required String timeAgo,
   }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -601,7 +698,7 @@ class _PropertyStatusScreenState extends State<PropertyStatusScreen> {
           ),
         ),
         Text(
-          "2h",
+          timeAgo,
           style: GoogleFonts.outfit(
             fontSize: 15.sp,
             fontWeight: FontWeight.w500,

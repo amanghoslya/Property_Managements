@@ -1,18 +1,27 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:property_care/core/Utils/showMessage.dart';
 import 'package:property_care/core/constant/appColor.dart';
 import 'package:property_care/OwnerScreen/verifyOtp_screen/verify_otp_screen.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
+import '../../core/AuthService/AuthServiceProvider.dart';
+
+class ForgotPasswordScreen extends ConsumerStatefulWidget {
   const ForgotPasswordScreen({super.key});
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  ConsumerState<ForgotPasswordScreen> createState() =>
+      _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
+  final emailController = TextEditingController();
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,6 +136,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     height: 44.h,
                     decoration: BoxDecoration(color: Colors.transparent),
                     child: TextField(
+                      controller: emailController,
                       cursorColor: AppColors.heading,
                       cursorHeight: 18.h,
                       cursorWidth: 1.5.w,
@@ -177,25 +187,66 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           borderRadius: BorderRadius.circular(8.r),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => VerifyOtpScreen(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "Send Reset OTP",
-                        style: GoogleFonts.outfit(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 13.sp,
-                          color: Color(0xffFFFFFF),
-                          letterSpacing: -0.24,
-                        ),
-                      ),
+                      onPressed: isLoading
+                          ? null
+                          : () async {
+                              if (emailController.text.trim().isEmpty) {
+                                return;
+                              }
+                              try {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                final service = ref.read(authServiceProvider);
+                                final response = await service.forgotPassword(
+                                  email: emailController.text.trim(),
+                                );
+                                if (response.status == true) {
+                                  showSuccessSnackBar(
+                                    response.message ?? "Success",
+                                  );
+                                  if (context.mounted) {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) => VerifyOtpScreen(
+                                          email: emailController.text.trim(),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }
+                              } catch (e) {
+                                log(e.toString());
+                              } finally {
+                                if (mounted) {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                }
+                              }
+                            },
+                      child: isLoading
+                          ? SizedBox(
+                              width: 20.w,
+                              height: 20.h,
+                              child: CircularProgressIndicator(
+                                color: AppColors.heading,
+                                strokeWidth: 1.5,
+                              ),
+                            )
+                          : Text(
+                              "Send Reset OTP",
+                              style: GoogleFonts.outfit(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 13.sp,
+                                color: Color(0xffFFFFFF),
+                                letterSpacing: -0.24,
+                              ),
+                            ),
                     ),
                   ),
+                  SizedBox(height: 20.h),
                 ],
               ),
             ),

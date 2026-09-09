@@ -1,9 +1,29 @@
 import 'package:dio/dio.dart';
+import 'package:property_care/OwnerScreen/Bottom_Screen/Profile_Screen/EditProfileScreen.dart';
+import 'package:property_care/OwnerScreen/PropertyPerformanceScreen/Provider/getPropertyScoreProvider.dart';
+import 'package:property_care/core/Data/Model/BodyModel/resetPassBodyModel.dart';
+import 'package:property_care/core/Data/Model/BodyModel/verifyOtpBodyModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/availableFlatModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/consolidatedStateModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/editProfileResModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/getProfileModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/getServiceRequestDetailsModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/getServiceRequestModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/logoutModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/ownerDashboardModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/propertyDetailsModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/propertyListModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/registerResModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/resetPassResModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/verifyOtpResModel.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../Data/Model/BodyModel/forgotPassBodyModel.dart';
+import '../Data/Model/BodyModel/loginBodyModel.dart';
 import '../Data/Model/BodyModel/registerBodyModel.dart';
+import '../Data/Model/ResponseModel/forgotPassResModel.dart';
+import '../Data/Model/ResponseModel/getPropertyScoreModel.dart';
+import '../Data/Model/ResponseModel/loginResModel.dart';
 
 part 'ApiStateNetwork.g.dart';
 
@@ -16,4 +36,71 @@ abstract class ApiStateNetwork {
 
   @POST("/api/v1/auth/register")
   Future<RegisterResModel> register(@Body() RegisterBodyModel body);
+
+  @POST("/api/v1/auth/login")
+  Future<LoginResModel> login(@Body() LoginBodyModel body);
+
+  @POST("/api/v1/auth/forgot-password")
+  Future<ForgotPassResModel> forgotPass(@Body() ForgotPassBodyModel body);
+
+  @POST("/api/v1/auth/verify-otp")
+  Future<VerifyOtpResModel> verifyOtp(@Body() VerifyOtpBodyModel body);
+
+  @POST("/api/v1/auth/reset-password")
+  Future<ResetPassResModel> resetPassword(@Body() ResetPassBodyModel body);
+
+  @GET("/api/v1/auth/me")
+  Future<GetProfileModel> getProfileData();
+
+  @GET("/api/v1/owner/dashboard")
+  Future<OwnerDashboardModel> getOwnerDashboardData();
+
+  @GET("/api/v1/owner/property/details")
+  Future<PropertyDetailsModel> propertyDetails();
+
+  @POST("/api/v1/auth/logout")
+  Future<LogoutModel> logout();
+
+  @GET("/api/v1/owner/properties")
+  Future<PropertyListModel> getProperyList();
+
+  @GET("/api/v1/property-scores")
+  Future<GetPropertyScoreModel> getPropertyScore();
+
+  @GET("/api/v1/owner/property/consolidated-status")
+  Future<ConsolidatedStatusModel> propertyConsolidateStatus();
+
+  @MultiPart()
+  @POST("/api/v1/auth/profile")
+  Future<EditProfileResModel> editProfile(
+    @Part(name: "name") String name,
+    @Part(name: "phone") String phone,
+    @Part(name: "image") MultipartFile? image,
+  );
+
+  @MultiPart()
+  @POST("/api/v1/tickets")
+  Future<void> createService(
+    @Part(name: "service_category") String serviceCategory,
+    @Part(name: "service_type") String? serviceType,
+    @Part(name: "title") String title,
+    @Part(name: "details") String details,
+    @Part(name: "preferred_date") String? preferredDate,
+    @Part(name: "preferred_time") String? preferredTime,
+    @Part(name: "priority") String priority,
+    @Part(name: "attachment") MultipartFile? attachment,
+    @Part(name: "type") String type,
+  );
+
+  @GET("/api/v1/tickets")
+  Future<GetServiceRequestModel> getServiceRequest(
+    @Query("status_filter") String statusFilter,
+    @Query("search") String search,
+    @Query("type") String type,
+  );
+
+  @GET("/api/v1/tickets/{id}")
+  Future<GetServiceRequestDetailsModel> getServiceRequestDetails(
+    @Path("id") String id,
+  );
 }

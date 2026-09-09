@@ -1,21 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Complaint_Screen/ComplaintDetailScreen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Complaint_Screen/CreateComplaintScreen.dart';
 import 'package:property_care/core/constant/appColor.dart';
+import 'package:property_care/OwnerScreen/ServiceRequest_Screen/Provider/getServiceProvider.dart';
 
-class ComplaintsScreen extends StatefulWidget {
+class ComplaintsScreen extends ConsumerStatefulWidget {
   const ComplaintsScreen({super.key});
 
   @override
-  State<ComplaintsScreen> createState() => _ComplaintsScreenState();
+  ConsumerState<ComplaintsScreen> createState() => _ComplaintsScreenState();
 }
 
-class _ComplaintsScreenState extends State<ComplaintsScreen> {
+class _ComplaintsScreenState extends ConsumerState<ComplaintsScreen> {
   int selectedFilter = 0;
   int selectedSummary = 0;
+  String searchQuery = "";
+  String? total, open, resolved;
+  final TextEditingController searchController = TextEditingController();
 
   final List<Map<String, dynamic>> complaints = [
     {
@@ -45,9 +50,29 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
   ];
 
   final List<String> filters = ["All", "Open", "In Progress", "Resolved"];
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    String statusFilter = "";
+    if (selectedFilter == 1)
+      statusFilter = "open";
+    else if (selectedFilter == 2)
+      statusFilter = "in_progress";
+    else if (selectedFilter == 3)
+      statusFilter = "resolved";
+
+    final state = ref.watch(
+      getServiceRequestProvider((
+        statusFilter: statusFilter,
+        search: searchQuery,
+        type: "complaint",
+      )),
+    );
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       appBar: AppBar(
@@ -94,24 +119,168 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20.h),
-              _buildSummaryCards(),
+              Row(
+                children: [
+                  Expanded(
+                    child: _summaryCard(
+                      index: 0,
+                      count: total ?? "0",
+                      title: "Total",
+                    ),
+                  ),
+                  SizedBox(width: 10.w),
+                  Expanded(
+                    child: _summaryCard(
+                      index: 1,
+                      count: open ?? "0",
+                      title: "Open",
+                    ),
+                  ),
+                  SizedBox(width: 10.w),
+                  Expanded(
+                    child: _summaryCard(
+                      index: 2,
+                      count: resolved ?? "0",
+                      title: "Resolved",
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(height: 24.h),
-              _buildSearchBox(),
+              TextField(
+                controller: searchController,
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value;
+                  });
+                },
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                    borderSide: BorderSide(
+                      color: Color(0xFF101C16),
+                      width: 1.w,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                    borderSide: BorderSide(
+                      color: Color(0xFF101C16),
+                      width: 1.w,
+                    ),
+                  ),
+                  hintText: "Search documents...",
+                  hintStyle: GoogleFonts.outfit(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Color.fromARGB(153, 42, 41, 51),
+                  ),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    size: 20.sp,
+                    color: Color.fromARGB(153, 42, 41, 51),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 12.h),
+                ),
+              ),
               SizedBox(height: 20.h),
               _buildFilters(),
               SizedBox(height: 20.h),
-              _buildComplaintHeader(),
-              SizedBox(height: 27.h),
-              Padding(
-                padding: EdgeInsets.only(bottom: 60.h),
-                child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: complaints.length,
-                  itemBuilder: (context, index) {
-                    return _buildComplaintCard(complaints[index]);
-                  },
+              state.when(
+                data: (complaintData) {
+                  total = complaintData.data?.summaryCounts?.totalRequests
+                      .toString();
+                  open = complaintData.data?.summaryCounts?.inProgress
+                      .toString();
+                  resolved = complaintData.data?.summaryCounts?.completed
+                      .toString();
+
+                  if (complaintData.data?.tickets == null ||
+                      complaintData.data!.tickets!.isEmpty) {
+                    return Padding(
+                      padding: EdgeInsets.only(top: 50.h),
+                      child: Center(
+                        child: Text(
+                          "No Complaints found",
+                          style: GoogleFonts.outfit(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xff8B8D8B),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "My Complaints",
+                            style: GoogleFonts.outfit(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF101C16),
+                              letterSpacing: -0.3,
+                            ),
+                          ),
+
+                          Text(
+                            "03 Records",
+                            style: GoogleFonts.outfit(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF101C16),
+                              letterSpacing: -0.3,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 27.h),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 60.h),
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: complaintData.data!.tickets!.length,
+                          itemBuilder: (context, index) {
+                            var model = complaintData.data!.tickets![index];
+                            return _buildComplaintCard(
+                              title: model.category ?? "",
+                              complaintId: model.ticketNumber ?? "",
+                              status: model.statusPill ?? "",
+                              priority: model.priority ?? "",
+                              date: model.requestedDate ?? "",
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => ComplaintDetailScreen(
+                                      complaintId: model.id.toString(),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                error: (error, stackTrace) {
+                  return Center(child: Text("Error Loading Data"));
+                },
+                loading: () => SizedBox(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height / 1.8,
+                  child: Center(
+                    child: CircularProgressIndicator(color: AppColors.heading),
+                  ),
                 ),
               ),
             ],
@@ -146,24 +315,6 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-    );
-  }
-
-  Widget _buildSummaryCards() {
-    return Row(
-      children: [
-        Expanded(
-          child: _summaryCard(index: 0, count: "03", title: "Total"),
-        ),
-        SizedBox(width: 10.w),
-        Expanded(
-          child: _summaryCard(index: 1, count: "01", title: "Open"),
-        ),
-        SizedBox(width: 10.w),
-        Expanded(
-          child: _summaryCard(index: 2, count: "02", title: "Resolved"),
-        ),
-      ],
     );
   }
 
@@ -215,33 +366,6 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
     );
   }
 
-  Widget _buildSearchBox() {
-    return TextField(
-      decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.r),
-          borderSide: BorderSide(color: Color(0xFF101C16), width: 1.w),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.r),
-          borderSide: BorderSide(color: Color(0xFF101C16), width: 1.w),
-        ),
-        hintText: "Search documents...",
-        hintStyle: GoogleFonts.outfit(
-          fontSize: 15.sp,
-          fontWeight: FontWeight.w500,
-          color: Color.fromARGB(153, 42, 41, 51),
-        ),
-        prefixIcon: Icon(
-          Icons.search,
-          size: 20.sp,
-          color: Color.fromARGB(153, 42, 41, 51),
-        ),
-        contentPadding: EdgeInsets.symmetric(vertical: 12.h),
-      ),
-    );
-  }
-
   Widget _buildFilters() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -284,41 +408,16 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
     );
   }
 
-  Widget _buildComplaintHeader() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          "My Complaints",
-          style: GoogleFonts.outfit(
-            fontSize: 17.sp,
-            fontWeight: FontWeight.w500,
-            color: Color(0xFF101C16),
-            letterSpacing: -0.3,
-          ),
-        ),
-
-        Text(
-          "03 Records",
-          style: GoogleFonts.outfit(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w500,
-            color: Color(0xFF101C16),
-            letterSpacing: -0.3,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildComplaintCard(Map<String, dynamic> complaint) {
+  Widget _buildComplaintCard({
+    required String title,
+    required String complaintId,
+    required String status,
+    required String priority,
+    required String date,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          CupertinoPageRoute(builder: (context) => ComplaintDetailScreen()),
-        );
-      },
+      onTap: onTap,
       child: Container(
         margin: EdgeInsets.only(bottom: 24.h),
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
@@ -340,7 +439,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
                     border: Border.all(color: Color(0xFF101C16), width: 1.w),
                   ),
                   child: Icon(
-                    complaint["icon"],
+                    Icons.water_damage_outlined,
                     size: 17.sp,
                     color: const Color(0xFF3E443D),
                   ),
@@ -352,7 +451,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        complaint["title"],
+                        title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.outfit(
@@ -364,7 +463,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
                       ),
 
                       Text(
-                        "Complaint ID · ${complaint["complaintId"]}",
+                        "Complaint ID · $complaintId",
                         style: GoogleFonts.outfit(
                           fontSize: 13.sp,
                           fontWeight: FontWeight.w500,
@@ -416,7 +515,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
                     ),
                   ),
                   child: Text(
-                    complaint["status"],
+                    status,
                     style: GoogleFonts.outfit(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -427,7 +526,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
                 ),
                 const Spacer(),
                 Text(
-                  complaint["priority"],
+                  "${priority} Priority",
                   style: GoogleFonts.outfit(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w500,
@@ -437,7 +536,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen> {
                 ),
                 SizedBox(width: 5.w),
                 Text(
-                  complaint["date"],
+                  date,
                   style: GoogleFonts.outfit(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w500,

@@ -1,25 +1,33 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:property_care/core/AuthService/AuthServiceProvider.dart';
+import 'package:property_care/core/Utils/showMessage.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
-class CreateComplaintScreen extends StatefulWidget {
+import '../../ServiceRequest_Screen/Provider/getServiceProvider.dart';
+
+class CreateComplaintScreen extends ConsumerStatefulWidget {
   const CreateComplaintScreen({super.key});
 
   @override
-  State<CreateComplaintScreen> createState() => _CreateComplaintScreenState();
+  ConsumerState<CreateComplaintScreen> createState() =>
+      _CreateComplaintScreenState();
 }
 
-class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
+class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
   String? selectedCategory;
   String? selectedSubject;
+  bool isLoading = false;
 
   final List<String> categories = [
     "Electrical",
@@ -182,7 +190,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
       final int fileSize = await file.length();
       const int maxSize = 10 * 1024 * 1024;
       if (fileSize > maxSize) {
-        _showError("Image size must be less than 10 MB.");
+        showErrorSnackBar("Image size must be less than 10 MB.");
         return;
       }
       setState(() {
@@ -191,7 +199,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
         selectedFileType = "image";
       });
     } catch (e) {
-      _showError("Unable to select image.");
+      showErrorSnackBar("Unable to select image.");
     }
   }
 
@@ -206,14 +214,14 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
       }
       final PlatformFile fileData = result.files.single;
       if (fileData.path == null) {
-        _showError("Unable to select document.");
+        showErrorSnackBar("Unable to select document.");
         return;
       }
       final File file = File(fileData.path!);
       final int fileSize = await file.length();
       const int maxSize = 10 * 1024 * 1024;
       if (fileSize > maxSize) {
-        _showError("Document size must be less than 10 MB.");
+        showErrorSnackBar("Document size must be less than 10 MB.");
         return;
       }
       setState(() {
@@ -222,7 +230,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
         selectedFileType = "document";
       });
     } catch (e) {
-      _showError("Unable to select document.");
+      showErrorSnackBar("Unable to select document.");
     }
   }
 
@@ -547,12 +555,18 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                                     ),
                                     borderRadius: BorderRadius.circular(5.r),
                                   ),
-                                  child: Icon(
-                                    selectedFileType == "image"
-                                        ? Icons.image_outlined
-                                        : Icons.description_outlined,
-                                    size: 20.sp,
-                                    color: const Color(0xff101C16),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(4.r),
+                                    child: selectedFileType == "image" && selectedFile != null
+                                        ? Image.file(
+                                            selectedFile!,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Icon(
+                                            Icons.description_outlined,
+                                            size: 20.sp,
+                                            color: const Color(0xff101C16),
+                                          ),
                                   ),
                                 ),
                                 SizedBox(width: 10.w),
@@ -597,7 +611,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                 width: double.infinity,
                 height: 49.h,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF101C16),
                     foregroundColor: Colors.white,
@@ -606,15 +620,26 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                   ),
-                  child: Text(
-                    "Submit Complaint",
-                    style: GoogleFonts.outfit(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                      letterSpacing: -0.2,
-                    ),
-                  ),
+                  child: isLoading
+                      ? Center(
+                          child: SizedBox(
+                            width: 20.w,
+                            height: 20.h,
+                            child: CircularProgressIndicator(
+                              color: AppColors.background,
+                              strokeWidth: 1.5.w,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          "Submit Complaint",
+                          style: GoogleFonts.outfit(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                            letterSpacing: -0.2,
+                          ),
+                        ),
                 ),
               ),
               SizedBox(height: 20.h),
@@ -740,14 +765,61 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
     );
   }
 
-  void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message, style: GoogleFonts.outfit(fontSize: 12.sp)),
-        backgroundColor: const Color(0xff101C16),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
+  Future<void> _submitForm() async {
+    if (selectedCategory == null) {
+      showErrorSnackBar("Please select a complaint category");
+      return;
+    }
+
+    if (selectedSubject == null) {
+      showErrorSnackBar("Please select a complaint subject");
+      return;
+    }
+    if (descriptionController.text.trim().isEmpty) {
+      showErrorSnackBar("Please enter complaint details");
+      return;
+    }
+
+    MultipartFile? attachment;
+    if (selectedFile != null) {
+      attachment = await MultipartFile.fromFile(
+        selectedFile!.path,
+        filename: selectedFileName,
+      );
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final service = ref.read(authServiceProvider);
+      await service.createService(
+        serviceCategory: selectedCategory!,
+        title: selectedSubject!,
+        details: descriptionController.text.trim(),
+        priority: priorities[selectedPriority],
+        attachment: attachment,
+        type: "complaint",
+        preferredDate: null,
+        preferredTime: null,
+        serviceType: null,
+      );
+      ref.invalidate(
+        getServiceRequestProvider((
+          statusFilter: "",
+          search: "",
+          type: "complaint",
+        )),
+      );
+      Navigator.pop(context);
+    } catch (e) {
+      showErrorSnackBar("Failed to submit Complaint.");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   Widget _buildInfoBox() {

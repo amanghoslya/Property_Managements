@@ -1,22 +1,32 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/my_bottom_screen.dart';
 import 'package:property_care/OwnerScreen/Register_Screen/Register_Screen.dart';
+import 'package:property_care/core/Utils/showMessage.dart';
 import 'package:property_care/core/constant/appColor.dart';
 import 'package:property_care/OwnerScreen/forgot_password/forgot_password_screen.dart';
 
-class LoginScreen extends StatefulWidget {
+import '../core/AuthService/AuthServiceProvider.dart';
+
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool isPasswordVisible = false;
   bool rememberMe = false;
+  bool isLoading = false;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,6 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 44.h,
                     decoration: const BoxDecoration(color: Colors.transparent),
                     child: TextField(
+                      controller: emailController,
                       cursorColor: AppColors.heading,
                       cursorHeight: 18.h,
                       cursorWidth: 1.5.w,
@@ -172,6 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 44.h,
                     decoration: const BoxDecoration(color: Colors.transparent),
                     child: TextField(
+                      controller: passwordController,
                       cursorColor: AppColors.heading,
                       cursorHeight: 18.h,
                       cursorWidth: 1.5.w,
@@ -311,24 +323,77 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(8.r),
                         ),
                       ),
-                      onPressed: () {
-                        
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => MyBottomScreen(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "Login",
-                        style: GoogleFonts.outfit(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15.sp,
-                          color: Color(0xffFFFFFF),
-                          letterSpacing: -0.24,
-                        ),
-                      ),
+
+                      onPressed: isLoading
+                          ? null
+                          : () async {
+                              if (emailController.text.trim().isEmpty) {
+                                return;
+                              }
+                              if (passwordController.text.trim().isEmpty) {
+                                return;
+                              }
+                              if (rememberMe == false) {
+                                showErrorSnackBar("Please checked Remember Me");
+                                return;
+                              }
+                              try {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                final service = ref.read(authServiceProvider);
+                                final response = await service.login(
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim(),
+                                );
+                                if (response.status == true) {
+                                  var box = Hive.box("userdata");
+                                  await box.put("token", response.data!.token);
+                                  await box.put("id", response.data!.user!.id);
+                                  await box.put(
+                                    "name",
+                                    response.data!.user!.name,
+                                  );
+                                  if (context.mounted) {
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) => MyBottomScreen(),
+                                      ),
+                                      (route) => false,
+                                    );
+                                  }
+                                }
+                              } catch (e) {
+                                log(e.toString());
+                              } finally {
+                                if (mounted) {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                }
+                              }
+                            },
+                      child: isLoading
+                          ? Center(
+                              child: SizedBox(
+                                width: 20.w,
+                                height: 20.h,
+                                child: CircularProgressIndicator(
+                                  color: AppColors.heading,
+                                  strokeWidth: 1.5,
+                                ),
+                              ),
+                            )
+                          : Text(
+                              "Login",
+                              style: GoogleFonts.outfit(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 15.sp,
+                                color: Color(0xffFFFFFF),
+                                letterSpacing: -0.24,
+                              ),
+                            ),
                     ),
                   ),
                   SizedBox(height: 15.h),
