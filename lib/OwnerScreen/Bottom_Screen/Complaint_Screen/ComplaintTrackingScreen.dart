@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/getServiceRequestDetailsModel.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
 class ComplaintTrackingScreen extends StatefulWidget {
-  const ComplaintTrackingScreen({super.key});
+  final Data complaintData;
+  const ComplaintTrackingScreen({super.key, required this.complaintData});
 
   @override
   State<ComplaintTrackingScreen> createState() =>
@@ -50,7 +52,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    final percentage = (progress * 100).round();
+    final complainData = widget.complaintData;
 
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
@@ -151,7 +153,8 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                                 ),
                               ),
                               Text(
-                                "In Progress",
+                                // "In Progress",
+                                complainData?.header?.statusPill ?? "",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.outfit(
@@ -177,7 +180,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                             ),
                           ),
                           child: Text(
-                            "62% COMPLETE",
+                            "${complainData?.header?.completionPercentage}% COMPLETE",
                             style: GoogleFonts.outfit(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
@@ -216,7 +219,8 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Water Leakage in Bathroom",
+                          // "Water Leakage in Bathroom",
+                          complainData?.header?.title ?? "",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.outfit(
@@ -227,7 +231,8 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                           ),
                         ),
                         Text(
-                          "CMP-2026-00124",
+                          // "CMP-2026-00124",
+                          complainData?.header?.ticketNumber ?? "",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.outfit(
@@ -268,7 +273,11 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: "Plumbing",
+                                    text:
+                                        complainData
+                                            ?.requestInformation
+                                            ?.serviceCategory ??
+                                        "",
                                     style: GoogleFonts.outfit(
                                       fontSize: 13.sp,
                                       fontWeight: FontWeight.w500,
@@ -308,7 +317,11 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: "High",
+                                    text:
+                                        complainData
+                                            ?.requestInformation
+                                            ?.priority ??
+                                        "",
                                     style: GoogleFonts.outfit(
                                       fontSize: 13.sp,
                                       fontWeight: FontWeight.w500,
@@ -365,7 +378,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                           ),
                         ),
                         Text(
-                          '$percentage%',
+                          '${complainData?.header?.completionPercentage ?? 0}%',
                           style: GoogleFonts.outfit(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
@@ -379,7 +392,11 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: LinearProgressIndicator(
-                        value: progress.clamp(0.0, 1.0),
+                        value:
+                            ((complainData?.header?.completionPercentage ?? 0) /
+                                    100)
+                                .toDouble()
+                                .clamp(0.0, 1.0),
                         minHeight: 3.h,
                         backgroundColor: const Color(0xff919191),
                         valueColor: const AlwaysStoppedAnimation<Color>(
@@ -402,12 +419,11 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
               ),
               SizedBox(height: 11.h),
               ...List.generate(activities.length, (index) {
-                final activity = activities[index];
+                final activity = complainData.statusTimeline![index];
                 return _TimelineItem(
-                  title: activity["title"]!,
-                  date: activity["date"]!,
-                  description: activity["description"]!,
-                  isLast: index == activities.length - 1,
+                  title: activity.label ?? "",
+                  date: activity.dateTime ?? "",
+                  isLast: index == complainData.statusTimeline!.length - 1,
                 );
               }),
               SizedBox(height: 20.h),
@@ -443,7 +459,7 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                         ),
                         SizedBox(width: 10.w),
                         Text(
-                          "Apartment A-204",
+                          "${complainData.requestInformation?.property}",
                           style: GoogleFonts.outfit(
                             fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
@@ -455,7 +471,8 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                     ),
                     SizedBox(height: 10.h),
                     Text(
-                      "Maintenance supervisor has scheduled a site visit. The issue will be inspected before the repair work begins.",
+                      // "Maintenance supervisor has scheduled a site visit. The issue will be inspected before the repair work begins.",
+                      "${complainData.requestDetails}",
                       style: GoogleFonts.outfit(
                         fontSize: 13.sp,
                         fontWeight: FontWeight.w500,
@@ -466,67 +483,89 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 18.h),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.r),
-                  border: Border.all(color: Color(0xFF101C16), width: 1.w),
-                ),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      "assets/rajkumar.png",
-                      width: 50.w,
-                      height: 50.h,
-                    ),
-                    SizedBox(width: 10.w),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Raj Kumar",
-                          style: GoogleFonts.outfit(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w500,
+              if (complainData?.assignedTo != null) ...[
+                SizedBox(height: 16.h),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 10.h,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.r),
+                    border: Border.all(color: Color(0xFF101C16), width: 1.w),
+                  ),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.r),
+                        child: Image.network(
+                          complainData.assignedTo?.avatarUrl ?? "",
+                          width: 50.w,
+                          height: 50.w,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                                width: 50.w,
+                                height: 50.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  border: Border.all(
+                                    color: Color(0xFF101C16),
+                                    width: 1.w,
+                                  ),
+                                ),
+                                child: Icon(Icons.person, size: 30.sp),
+                              ),
+                        ),
+                      ),
+                      SizedBox(width: 10.w),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            complainData?.assignedTo?.name ?? "",
+                            style: GoogleFonts.outfit(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF101C16),
+                              letterSpacing: -0.2,
+                            ),
+                          ),
+                          Text(
+                            complainData.assignedTo?.role ?? "",
+                            style: GoogleFonts.outfit(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromRGBO(16, 28, 22, 0.5),
+                              letterSpacing: -0.3,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Container(
+                        width: 46.w,
+                        height: 46.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.4),
+                          border: Border.all(
                             color: Color(0xFF101C16),
-                            letterSpacing: -0.2,
+                            width: 1.w,
                           ),
                         ),
-                        Text(
-                          "Maintenance Supervisor",
-                          style: GoogleFonts.outfit(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(16, 28, 22, 0.5),
-                            letterSpacing: -0.3,
+                        child: Center(
+                          child: Icon(
+                            Icons.call_outlined,
+                            color: Color(0xFF101C16),
+                            size: 20.sp,
                           ),
                         ),
-                      ],
-                    ),
-                    Spacer(),
-                    Container(
-                      width: 46.w,
-                      height: 46.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4.4),
-                        border: Border.all(
-                          color: Color(0xFF101C16),
-                          width: 1.w,
-                        ),
                       ),
-                      child: Center(
-                        child: Icon(
-                          Icons.call_outlined,
-                          color: Color(0xFF101C16),
-                          size: 20.sp,
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+              ],
               SizedBox(height: 27.h),
               Row(
                 children: [
@@ -596,13 +635,11 @@ class _ComplaintTrackingScreenState extends State<ComplaintTrackingScreen> {
 class _TimelineItem extends StatelessWidget {
   final String title;
   final String date;
-  final String description;
   final bool isLast;
 
   const _TimelineItem({
     required this.title,
     required this.date,
-    required this.description,
     required this.isLast,
   });
 
@@ -627,16 +664,20 @@ class _TimelineItem extends StatelessWidget {
                       width: 1.w,
                     ),
                   ),
-                  child: Center(
-                    child: Container(
-                      width: 10.w,
-                      height: 10.h,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFF101C16),
-                      ),
-                    ),
-                  ),
+                  child:
+                      date.toLowerCase() == "pending" ||
+                          date.toLowerCase() == "current status"
+                      ? null
+                      : Center(
+                          child: Container(
+                            width: 10.w,
+                            height: 10.h,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xFF101C16),
+                            ),
+                          ),
+                        ),
                 ),
                 // Vertical Line
                 if (!isLast)
@@ -674,17 +715,6 @@ class _TimelineItem extends StatelessWidget {
                     style: GoogleFonts.outfit(
                       fontSize: 13.sp,
                       height: 1.1,
-                      fontWeight: FontWeight.w500,
-                      color: Color.fromRGBO(42, 41, 51, 0.5),
-                      letterSpacing: -0.2,
-                    ),
-                  ),
-                  SizedBox(height: 6.h),
-                  Text(
-                    description,
-                    style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
-                      height: 1.2,
                       fontWeight: FontWeight.w500,
                       color: Color.fromRGBO(42, 41, 51, 0.5),
                       letterSpacing: -0.2,

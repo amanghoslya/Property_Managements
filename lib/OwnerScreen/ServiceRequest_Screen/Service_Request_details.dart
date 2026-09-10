@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -777,6 +779,8 @@ class _ServiceRequestDetailsState extends ConsumerState<ServiceRequestDetails> {
           );
         },
         error: (error, stackTrace) {
+          log(error.toString());
+          log(stackTrace.toString());
           return Center(child: Text("Error Loading Data"));
         },
         loading: () =>

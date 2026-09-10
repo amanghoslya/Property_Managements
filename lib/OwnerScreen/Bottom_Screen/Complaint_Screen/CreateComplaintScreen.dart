@@ -242,6 +242,13 @@ class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(
+      getServiceRequestProvider((
+        statusFilter: "",
+        search: "",
+        type: "complaint",
+      )),
+    );
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -312,78 +319,109 @@ class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 13.h),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  border: Border.all(color: const Color(0xff101C16), width: 1),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8.r),
-                      child: Stack(
-                        children: [
-                          Image.asset(
-                            "assets/document_img.png",
-                            width: double.infinity,
-                            height: 151.h,
-                            fit: BoxFit.cover,
-                          ),
-                          Positioned(
-                            left: 12.w,
-                            top: 10.h,
-                            child: Container(
-                              width: 72.w,
-                              height: 30.h,
-                              decoration: BoxDecoration(
-                                color: Color(0xff101C16),
-                                borderRadius: BorderRadius.circular(50.r),
+              state.when(
+                data: (propertyData) {
+                  return Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 14.w,
+                      vertical: 13.h,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.r),
+                      border: Border.all(
+                        color: const Color(0xff101C16),
+                        width: 1,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8.r),
+                          child: Stack(
+                            children: [
+                              Image.network(
+                                // "assets/document_img.png",
+                                propertyData
+                                        .data
+                                        ?.tickets
+                                        ?.first
+                                        .propertyImage ??
+                                    "",
+                                width: double.infinity,
+                                height: 151.h,
+                                fit: BoxFit.cover,
                               ),
-                              child: Center(
-                                child: Text(
-                                  "A-204",
-                                  style: GoogleFonts.outfit(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                    fontSize: 14.sp,
+                              Positioned(
+                                left: 12.w,
+                                top: 10.h,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10.w,
+                                    vertical: 6.h,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff101C16),
+                                    borderRadius: BorderRadius.circular(50.r),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      propertyData
+                                              .data
+                                              ?.tickets
+                                              ?.first
+                                              .propertyNameNumber ??
+                                          "",
+                                      style: GoogleFonts.outfit(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                        fontSize: 14.sp,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16.h),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Complaint For",
-                          style: GoogleFonts.outfit(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xff101C16),
-                            letterSpacing: -0.54,
+                            ],
                           ),
                         ),
-                        SizedBox(height: 4.h),
-                        Text(
-                          "Apartment A-204 · Green Valley Residency",
-                          style: GoogleFonts.outfit(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(42, 41, 51, 0.6),
-                            letterSpacing: -0.34,
-                          ),
+                        SizedBox(height: 16.h),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Complaint For",
+                              style: GoogleFonts.outfit(
+                                fontSize: 17.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xff101C16),
+                                letterSpacing: -0.54,
+                              ),
+                            ),
+                            SizedBox(height: 4.h),
+                            Text(
+                              "${propertyData.data?.tickets?.first.propertyNameNumber ?? ""} · ${propertyData.data?.tickets?.first.complexName ?? ""}",
+                              style: GoogleFonts.outfit(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromRGBO(42, 41, 51, 0.6),
+                                letterSpacing: -0.34,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  );
+                },
+                error: (error, stackTrace) {
+                  return Center(child: Text("Error while loading Data"));
+                },
+                loading: () {
+                  return Center(
+                    child: CircularProgressIndicator(color: AppColors.heading),
+                  );
+                },
               ),
               SizedBox(height: 30.h),
               Text(
@@ -557,7 +595,9 @@ class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(4.r),
-                                    child: selectedFileType == "image" && selectedFile != null
+                                    child:
+                                        selectedFileType == "image" &&
+                                            selectedFile != null
                                         ? Image.file(
                                             selectedFile!,
                                             fit: BoxFit.cover,

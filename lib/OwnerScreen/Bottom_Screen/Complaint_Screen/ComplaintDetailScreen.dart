@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Complaint_Screen/ComplaintTrackingScreen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
@@ -183,7 +184,8 @@ class _ComplaintDetailScreenState extends ConsumerState<ComplaintDetailScreen> {
                         ),
                         SizedBox(height: 16.h),
                         Text(
-                          data.data?.header?.subtitle ?? "",
+                          // data.data?.header?.subtitle ?? "",
+                          "Your complaint has been received and is currently awaiting assignment to the maintenance team.",
                           style: GoogleFonts.outfit(
                             fontSize: 15.sp,
                             fontWeight: FontWeight.w500,
@@ -238,7 +240,8 @@ class _ComplaintDetailScreenState extends ConsumerState<ComplaintDetailScreen> {
                               ),
                             ),
                             Text(
-                              "Apartment A-204",
+                              // "Apartment A-204",
+                              data.data?.requestInformation?.property ?? "",
                               style: GoogleFonts.outfit(
                                 fontSize: 17.sp,
                                 fontWeight: FontWeight.w500,
@@ -247,15 +250,15 @@ class _ComplaintDetailScreenState extends ConsumerState<ComplaintDetailScreen> {
                                 height: 1.h,
                               ),
                             ),
-                            Text(
-                              "Green Valley Residency",
-                              style: GoogleFonts.outfit(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.w500,
-                                color: Color.fromARGB(127, 42, 41, 51),
-                                letterSpacing: -0.3,
-                              ),
-                            ),
+                            // Text(
+                            //   "Green Valley Residency",
+                            //   style: GoogleFonts.outfit(
+                            //     fontSize: 13.sp,
+                            //     fontWeight: FontWeight.w500,
+                            //     color: Color.fromARGB(127, 42, 41, 51),
+                            //     letterSpacing: -0.3,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ],
@@ -290,12 +293,17 @@ class _ComplaintDetailScreenState extends ConsumerState<ComplaintDetailScreen> {
                           value: data.data?.requestInformation?.priority ?? "",
                           valueColor: const Color(0xFFAE8130),
                         ),
-                        _documentRow(title: "Submitted On", value: ""),
-                        _documentRow(title: "Last Updated", value: ""),
+                        _documentRow(
+                          title: "Submitted On",
+                          value: data.data?.header?.submitted ?? "",
+                        ),
+                        _documentRow(
+                          title: "Last Updated",
+                          value: data.data?.header?.submitted ?? "",
+                        ),
                         _documentRow(
                           title: "Resolution Type",
-                          value:
-                              data.data?.requestInformation?.serviceType ?? "",
+                          value: data.data?.header?.title ?? "",
                           showBottomBorder: false,
                         ),
                       ],
@@ -335,157 +343,280 @@ class _ComplaintDetailScreenState extends ConsumerState<ComplaintDetailScreen> {
                     ),
                   ),
                   SizedBox(height: 16.h),
-                  Text(
-                    "Assigned To",
-                    style: GoogleFonts.outfit(
-                      fontSize: 17.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF101C16),
-                      letterSpacing: -0.2,
+                  if (data.data?.assignedTo != null) ...[
+                    Text(
+                      "Assigned To",
+                      style: GoogleFonts.outfit(
+                        fontSize: 17.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.heading,
+                        letterSpacing: -0.2,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10.h),
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.w,
-                      vertical: 10.h,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.r),
-                      border: Border.all(color: Color(0xFF101C16), width: 1.w),
-                    ),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/rajkumar.png",
-                          width: 50.w,
-                          height: 50.h,
+                    SizedBox(height: 16.h),
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 10.h,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.r),
+                        border: Border.all(
+                          color: Color(0xFF101C16),
+                          width: 1.w,
                         ),
-                        SizedBox(width: 10.w),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Raj Kumar",
-                              style: GoogleFonts.outfit(
-                                fontSize: 17.sp,
-                                fontWeight: FontWeight.w500,
+                      ),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.r),
+                            child: Image.network(
+                              data.data?.assignedTo?.avatarUrl ?? "",
+                              width: 50.w,
+                              height: 50.w,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Container(
+                                    width: 50.w,
+                                    height: 50.w,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      border: Border.all(
+                                        color: Color(0xFF101C16),
+                                        width: 1.w,
+                                      ),
+                                    ),
+                                    child: Icon(Icons.person, size: 30.sp),
+                                  ),
+                            ),
+                          ),
+                          SizedBox(width: 10.w),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data.data?.assignedTo?.name ?? "",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 17.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xFF101C16),
+                                  letterSpacing: -0.2,
+                                ),
+                              ),
+                              Text(
+                                data.data?.assignedTo?.role ?? "",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color.fromRGBO(16, 28, 22, 0.5),
+                                  letterSpacing: -0.3,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Container(
+                            width: 46.w,
+                            height: 46.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.4),
+                              border: Border.all(
                                 color: Color(0xFF101C16),
-                                letterSpacing: -0.2,
+                                width: 1.w,
                               ),
                             ),
-                            Text(
-                              "Maintenance Supervisor",
-                              style: GoogleFonts.outfit(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                                color: Color.fromRGBO(16, 28, 22, 0.5),
-                                letterSpacing: -0.3,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-                        Container(
-                          width: 46.w,
-                          height: 46.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4.4),
-                            border: Border.all(
-                              color: Color(0xFF101C16),
-                              width: 1.w,
-                            ),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.call_outlined,
-                              color: Color(0xFF101C16),
-                              size: 20.sp,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 18.h),
-                  Text(
-                    "Assigned To",
-                    style: GoogleFonts.outfit(
-                      fontSize: 17.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF101C16),
-                      letterSpacing: -0.2,
-                    ),
-                  ),
-                  SizedBox(height: 10.h),
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.w,
-                      vertical: 10.h,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.r),
-                      border: Border.all(color: Color(0xFF101C16), width: 1.w),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 30.w,
-                          height: 30.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4.4),
-                            border: Border.all(
-                              color: Color(0xFF101C16),
-                              width: 1.w,
-                            ),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.description_outlined,
-                              color: Color(0xFF101C16),
-                              size: 20.sp,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10.w),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Raj Kumar",
-                              style: GoogleFonts.outfit(
-                                fontSize: 17.sp,
-                                fontWeight: FontWeight.w500,
+                            child: Center(
+                              child: Icon(
+                                Icons.call_outlined,
                                 color: Color(0xFF101C16),
-                                letterSpacing: -0.2,
+                                size: 20.sp,
                               ),
                             ),
-                            Text(
-                              "Maintenance Supervisor",
-                              style: GoogleFonts.outfit(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                                color: Color.fromRGBO(16, 28, 22, 0.5),
-                                letterSpacing: -0.3,
-                              ),
-                            ),
-                          ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                  SizedBox(height: 16.h),
+                  if ((data.data?.attachments ?? []).isNotEmpty) ...[
+                    Row(
+                      children: [
+                        Text(
+                          "Attachments",
+                          style: GoogleFonts.outfit(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.heading,
+                            letterSpacing: -0.2,
+                          ),
                         ),
                         Spacer(),
                         Text(
-                          "View",
+                          "${data.data!.attachments!.length} File${data.data!.attachments!.length > 1 ? 's' : ''}",
                           style: GoogleFonts.outfit(
-                            fontSize: 17.sp,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xFF101C16),
+                            color: AppColors.heading,
                             letterSpacing: -0.2,
                           ),
                         ),
                       ],
                     ),
-                  ),
+                    SizedBox(height: 16.h),
+                    ...List.generate(data.data!.attachments!.length, (index) {
+                      final attachment = data.data!.attachments![index];
+                      return Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 10.h,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.r),
+                          border: Border.all(
+                            color: Color(0xFF101C16),
+                            width: 1.w,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10.r),
+                              child: Image.network(
+                                attachment.url ?? "",
+                                width: 50.w,
+                                height: 50.w,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(
+                                      width: 50.w,
+                                      height: 50.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          10.r,
+                                        ),
+                                        border: Border.all(
+                                          color: Color(0xFF101C16),
+                                          width: 1.w,
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        Icons.broken_image,
+                                        size: 30.sp,
+                                      ),
+                                    ),
+                              ),
+                            ),
+                            SizedBox(width: 10.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    attachment.fileName ?? "",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xFF101C16),
+                                      letterSpacing: -0.2,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${attachment.type ?? 'File'} • ${attachment.size ?? ''}",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromRGBO(16, 28, 22, 0.5),
+                                      letterSpacing: -0.3,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 10.w),
+                            GestureDetector(
+                              onTap: () {
+                                if (attachment.url != null &&
+                                    attachment.url!.isNotEmpty) {
+                                  showDialog(
+                                    context: context,
+                                    barrierColor: Colors.black87,
+                                    builder: (context) {
+                                      return Dialog(
+                                        backgroundColor: Colors.transparent,
+                                        insetPadding: EdgeInsets.zero,
+                                        child: Stack(
+                                          children: [
+                                            SizedBox(
+                                              width: double.infinity,
+                                              height: double.infinity,
+                                              child: PhotoView(
+                                                imageProvider: NetworkImage(
+                                                  attachment.url!,
+                                                ),
+                                                backgroundDecoration:
+                                                    const BoxDecoration(
+                                                      color: Colors.transparent,
+                                                    ),
+                                                minScale: PhotoViewComputedScale
+                                                    .contained,
+                                                maxScale:
+                                                    PhotoViewComputedScale
+                                                        .covered *
+                                                    3,
+                                              ),
+                                            ),
+
+                                            Positioned(
+                                              top: 40.h,
+                                              right: 20.w,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Container(
+                                                  padding: EdgeInsets.all(8.w),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                        color: Colors.black54,
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                  child: Icon(
+                                                    Icons.close,
+                                                    color: Colors.white,
+                                                    size: 24.sp,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                              child: Text(
+                                "View",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.heading,
+                                  letterSpacing: -0.3,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                  ],
                   SizedBox(height: 16.h),
                   Text(
                     "Complaint Activity",
@@ -497,13 +628,14 @@ class _ComplaintDetailScreenState extends ConsumerState<ComplaintDetailScreen> {
                     ),
                   ),
                   SizedBox(height: 20.h),
-                  ...List.generate(activities.length, (index) {
-                    final activity = activities[index];
+                  ...List.generate(data.data?.statusTimeline?.length ?? 0, (
+                    index,
+                  ) {
+                    final activity = data.data!.statusTimeline![index];
                     return _TimelineItem(
-                      title: activity["title"]!,
-                      date: activity["date"]!,
-                      description: activity["description"]!,
-                      isLast: index == activities.length - 1,
+                      title: activity.label ?? "",
+                      date: activity.dateTime ?? "",
+                      isLast: index == data.data!.statusTimeline!.length - 1,
                     );
                   }),
                   SizedBox(height: 27.h),
@@ -529,7 +661,9 @@ class _ComplaintDetailScreenState extends ConsumerState<ComplaintDetailScreen> {
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                builder: (context) => ComplaintTrackingScreen(),
+                                builder: (context) => ComplaintTrackingScreen(
+                                  complaintData: data.data!,
+                                ),
                               ),
                             );
                           },
@@ -652,13 +786,11 @@ class _ComplaintDetailScreenState extends ConsumerState<ComplaintDetailScreen> {
 class _TimelineItem extends StatelessWidget {
   final String title;
   final String date;
-  final String description;
   final bool isLast;
 
   const _TimelineItem({
     required this.title,
     required this.date,
-    required this.description,
     required this.isLast,
   });
 
@@ -683,17 +815,22 @@ class _TimelineItem extends StatelessWidget {
                       width: 1.w,
                     ),
                   ),
-                  child: Center(
-                    child: Container(
-                      width: 10.w,
-                      height: 10.h,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFF101C16),
-                      ),
-                    ),
-                  ),
+                  child:
+                      date.toLowerCase() == "pending" ||
+                          date.toLowerCase() == "current status"
+                      ? null
+                      : Center(
+                          child: Container(
+                            width: 10.w,
+                            height: 10.h,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xFF101C16),
+                            ),
+                          ),
+                        ),
                 ),
+                // Vertical Line
                 if (!isLast)
                   Expanded(
                     child: Container(
@@ -716,7 +853,7 @@ class _TimelineItem extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 17.sp,
+                      fontSize: 18.sp,
                       height: 1.1,
                       fontWeight: FontWeight.w500,
                       color: Color(0xFF101C16),
@@ -729,17 +866,6 @@ class _TimelineItem extends StatelessWidget {
                     style: GoogleFonts.outfit(
                       fontSize: 13.sp,
                       height: 1.1,
-                      fontWeight: FontWeight.w500,
-                      color: Color.fromRGBO(42, 41, 51, 0.5),
-                      letterSpacing: -0.2,
-                    ),
-                  ),
-                  SizedBox(height: 6.h),
-                  Text(
-                    description,
-                    style: GoogleFonts.outfit(
-                      fontSize: 12.sp,
-                      height: 1.2,
                       fontWeight: FontWeight.w500,
                       color: Color.fromRGBO(42, 41, 51, 0.5),
                       letterSpacing: -0.2,

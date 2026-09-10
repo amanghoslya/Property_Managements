@@ -83,6 +83,9 @@ class Ticket {
     String? priority;
     String? requestedDate;
     String? updatedText;
+    String? propertyImage;
+    String? propertyNameNumber;
+    String? complexName;
 
     Ticket({
         this.id,
@@ -95,6 +98,9 @@ class Ticket {
         this.priority,
         this.requestedDate,
         this.updatedText,
+        this.propertyImage,
+        this.complexName,
+        this.propertyNameNumber,
     });
 
     factory Ticket.fromJson(Map<String, dynamic> json) => Ticket(
@@ -108,6 +114,9 @@ class Ticket {
         priority: json["priority"],
         requestedDate: json["requested_date"],
         updatedText: json["updated_text"],
+        propertyImage: json["property_image"],
+        complexName: json["complex_name"],
+        propertyNameNumber: json["property_name_number"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -121,5 +130,8 @@ class Ticket {
         "priority": priority,
         "requested_date": requestedDate,
         "updated_text": updatedText,
+        "property_image": propertyImage,
+        "complex_name": complexName,
+        "property_name_number": propertyNameNumber,
     };
 }

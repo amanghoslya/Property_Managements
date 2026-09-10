@@ -119,6 +119,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     height: 44.h,
                     decoration: const BoxDecoration(color: Colors.transparent),
                     child: TextField(
+                      style: GoogleFonts.outfit(
+                        letterSpacing: -0.2,
+                        fontSize: 20.sp,
+                      ),
                       controller: emailController,
                       cursorColor: AppColors.heading,
                       cursorHeight: 18.h,
@@ -183,6 +187,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     height: 44.h,
                     decoration: const BoxDecoration(color: Colors.transparent),
                     child: TextField(
+                      style: GoogleFonts.outfit(
+                        letterSpacing: -0.2,
+                        fontSize: 20.sp,
+                      ),
                       controller: passwordController,
                       cursorColor: AppColors.heading,
                       cursorHeight: 18.h,

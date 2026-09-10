@@ -477,13 +477,13 @@ class _PropertyStatusScreenState extends ConsumerState<PropertyStatusScreen> {
                               borderRadius: BorderRadius.circular(10.r),
                               child: Image.network(
                                 issue.imageUrl ?? "",
-                                width: 44.w,
-                                height: 54.h,
+                                width: 50.w,
+                                height: 50.h,
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) =>
                                     Container(
-                                      width: 44.w,
-                                      height: 54.h,
+                                      width: 50.w,
+                                      height: 50.h,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
                                           10.r,
@@ -514,6 +514,7 @@ class _PropertyStatusScreenState extends ConsumerState<PropertyStatusScreen> {
                                       fontWeight: FontWeight.w500,
                                       color: AppColors.heading,
                                       letterSpacing: -0.2,
+                                      height: 1.h,
                                     ),
                                   ),
                                   SizedBox(height: 4.h),
@@ -524,6 +525,7 @@ class _PropertyStatusScreenState extends ConsumerState<PropertyStatusScreen> {
                                       fontWeight: FontWeight.w500,
                                       color: Color.fromRGBO(42, 41, 51, 0.5),
                                       letterSpacing: -0.2,
+                                      height: 1.2.h,
                                     ),
                                   ),
                                 ],

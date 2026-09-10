@@ -30,6 +30,7 @@ class _EditprofilescreenState extends ConsumerState<Editprofilescreen> {
   final ImagePicker _picker = ImagePicker();
 
   File? selectedImage;
+  String? existingImageUrl;
 
   Future<void> _pickImage(ImageSource source) async {
     try {
@@ -98,7 +99,9 @@ class _EditprofilescreenState extends ConsumerState<Editprofilescreen> {
       emailController.text = value.data?.email ?? "";
       phoneController.text = value.data?.phone ?? "";
       accountTypeController.text = value.data?.role ?? "";
-      // selectedImage = value.data?.avatarUrl ?? "";
+      setState(() {
+        existingImageUrl = value.data?.avatarUrl ?? "";
+      });
     });
   }
 
@@ -185,6 +188,44 @@ class _EditprofilescreenState extends ConsumerState<Editprofilescreen> {
                                   width: 80.r,
                                   height: 80.r,
                                   fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      width: 80.r,
+                                      height: 80.r,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: const Color(0xFF101C16),
+                                          width: 1.w,
+                                        ),
+                                      ),
+                                      child: Icon(Icons.person, size: 30.sp),
+                                    );
+                                  },
+                                )
+                              : (existingImageUrl != null &&
+                                    existingImageUrl!.isNotEmpty)
+                              ? ClipOval(
+                                  child: Image.network(
+                                    existingImageUrl!,
+                                    width: 80.r,
+                                    height: 80.r,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Container(
+                                        width: 80.r,
+                                        height: 80.r,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: const Color(0xFF101C16),
+                                            width: 1.w,
+                                          ),
+                                        ),
+                                        child: Icon(Icons.person, size: 30.sp),
+                                      );
+                                    },
+                                  ),
                                 )
                               : Container(
                                   width: 80.r,

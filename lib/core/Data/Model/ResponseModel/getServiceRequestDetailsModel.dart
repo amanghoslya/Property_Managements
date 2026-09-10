@@ -96,20 +96,26 @@ class Header {
     String? ticketNumber;
     String? title;
     String? subtitle;
+    String? submitted;
     String? statusPill;
+    int? completionPercentage;
 
     Header({
         this.ticketNumber,
         this.title,
         this.subtitle,
+        this.submitted,
         this.statusPill,
+        this.completionPercentage,
     });
 
     factory Header.fromJson(Map<String, dynamic> json) => Header(
         ticketNumber: json["ticket_number"],
         title: json["title"],
         subtitle: json["subtitle"],
+        submitted: json["Submitted"],
         statusPill: json["status_pill"],
+        completionPercentage: json["completion_percentage"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -117,6 +123,8 @@ class Header {
         "title": title,
         "subtitle": subtitle,
         "status_pill": statusPill,
+        "Submitted": submitted,
+        "completion_percentage": completionPercentage,
     };
 }
 

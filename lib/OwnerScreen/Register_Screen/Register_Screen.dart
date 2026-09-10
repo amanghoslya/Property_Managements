@@ -251,7 +251,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           value: selectedFlatNameNumber,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return "Please select a flat";
+                              return "Please select an apartment / flat";
                             }
                             return null;
                           },
@@ -316,8 +316,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           ),
                           items: data.data?.map((flat) {
                             return DropdownMenuItem<String>(
-                              value: flat.id.toString(),
-                              child: Text(flat.propertyNameNumber ?? ''),
+                              value: flat.propertyNameNumber.toString(),
+                              child: Text(
+                                flat.propertyNameNumber ?? '',
+                                style: GoogleFonts.outfit(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.heading,
+                                  letterSpacing: -0.2,
+                                ),
+                              ),
                             );
                           }).toList(),
                           onChanged: (value) {
@@ -327,7 +335,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           },
                         );
                       },
-
                       error: (e, s) {
                         log("error $e");
                         return Center(child: Text("Something went wrong"));
@@ -415,8 +422,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                     confirmPassword: confirmPasswordController
                                         .text
                                         .trim(),
-                                    propertyNameNumber: apartmentController.text
-                                        .trim(),
+                                    propertyNameNumber: selectedFlatNameNumber!,
+
                                     role: 'property_owner',
                                   );
                                   if (response.status == true) {
@@ -478,26 +485,31 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               ),
               SizedBox(height: 20.h),
               Center(
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Already have an account?  ",
-                        style: GoogleFonts.outfit(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF000000),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "Already have an account?  ",
+                          style: GoogleFonts.outfit(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF000000),
+                          ),
                         ),
-                      ),
-                      TextSpan(
-                        text: "Login",
-                        style: GoogleFonts.outfit(
-                          fontSize: 17.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF000000),
+                        TextSpan(
+                          text: "Login",
+                          style: GoogleFonts.outfit(
+                            fontSize: 17.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF000000),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -575,7 +587,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: GoogleFonts.outfit(
-        fontSize: 15.sp,
+        fontSize: 16.sp,
         color: const Color(0xff101C16),
         letterSpacing: -0.2,
       ),

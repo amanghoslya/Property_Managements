@@ -86,31 +86,32 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Image.asset(
-                        //   "assets/profile (2).png",
-                        //   width: 70.w,
-                        //   height: 70.h,
-                        // ),
-                        ClipOval(
-                          child: Image.network(
-                            data.data?.avatarUrl ?? "",
-                            width: 70.r,
-                            height: 70.r,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container(
-                                width: 70.r,
-                                height: 70.r,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Color(0xFF101C16),
-                                    width: 1.w,
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.blueGrey.shade100,
+                          ),
+                          child: ClipOval(
+                            child: Image.network(
+                              data.data?.avatarUrl ?? "",
+                              width: 70.r,
+                              height: 70.r,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  width: 70.r,
+                                  height: 70.r,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Color(0xFF101C16),
+                                      width: 1.w,
+                                    ),
                                   ),
-                                ),
-                                child: Icon(Icons.person, size: 30.sp),
-                              );
-                            },
+                                  child: Icon(Icons.person, size: 30.sp),
+                                );
+                              },
+                            ),
                           ),
                         ),
                         SizedBox(height: 6.h),

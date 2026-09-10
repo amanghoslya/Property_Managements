@@ -19,7 +19,6 @@ class _ComplaintsScreenState extends ConsumerState<ComplaintsScreen> {
   int selectedFilter = 0;
   int selectedSummary = 0;
   String searchQuery = "";
-  String? total, open, resolved;
   final TextEditingController searchController = TextEditingController();
 
   final List<Map<String, dynamic>> complaints = [
@@ -73,6 +72,11 @@ class _ComplaintsScreenState extends ConsumerState<ComplaintsScreen> {
         type: "complaint",
       )),
     );
+
+    final summary = state.valueOrNull?.data?.summaryCounts;
+    final total = summary?.totalRequests ?? "0";
+    final open = summary?.inProgress ?? "0";
+    final resolved = summary?.completed ?? "0";
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       appBar: AppBar(
@@ -122,25 +126,17 @@ class _ComplaintsScreenState extends ConsumerState<ComplaintsScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: _summaryCard(
-                      index: 0,
-                      count: total ?? "0",
-                      title: "Total",
-                    ),
+                    child: _summaryCard(index: 0, count: total, title: "Total"),
                   ),
                   SizedBox(width: 10.w),
                   Expanded(
-                    child: _summaryCard(
-                      index: 1,
-                      count: open ?? "0",
-                      title: "Open",
-                    ),
+                    child: _summaryCard(index: 1, count: open, title: "Open"),
                   ),
                   SizedBox(width: 10.w),
                   Expanded(
                     child: _summaryCard(
                       index: 2,
-                      count: resolved ?? "0",
+                      count: resolved,
                       title: "Resolved",
                     ),
                   ),
@@ -188,13 +184,6 @@ class _ComplaintsScreenState extends ConsumerState<ComplaintsScreen> {
               SizedBox(height: 20.h),
               state.when(
                 data: (complaintData) {
-                  total = complaintData.data?.summaryCounts?.totalRequests
-                      .toString();
-                  open = complaintData.data?.summaryCounts?.inProgress
-                      .toString();
-                  resolved = complaintData.data?.summaryCounts?.completed
-                      .toString();
-
                   if (complaintData.data?.tickets == null ||
                       complaintData.data!.tickets!.isEmpty) {
                     return Padding(
@@ -229,7 +218,7 @@ class _ComplaintsScreenState extends ConsumerState<ComplaintsScreen> {
                           ),
 
                           Text(
-                            "03 Records",
+                            "${complaintData.data!.tickets!.length.toString().padLeft(2, '0')} Records",
                             style: GoogleFonts.outfit(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500,

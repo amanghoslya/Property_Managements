@@ -30,7 +30,13 @@ class _MyBottomScreenState extends State<MyBottomScreen> {
   int selectIndex = 0;
 
   List<Widget> get screen => [
-    HomeScreen(),
+    HomeScreen(
+      onProfileTap: () {
+        setState(() {
+          selectIndex = 4;
+        });
+      },
+    ),
     PropertyScreen(),
     ComplaintsScreen(),
     DocumentScreen(),
@@ -152,7 +158,8 @@ class _MyBottomScreenState extends State<MyBottomScreen> {
 }
 
 class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({super.key});
+  final VoidCallback onProfileTap;
+  const HomeScreen({super.key, required this.onProfileTap});
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
@@ -415,22 +422,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
 
               SizedBox(width: 8.w),
-              Container(
-                height: 36.h,
-                width: 36.w,
-                decoration: BoxDecoration(
-                  color: AppColors.scaffoldBg,
-                  borderRadius: BorderRadius.circular(6.r),
-                  border: Border.all(
-                    color: const Color(0xffB8BCB8),
-                    width: 1.w,
+              InkWell(
+                onTap: widget.onProfileTap,
+                child: Container(
+                  height: 36.h,
+                  width: 36.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.scaffoldBg,
+                    borderRadius: BorderRadius.circular(6.r),
+                    border: Border.all(
+                      color: const Color(0xffB8BCB8),
+                      width: 1.w,
+                    ),
                   ),
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.person_outline,
-                    size: 25.sp,
-                    color: Color(0xff101C16),
+                  child: Center(
+                    child: Icon(
+                      Icons.person_outline,
+                      size: 25.sp,
+                      color: Color(0xff101C16),
+                    ),
                   ),
                 ),
               ),

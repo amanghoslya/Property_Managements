@@ -5,10 +5,14 @@ import 'package:property_care/core/Data/Model/BodyModel/resetPassBodyModel.dart'
 import 'package:property_care/core/Data/Model/BodyModel/verifyOtpBodyModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/availableFlatModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/consolidatedStateModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/documentDetialsModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/forgotPassResModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/getDocumentListModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getProfileModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getServiceRequestDetailsModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getServiceRequestModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/getTenantDetailsModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/getTenantListModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/logoutModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/ownerDashboardModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/propertyDetailsModel.dart';
@@ -19,6 +23,8 @@ import 'package:property_care/core/Network/ApiStateNetwork.dart';
 import '../Data/Model/BodyModel/forgotPassBodyModel.dart';
 import '../Data/Model/ResponseModel/editProfileResModel.dart';
 import '../Data/Model/ResponseModel/getPropertyScoreModel.dart';
+import '../Data/Model/ResponseModel/getTenantPaymentModel.dart';
+import '../Data/Model/ResponseModel/gtUtilityStatusModel.dart';
 import '../Data/Model/ResponseModel/loginResModel.dart';
 import '../Data/Model/ResponseModel/registerResModel.dart';
 
@@ -238,6 +244,130 @@ class AuthService {
   }) async {
     try {
       final response = await api.getServiceRequestDetails(id);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetDocumentListModel> getDocumentList({
+    required String category,
+  }) async {
+    try {
+      final response = await api.getDocumentList(category);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<DocumentDetailsModel> documentDetails({required String id}) async {
+    try {
+      final response = await api.documentDetails(id);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> addTenant({
+    required int propertyId,
+    required String name,
+    required String phone,
+    required String email,
+    required String monthlyRent,
+    required String securityDeposit,
+    required String moveInDate,
+    required String moveOutDate,
+    required String tenantStatus,
+    required String tenantType,
+    MultipartFile? image,
+  }) async {
+    try {
+      final response = await api.addTenant(
+        propertyId,
+        name,
+        phone,
+        email,
+        monthlyRent,
+        securityDeposit,
+        moveInDate,
+        moveOutDate,
+        tenantStatus,
+        tenantType,
+        image,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetTenantListModel> getTenantList() async {
+    try {
+      final response = await api.getTenantList();
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetTenantDetailsModel> getTenantDetails({required String id}) async {
+    try {
+      final response = await api.getTenantDetails(id);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> editTenant({
+    required String id,
+    required int propertyId,
+    required String name,
+    required String phone,
+    required String email,
+    required String monthlyRent,
+    required String securityDeposit,
+    required String moveInDate,
+    required String moveOutDate,
+    required String tenantStatus,
+    required String tenantType,
+    MultipartFile? image,
+  }) async {
+    try {
+      final response = await api.editTenant(
+        id,
+        propertyId,
+        name,
+        phone,
+        email,
+        monthlyRent,
+        securityDeposit,
+        moveInDate,
+        moveOutDate,
+        tenantStatus,
+        tenantType,
+        image,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetTenantPaymentModel> getTenantPayment({required String id}) async {
+    try {
+      final response = await api.getTenantPayment(id);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetUtilityStatusModel> getUtilityStatus({required String id}) async {
+    try {
+      final response = await api.getUtilityStatus(id);
       return response;
     } catch (e) {
       rethrow;
