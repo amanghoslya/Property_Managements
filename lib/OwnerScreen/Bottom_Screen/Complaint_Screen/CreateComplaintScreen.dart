@@ -15,6 +15,8 @@ import 'package:property_care/core/Utils/showMessage.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
 import '../../ServiceRequest_Screen/Provider/getServiceProvider.dart';
+import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/Provider/getPropertyListProvider.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/propertyListModel.dart';
 
 class CreateComplaintScreen extends ConsumerStatefulWidget {
   const CreateComplaintScreen({super.key});
@@ -242,13 +244,48 @@ class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(
+    final propertyListState = ref.watch(getPropertyListProvider);
+    final serviceState = ref.watch(
       getServiceRequestProvider((
         statusFilter: "",
         search: "",
         type: "complaint",
       )),
     );
+
+    final activeProperty = propertyListState.valueOrNull?.data?.firstWhere(
+      (p) => p.isSelected == true,
+      orElse: () =>
+          (propertyListState.valueOrNull?.data != null &&
+              propertyListState.valueOrNull!.data!.isNotEmpty)
+          ? propertyListState.valueOrNull!.data!.first
+          : Datum(),
+    );
+
+    final ticket =
+        (serviceState.valueOrNull?.data?.tickets != null &&
+            serviceState.valueOrNull!.data!.tickets!.isNotEmpty)
+        ? serviceState.valueOrNull!.data!.tickets!.first
+        : null;
+
+    final propertyName =
+        (activeProperty?.propertyNameNumber?.isNotEmpty == true)
+        ? activeProperty!.propertyNameNumber!
+        : (ticket?.propertyNameNumber?.isNotEmpty == true)
+        ? ticket!.propertyNameNumber!
+        : "Apartment A-204";
+
+    final complexName = (activeProperty?.complexName?.isNotEmpty == true)
+        ? activeProperty!.complexName!
+        : (ticket?.complexName?.isNotEmpty == true)
+        ? ticket!.complexName!
+        : "Green Valley Residency";
+
+    final propertyImage = (activeProperty?.imageUrl?.isNotEmpty == true)
+        ? activeProperty!.imageUrl!
+        : (ticket?.propertyImage?.isNotEmpty == true)
+        ? ticket!.propertyImage!
+        : "";
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -319,110 +356,121 @@ class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              state.when(
-                data: (propertyData) {
-                  return Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.w,
-                      vertical: 13.h,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      border: Border.all(
-                        color: const Color(0xff101C16),
-                        width: 1,
+              propertyListState.isLoading &&
+                      propertyListState.valueOrNull == null
+                  ? Container(
+                      width: double.infinity,
+                      height: 220.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(
+                          color: const Color(0xff101C16),
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.r),
-                          child: Stack(
-                            children: [
-                              Image.network(
-                                // "assets/document_img.png",
-                                propertyData
-                                        .data
-                                        ?.tickets
-                                        ?.first
-                                        .propertyImage ??
-                                    "",
-                                width: double.infinity,
-                                height: 151.h,
-                                fit: BoxFit.cover,
-                              ),
-                              Positioned(
-                                left: 12.w,
-                                top: 10.h,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 10.w,
-                                    vertical: 6.h,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xff101C16),
-                                    borderRadius: BorderRadius.circular(50.r),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      propertyData
-                                              .data
-                                              ?.tickets
-                                              ?.first
-                                              .propertyNameNumber ??
-                                          "",
-                                      style: GoogleFonts.outfit(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
-                                        fontSize: 14.sp,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.heading,
+                          strokeWidth: 1.5.w,
+                        ),
+                      ),
+                    )
+                  : Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 14.w,
+                        vertical: 13.h,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(
+                          color: const Color(0xff101C16),
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.r),
+                            child: Stack(
+                              children: [
+                                propertyImage.isNotEmpty
+                                    ? Image.network(
+                                        propertyImage,
+                                        width: double.infinity,
+                                        height: 151.h,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Image.asset(
+                                                  "assets/document_img.png",
+                                                  width: double.infinity,
+                                                  height: 151.h,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                      )
+                                    : Image.asset(
+                                        "assets/document_img.png",
+                                        width: double.infinity,
+                                        height: 151.h,
+                                        fit: BoxFit.cover,
+                                      ),
+                                Positioned(
+                                  left: 12.w,
+                                  top: 10.h,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 10.w,
+                                      vertical: 6.h,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xff101C16),
+                                      borderRadius: BorderRadius.circular(50.r),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        propertyName,
+                                        style: GoogleFonts.outfit(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                          fontSize: 14.sp,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 16.h),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Complaint For",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 17.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xff101C16),
+                                  letterSpacing: -0.54,
+                                ),
+                              ),
+                              SizedBox(height: 4.h),
+                              Text(
+                                "$propertyName · $complexName",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color.fromRGBO(42, 41, 51, 0.6),
+                                  letterSpacing: -0.34,
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        SizedBox(height: 16.h),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Complaint For",
-                              style: GoogleFonts.outfit(
-                                fontSize: 17.sp,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xff101C16),
-                                letterSpacing: -0.54,
-                              ),
-                            ),
-                            SizedBox(height: 4.h),
-                            Text(
-                              "${propertyData.data?.tickets?.first.propertyNameNumber ?? ""} · ${propertyData.data?.tickets?.first.complexName ?? ""}",
-                              style: GoogleFonts.outfit(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                                color: Color.fromRGBO(42, 41, 51, 0.6),
-                                letterSpacing: -0.34,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  );
-                },
-                error: (error, stackTrace) {
-                  return Center(child: Text("Error while loading Data"));
-                },
-                loading: () {
-                  return Center(
-                    child: CircularProgressIndicator(color: AppColors.heading),
-                  );
-                },
-              ),
               SizedBox(height: 30.h),
               Text(
                 "Complaint Information",
@@ -852,13 +900,17 @@ class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
           type: "complaint",
         )),
       );
-      Navigator.pop(context);
+      if (mounted) {
+        Navigator.pop(context);
+      }
     } catch (e) {
       showErrorSnackBar("Failed to submit Complaint.");
     } finally {
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 

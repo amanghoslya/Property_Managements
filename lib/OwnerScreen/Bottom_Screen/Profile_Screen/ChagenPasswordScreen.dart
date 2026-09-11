@@ -1,20 +1,39 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:property_care/core/AuthService/AuthServiceProvider.dart';
+import 'package:property_care/core/Utils/showMessage.dart';
 import 'package:property_care/core/constant/appColor.dart';
 import 'package:svg_flutter/svg.dart';
 
-class ChagenPasswordScreen extends StatefulWidget {
+class ChagenPasswordScreen extends ConsumerStatefulWidget {
   const ChagenPasswordScreen({super.key});
 
   @override
-  State<ChagenPasswordScreen> createState() => _ChagenPasswordScreenState();
+  ConsumerState<ChagenPasswordScreen> createState() =>
+      _ChagenPasswordScreenState();
 }
 
-class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
+class _ChagenPasswordScreenState extends ConsumerState<ChagenPasswordScreen> {
   bool isCurrentPasswordVisible = false;
   bool isNewPasswordVisible = false;
   bool isConfirmPasswordVisible = false;
+  bool isLoading = false;
+  final currentPassController = TextEditingController();
+  final newPassController = TextEditingController();
+  final confirmPassController = TextEditingController();
+
+  @override
+  void dispose() {
+    currentPassController.dispose();
+    newPassController.dispose();
+    confirmPassController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -207,6 +226,7 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildTextfield(
+                      controller: currentPassController,
                       label: "Current Password",
                       hintText: "Current Password",
                       isPasswordVisible: isCurrentPasswordVisible,
@@ -218,6 +238,7 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
                     ),
                     SizedBox(height: 12.h),
                     _buildTextfield(
+                      controller: newPassController,
                       label: "New Password",
                       hintText: "Enter New Password",
                       isPasswordVisible: isNewPasswordVisible,
@@ -229,6 +250,7 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
                     ),
                     SizedBox(height: 12.h),
                     _buildTextfield(
+                      controller: confirmPassController,
                       label: "Confirm New Password",
                       hintText: "Confirm New Password",
                       isPasswordVisible: isConfirmPasswordVisible,
@@ -252,16 +274,62 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
                       borderRadius: BorderRadius.circular(3.r),
                     ),
                   ),
-                  onPressed: () {},
-                  child: Text(
-                    "Update Password",
-                    style: GoogleFonts.outfit(
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xffFFFFFF),
-                      fontSize: 15.sp,
-                      letterSpacing: -0.34,
-                    ),
-                  ),
+                  onPressed: () async {
+                    if (newPassController.text != confirmPassController.text) {
+                      showErrorSnackBar('Passwords do not match');
+                      return;
+                    }
+                    if (newPassController.text.isEmpty ||
+                        confirmPassController.text.isEmpty ||
+                        currentPassController.text.isEmpty) {
+                      showErrorSnackBar('Please fill all the fields');
+                      return;
+                    }
+                    setState(() {
+                      isLoading = true;
+                    });
+
+                    try {
+                      final service = ref.read(authServiceProvider);
+                      final response = await service.changePassword(
+                        currentPassword: currentPassController.text,
+                        newPassword: newPassController.text,
+                        confirmNewPassword: confirmPassController.text,
+                      );
+                      if (context.mounted) {
+                        showSuccessSnackBar('Password changed successfully');
+                        if (response.status == true) {
+                          Navigator.pop(context);
+                        }
+                      }
+                    } catch (e) {
+                      log(e.toString());
+                    } finally {
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
+                  },
+                  child: isLoading
+                      ? Center(
+                          child: SizedBox(
+                            width: 20.w,
+                            height: 20.h,
+                            child: CircularProgressIndicator(
+                              color: AppColors.background,
+                              strokeWidth: 2.w,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          "Update Password",
+                          style: GoogleFonts.outfit(
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xffFFFFFF),
+                            fontSize: 15.sp,
+                            letterSpacing: -0.34,
+                          ),
+                        ),
                 ),
               ),
             ],
@@ -276,6 +344,7 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
     required String hintText,
     required bool isPasswordVisible,
     required VoidCallback onVisibilityChanged,
+    required TextEditingController controller,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -293,9 +362,11 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
         SizedBox(height: 7.h),
 
         Container(
-          height: 35.h,
+          height: 40.h,
           decoration: const BoxDecoration(color: Colors.transparent),
           child: TextField(
+            style: GoogleFonts.outfit(fontSize: 17.sp, letterSpacing: -0.2),
+            controller: controller,
             cursorColor: AppColors.heading,
             cursorHeight: 18.h,
             cursorWidth: 1.5.w,

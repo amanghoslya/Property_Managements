@@ -6,12 +6,14 @@ import 'package:property_care/core/Data/Model/ResponseModel/consolidatedStateMod
 import 'package:property_care/core/Data/Model/ResponseModel/documentDetialsModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/editProfileResModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getDocumentListModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/getNotificaionListModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getProfileModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getServiceRequestDetailsModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getServiceRequestModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getTenantDetailsModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getTenantListModel.dart';
-import 'package:property_care/core/Data/Model/ResponseModel/gtUtilityStatusModel.dart' show GetUtilityStatusModel;
+import 'package:property_care/core/Data/Model/ResponseModel/gtUtilityStatusModel.dart'
+    show GetUtilityStatusModel;
 import 'package:property_care/core/Data/Model/ResponseModel/logoutModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/ownerDashboardModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/propertyDetailsModel.dart';
@@ -20,13 +22,18 @@ import 'package:property_care/core/Data/Model/ResponseModel/registerResModel.dar
 import 'package:property_care/core/Data/Model/ResponseModel/resetPassResModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/verifyOtpResModel.dart';
 import 'package:retrofit/retrofit.dart';
+import '../Data/Model/BodyModel/changePasswordBodyModel.dart';
 import '../Data/Model/BodyModel/forgotPassBodyModel.dart';
 import '../Data/Model/BodyModel/loginBodyModel.dart';
 import '../Data/Model/BodyModel/registerBodyModel.dart';
+import '../Data/Model/ResponseModel/changePassResModel.dart';
 import '../Data/Model/ResponseModel/forgotPassResModel.dart';
+import '../Data/Model/ResponseModel/getMaintenanceHistoryDetailsModel.dart';
+import '../Data/Model/ResponseModel/getMaintenanceHistoryModel.dart';
 import '../Data/Model/ResponseModel/getPropertyScoreModel.dart';
 import '../Data/Model/ResponseModel/getTenantPaymentModel.dart';
 import '../Data/Model/ResponseModel/loginResModel.dart';
+import '../Data/Model/ResponseModel/maintenancePaymentStatusModel.dart';
 
 part 'ApiStateNetwork.g.dart';
 
@@ -159,4 +166,25 @@ abstract class ApiStateNetwork {
 
   @GET("/api/v1/owner/tenants/{id}/utility-status")
   Future<GetUtilityStatusModel> getUtilityStatus(@Path("id") String id);
+
+  @PUT("/api/v1/auth/password")
+  Future<ChangePasswordResModel> changePassword(
+    @Body() ChangePasswordBodyModel body,
+  );
+
+  @GET("/api/v1/maintenance/history")
+  Future<GetMaintenanceHistoryModel> getMaintenanceHistory(
+    @Query("filter") String filter,
+  );
+
+  @GET("/api/v1/maintenance/{id}/details")
+  Future<GetMaintenanceHistoryDetailsModel> getMaintenanceHistoryDetails(
+    @Path('id') String id,
+  );
+
+  @GET("/api/v1/maintenance/payment-status")
+  Future<MaintenancePaymentStatusModel> maintenancePaymentStatus();
+
+  @GET("/api/v1/notifications")
+  Future<GetNotificaionListModel> getNotificaionList();
 }

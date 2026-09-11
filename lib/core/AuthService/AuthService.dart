@@ -20,12 +20,18 @@ import 'package:property_care/core/Data/Model/ResponseModel/propertyListModel.da
 import 'package:property_care/core/Data/Model/ResponseModel/resetPassResModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/verifyOtpResModel.dart';
 import 'package:property_care/core/Network/ApiStateNetwork.dart';
+import '../Data/Model/BodyModel/changePasswordBodyModel.dart';
 import '../Data/Model/BodyModel/forgotPassBodyModel.dart';
+import '../Data/Model/ResponseModel/changePassResModel.dart';
 import '../Data/Model/ResponseModel/editProfileResModel.dart';
+import '../Data/Model/ResponseModel/getMaintenanceHistoryDetailsModel.dart';
+import '../Data/Model/ResponseModel/getMaintenanceHistoryModel.dart';
+import '../Data/Model/ResponseModel/getNotificaionListModel.dart';
 import '../Data/Model/ResponseModel/getPropertyScoreModel.dart';
 import '../Data/Model/ResponseModel/getTenantPaymentModel.dart';
 import '../Data/Model/ResponseModel/gtUtilityStatusModel.dart';
 import '../Data/Model/ResponseModel/loginResModel.dart';
+import '../Data/Model/ResponseModel/maintenancePaymentStatusModel.dart';
 import '../Data/Model/ResponseModel/registerResModel.dart';
 
 class AuthService {
@@ -368,6 +374,64 @@ class AuthService {
   Future<GetUtilityStatusModel> getUtilityStatus({required String id}) async {
     try {
       final response = await api.getUtilityStatus(id);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ChangePasswordResModel> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+  }) async {
+    try {
+      final body = ChangePasswordBodyModel(
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+        confirmNewPassword: confirmNewPassword,
+      );
+      final response = await api.changePassword(body);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetMaintenanceHistoryModel> maintenanceHistory({
+    required String filter,
+  }) async {
+    try {
+      final response = await api.getMaintenanceHistory(filter);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetMaintenanceHistoryDetailsModel> getMaintenanceHistoryDetails({
+    required String id,
+  }) async {
+    try {
+      final response = await api.getMaintenanceHistoryDetails(id);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+   Future<MaintenancePaymentStatusModel> maintenancePaymentStatus() async {
+    try {
+      final response = await api.maintenancePaymentStatus();
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetNotificaionListModel> getNotificaionList() async {
+    try {
+      final response = await api.getNotificaionList();
       return response;
     } catch (e) {
       rethrow;

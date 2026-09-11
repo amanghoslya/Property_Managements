@@ -24,7 +24,6 @@ class _ServiceRequestScreenState extends ConsumerState<ServiceRequestScreen> {
   final List<String> filters = ["All", "Open", "In Progress", "Resolved"];
   String searchQuery = "";
   final TextEditingController searchController = TextEditingController();
-  String? totalRequest, inProgress, complete;
 
   @override
   void dispose() {
@@ -49,6 +48,11 @@ class _ServiceRequestScreenState extends ConsumerState<ServiceRequestScreen> {
         type: "service_request",
       )),
     );
+
+    final summary = state.valueOrNull?.data?.summaryCounts;
+    final totalRequest = summary?.totalRequests ?? "0";
+    final inProgress = summary?.inProgress ?? "0";
+    final complete = summary?.completed ?? "0";
 
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
@@ -223,10 +227,6 @@ class _ServiceRequestScreenState extends ConsumerState<ServiceRequestScreen> {
               SizedBox(height: 20.h),
               state.when(
                 data: (modelData) {
-                  totalRequest = modelData.data?.summaryCounts?.totalRequests;
-                  inProgress = modelData.data?.summaryCounts?.inProgress;
-                  complete = modelData.data?.summaryCounts?.completed;
-
                   if (modelData.data?.tickets == null ||
                       modelData.data!.tickets!.isEmpty) {
                     return Padding(

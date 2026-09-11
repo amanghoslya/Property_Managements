@@ -8,8 +8,16 @@ import 'package:property_care/OwnerScreen/login_screen.dart';
 import 'package:property_care/core/Utils/key.dart';
 import 'package:property_care/core/Utils/showMessage.dart';
 
+bool _isRedirectingToLogin = false;
+
 Dio createDio() {
-  Dio dio = Dio();
+  Dio dio = Dio(
+    // BaseOptions(
+    //   connectTimeout: const Duration(seconds: 30),
+    //   receiveTimeout: const Duration(seconds: 30),
+    //   sendTimeout: const Duration(seconds: 30),
+    // ),
+  );
   dio.interceptors.add(
     PrettyDioLogger(
       requestBody: true,
@@ -24,13 +32,16 @@ Dio createDio() {
   dio.interceptors.add(
     InterceptorsWrapper(
       onRequest: (options, handler) async {
-        final box = await Hive.openBox("userData");
+        final box = Hive.isBoxOpen("userdata")
+            ? Hive.box("userdata")
+            : await Hive.openBox("userdata");
         final token = box.get("token");
 
         options.headers.addAll({
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          if (token != null) "Authorization": "Bearer $token",
+          if (token != null && token.toString().isNotEmpty)
+            "Authorization": "Bearer $token",
         });
         return handler.next(options);
       },
@@ -41,16 +52,26 @@ Dio createDio() {
         if (error.response?.statusCode == 401) {
           log("Token expired / Unauthenticated");
 
-          final box = await Hive.openBox("userData");
+          final box = Hive.isBoxOpen("userdata")
+              ? Hive.box("userdata")
+              : await Hive.openBox("userdata");
 
           // Token remove
           await box.delete("token");
-          showErrorSnackBar("Session expired. Please log in again.");
-          // Login screen par bhejo
-          navigatorKey.currentState?.pushAndRemoveUntil(
-            CupertinoPageRoute(builder: (_) => const LoginScreen()),
-            (route) => false,
-          );
+
+          if (!_isRedirectingToLogin) {
+            _isRedirectingToLogin = true;
+            showErrorSnackBar("Session expired. Please log in again.");
+            // Login screen par bhejo
+            navigatorKey.currentState?.pushAndRemoveUntil(
+              CupertinoPageRoute(builder: (_) => const LoginScreen()),
+              (route) => false,
+            );
+
+            Future.delayed(const Duration(seconds: 2), () {
+              _isRedirectingToLogin = false;
+            });
+          }
 
           return handler.next(error);
         }

@@ -12,6 +12,8 @@ import 'package:property_care/core/constant/appColor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:property_care/core/AuthService/AuthServiceProvider.dart';
 import 'package:dio/dio.dart';
+import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/Provider/getPropertyListProvider.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/propertyListModel.dart';
 
 class CreateServiceRequest extends ConsumerStatefulWidget {
   const CreateServiceRequest({super.key});
@@ -235,6 +237,30 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
 
   @override
   Widget build(BuildContext context) {
+    final propertyListState = ref.watch(getPropertyListProvider);
+
+    final activeProperty = propertyListState.valueOrNull?.data?.firstWhere(
+      (p) => p.isSelected == true,
+      orElse: () =>
+          (propertyListState.valueOrNull?.data != null &&
+              propertyListState.valueOrNull!.data!.isNotEmpty)
+          ? propertyListState.valueOrNull!.data!.first
+          : Datum(),
+    );
+
+    final propertyName =
+        (activeProperty?.propertyNameNumber?.isNotEmpty == true)
+        ? activeProperty!.propertyNameNumber!
+        : "Apartment A-204";
+
+    final complexName = (activeProperty?.complexName?.isNotEmpty == true)
+        ? activeProperty!.complexName!
+        : "Green Valley Residency";
+
+    final propertyImage = (activeProperty?.imageUrl?.isNotEmpty == true)
+        ? activeProperty!.imageUrl!
+        : "";
+
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       appBar: AppBar(
@@ -302,65 +328,106 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 30.h),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.heading),
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 40.h,
-                      width: 40.w,
+              propertyListState.isLoading &&
+                      propertyListState.valueOrNull == null
+                  ? Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 18.w,
+                        vertical: 12.h,
+                      ),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.r),
                         border: Border.all(color: AppColors.heading),
+                        borderRadius: BorderRadius.circular(10.r),
                       ),
+                      height: 80.h,
                       child: Center(
-                        child: Image.asset(
-                          "assets/auditImg.png",
-                          height: 18.h,
-                          width: 18.w,
+                        child: CircularProgressIndicator(
+                          color: AppColors.heading,
+                          strokeWidth: 1.5.w,
                         ),
                       ),
+                    )
+                  : Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 10.h,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.heading),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 40.h,
+                            width: 40.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.r),
+                              border: Border.all(color: AppColors.heading),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(4.r),
+                              child: propertyImage.isNotEmpty
+                                  ? Image.network(
+                                      propertyImage,
+                                      height: 40.h,
+                                      width: 40.w,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              Center(
+                                                child: Image.asset(
+                                                  "assets/auditImg.png",
+                                                  height: 18.h,
+                                                  width: 18.w,
+                                                ),
+                                              ),
+                                    )
+                                  : Center(
+                                      child: Image.asset(
+                                        "assets/auditImg.png",
+                                        height: 18.h,
+                                        width: 18.w,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                          SizedBox(width: 10.w),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Property",
+                                style: GoogleFonts.outfit(
+                                  fontWeight: FontWeight.w500,
+                                  color: Color.fromRGBO(42, 41, 51, 0.5),
+                                  fontSize: 13.sp,
+                                  letterSpacing: -0.2,
+                                ),
+                              ),
+                              Text(
+                                propertyName,
+                                style: GoogleFonts.outfit(
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.heading,
+                                  fontSize: 17.sp,
+                                  letterSpacing: -0.2,
+                                ),
+                              ),
+                              Text(
+                                complexName,
+                                style: GoogleFonts.outfit(
+                                  fontWeight: FontWeight.w500,
+                                  color: Color.fromRGBO(42, 41, 51, 0.5),
+                                  fontSize: 13.sp,
+                                  letterSpacing: -0.2,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(width: 10.w),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Property",
-                          style: GoogleFonts.outfit(
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(42, 41, 51, 0.5),
-                            fontSize: 13.sp,
-                            letterSpacing: -0.2,
-                          ),
-                        ),
-                        Text(
-                          "Apartment A-204",
-                          style: GoogleFonts.outfit(
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.heading,
-                            fontSize: 17.sp,
-                            letterSpacing: -0.2,
-                          ),
-                        ),
-                        Text(
-                          "Green Valley Residency",
-                          style: GoogleFonts.outfit(
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(42, 41, 51, 0.5),
-                            fontSize: 13.sp,
-                            letterSpacing: -0.2,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(height: 30.h),
               Text(
                 "Service Information",
@@ -851,7 +918,9 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(4.r),
-                                    child: selectedFileType == "image" && selectedFile != null
+                                    child:
+                                        selectedFileType == "image" &&
+                                            selectedFile != null
                                         ? Image.file(
                                             selectedFile!,
                                             fit: BoxFit.cover,
