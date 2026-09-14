@@ -159,7 +159,6 @@ class _ChagenPasswordScreenState extends State<ChagenPasswordScreen> {
 
                     SizedBox(width: 8.w),
 
-                    // Secure Button
                     Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 12.w,
