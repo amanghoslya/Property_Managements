@@ -4,20 +4,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:property_care/OwnerScreen/Audit_Report/AuditReport_Details_Screen.dart';
+import 'package:property_care/OwnerScreen/inspectionReport/inspectionReportDetailsScreen.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getInspectionReportModel.dart';
 import 'package:property_care/core/constant/appColor.dart';
+import 'package:svg_flutter/svg.dart';
 
-import '../inspectionReport/Provider/getInspectionReportProvider.dart';
+import 'Provider/getInspectionReportProvider.dart';
 
-class AuditreprotScreen extends ConsumerStatefulWidget {
-  const AuditreprotScreen({super.key});
+class InspectionReportScreen extends ConsumerStatefulWidget {
+  const InspectionReportScreen({super.key});
 
   @override
-  ConsumerState<AuditreprotScreen> createState() => _AuditreprotScreenState();
+  ConsumerState<InspectionReportScreen> createState() =>
+      _InspectionReportScreenState();
 }
 
-class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
+class _InspectionReportScreenState
+    extends ConsumerState<InspectionReportScreen> {
   int selectedFilter = 0;
   String get selectedFilterValue {
     switch (selectedFilter) {
@@ -34,13 +37,17 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
   @override
   Widget build(BuildContext context) {
     final getInspectionReport = ref.watch(
-      getInspectionReportProvider((filter: selectedFilterValue, type: "audit")),
+      getInspectionReportProvider((
+        filter: selectedFilterValue,
+        type: "inspection",
+      )),
     );
 
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       appBar: AppBar(
         backgroundColor: AppColors.scaffoldBg,
+        elevation: 0,
         automaticallyImplyLeading: false,
         titleSpacing: 20.w,
         title: Align(
@@ -73,21 +80,21 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Audit Reports",
+                    "INSPECTION REPORTS",
                     style: GoogleFonts.outfit(
                       fontSize: 17.sp,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
                     ),
                   ),
                   SizedBox(height: 2.h),
                   Text(
-                    "AUDIT REPORT HISTORY",
+                    "PROPERTY INSPECTION HISTORY",
                     style: GoogleFonts.outfit(
-                      fontSize: 14.sp,
+                      fontSize: 13.sp,
                       fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(42, 41, 51, 0.6),
+                      color: const Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
                     ),
                   ),
@@ -106,7 +113,7 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Failed to load audit reports",
+                "Failed to load inspection reports",
                 style: GoogleFonts.outfit(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
@@ -124,7 +131,7 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                 onPressed: () => ref.refresh(
                   getInspectionReportProvider((
                     filter: selectedFilterValue,
-                    type: "audit",
+                    type: "inspection",
                   )),
                 ),
                 child: Text(
@@ -146,7 +153,7 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
           final propertyName =
               firstProperty?.propertyNameNumber ?? "Apartment A-204";
           final propertyLocation =
-              firstProperty?.location ?? "Green Valley Residency · Jaipur";
+              firstProperty?.location ?? "Emirates Hills, Dubai, UAE";
           final filteredReports = allReports;
 
           return RefreshIndicator(
@@ -155,7 +162,7 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
               return ref.refresh(
                 getInspectionReportProvider((
                   filter: selectedFilterValue,
-                  type: "audit",
+                  type: "inspection",
                 )).future,
               );
             },
@@ -166,14 +173,20 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 12.h),
+
                     if (filteredReports.isNotEmpty)
                       Container(
+                        width: double.infinity,
                         padding: EdgeInsets.symmetric(
-                          vertical: 15.h,
-                          horizontal: 13.w,
+                          vertical: 12.h,
+                          horizontal: 14.w,
                         ),
                         decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.heading),
+                          border: Border.all(
+                            color: AppColors.heading,
+                            width: 1.1,
+                          ),
                           borderRadius: BorderRadius.circular(10.r),
                         ),
                         child: Row(
@@ -183,17 +196,20 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                               width: 40.w,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5.r),
-                                border: Border.all(color: AppColors.heading),
+                                border: Border.all(
+                                  color: AppColors.heading,
+                                  width: 1.1,
+                                ),
                               ),
                               child: Center(
-                                child: Image.asset(
-                                  "assets/auditImg.png",
-                                  height: 18.h,
-                                  width: 18.w,
+                                child: SvgPicture.asset(
+                                  "assets/SvgImage/proAparment.svg",
+                                  height: 20.h,
+                                  width: 20.w,
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10.w),
+                            SizedBox(width: 12.w),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,23 +217,23 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                                   Text(
                                     propertyName,
                                     style: GoogleFonts.outfit(
-                                      fontSize: 17.sp,
-                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
                                       color: AppColors.heading,
                                       letterSpacing: -0.2,
                                     ),
                                   ),
-                                  SizedBox(height: 4.h),
+                                  SizedBox(height: 3.h),
                                   Text(
                                     propertyLocation,
                                     style: GoogleFonts.outfit(
                                       fontSize: 13.sp,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w400,
                                       color: const Color.fromRGBO(
                                         42,
                                         41,
                                         51,
-                                        0.5,
+                                        0.6,
                                       ),
                                       letterSpacing: -0.2,
                                     ),
@@ -228,31 +244,38 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                           ],
                         ),
                       ),
+
                     SizedBox(height: 20.h),
+
+                    // Section Title & Description
                     Text(
-                      "Audit Reports",
+                      "Inspection Reports",
                       style: GoogleFonts.outfit(
                         fontSize: 17.sp,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         color: AppColors.heading,
                         letterSpacing: -0.2,
                       ),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 6.h),
                     Text(
-                      "View previous audit reports, audit dates, findings and\n recommendations.",
+                      "View previous inspections, inspection dates, inspector information and report findings.",
                       style: GoogleFonts.outfit(
                         fontSize: 13.sp,
-                        fontWeight: FontWeight.w500,
-                        color: const Color.fromRGBO(42, 41, 51, 0.5),
+                        fontWeight: FontWeight.w400,
+                        color: const Color.fromRGBO(42, 41, 51, 0.6),
                         letterSpacing: -0.2,
+                        height: 1.35,
                       ),
                     ),
-                    SizedBox(height: 20.h),
+
+                    SizedBox(height: 18.h),
+
+                    // Filter Buttons
                     Row(
                       children: [
                         Expanded(
-                          child: _reportFilterButton(
+                          child: _filterButton(
                             title: "All Reports",
                             isSelected: selectedFilter == 0,
                             onTap: () {
@@ -264,7 +287,7 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                         ),
                         SizedBox(width: 10.w),
                         Expanded(
-                          child: _reportFilterButton(
+                          child: _filterButton(
                             title: "Recent",
                             isSelected: selectedFilter == 1,
                             onTap: () {
@@ -276,7 +299,7 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                         ),
                         SizedBox(width: 10.w),
                         Expanded(
-                          child: _reportFilterButton(
+                          child: _filterButton(
                             title: "Previous",
                             isSelected: selectedFilter == 2,
                             onTap: () {
@@ -288,13 +311,16 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                         ),
                       ],
                     ),
+
                     SizedBox(height: 20.h),
+
+                    // Inspection Report Cards List
                     if (filteredReports.isEmpty)
                       Center(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 40.h),
                           child: Text(
-                            "No audit reports found",
+                            "No inspection reports found",
                             style: GoogleFonts.outfit(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
@@ -310,10 +336,11 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           final item = filteredReports[index];
-                          return _auditCard(item);
+                          return _inspectionCard(item);
                         },
                       ),
-                    SizedBox(height: 20.h),
+
+                    SizedBox(height: 24.h),
                   ],
                 ),
               ),
@@ -324,44 +351,76 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
     );
   }
 
-  Widget _auditCard(Datum item) {
-    final reportDate = item.inspectionDate ?? item.createdAt;
-    final displayDate = reportDate != null
-        ? DateFormat("dd MMMM yyyy").format(reportDate)
-        : "";
+  Widget _filterButton({
+    required String title,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          border: Border.all(
+            color: isSelected
+                ? const Color(0xff101C16)
+                : const Color(0xff8B8D84),
+            width: isSelected ? 1.3 : 1.1,
+          ),
+          borderRadius: BorderRadius.circular(25.r),
+        ),
+        alignment: Alignment.center,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            title,
+            maxLines: 1,
+            style: GoogleFonts.outfit(
+              fontSize: 13.5.sp,
+              fontWeight: isSelected ? FontWeight.w500 : FontWeight.w400,
+              color: isSelected
+                  ? const Color(0xff101C16)
+                  : const Color(0xff777970),
+              letterSpacing: -0.2,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _inspectionCard(Datum item) {
+    final displayDate = item.createdAt != null
+        ? DateFormat("dd MMMM yyyy").format(item.createdAt!)
+        : (item.inspectionDate != null
+              ? DateFormat("dd MMMM yyyy").format(item.inspectionDate!)
+              : "");
 
     final statusText = item.status != null && item.status!.isNotEmpty
         ? "${item.status![0].toUpperCase()}${item.status!.substring(1)}"
         : "Completed";
 
-    final auditDateText = item.inspectionDate != null
+    final inspectorName = item.inspector?.name ?? "N/A";
+
+    final inspectionDateText = item.inspectionDate != null
         ? DateFormat("dd MMM yyyy").format(item.inspectionDate!)
-        : (item.createdAt != null
-              ? DateFormat("dd MMM yyyy").format(item.createdAt!)
-              : "N/A");
-
-    final auditTypeText =
-        (item.auditType != null && item.auditType.toString().trim().isNotEmpty)
-        ? item.auditType.toString()
-        : "Property Audit";
-
-    final findingsText =
-        (item.findings != null && item.findings!.trim().isNotEmpty)
-        ? "Available"
-        : "None";
+        : "N/A";
 
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           CupertinoPageRoute(
-            builder: (context) => AuditreportDetailsScreen(
+            builder: (context) => InspectionReportDetailsScreen(
               id: item.id?.toString() ?? "",
-              title: "Property Audit Report",
+              title: "Property Inspection Report",
               date: displayDate,
               property: item.property?.propertyNameNumber ?? "Apartment A-204",
-              auditType: auditTypeText,
-              auditDate: auditDateText,
+              inspector: inspectorName,
+              inspectionDate: inspectionDateText,
               status: statusText,
             ),
           ),
@@ -369,11 +428,11 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
       },
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 11.w, vertical: 15.h),
-        margin: EdgeInsets.only(bottom: 20.h),
+        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
+        margin: EdgeInsets.only(bottom: 16.h),
         decoration: BoxDecoration(
-          border: Border.all(color: const Color(0xff101C16), width: 1.2),
-          borderRadius: BorderRadius.circular(13.r),
+          border: Border.all(color: const Color(0xff101C16), width: 1.1),
+          borderRadius: BorderRadius.circular(12.r),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -381,41 +440,44 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Left icon box
                 Container(
-                  width: 49.w,
-                  height: 51.h,
+                  width: 44.w,
+                  height: 44.h,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: const Color(0xff101C16),
                       width: 1.1,
                     ),
-                    borderRadius: BorderRadius.circular(4.r),
+                    borderRadius: BorderRadius.circular(5.r),
                   ),
                   child: Center(
                     child: Icon(
                       Icons.article_outlined,
-                      size: 22.sp,
+                      size: 20.sp,
                       color: const Color(0xff101C16),
                     ),
                   ),
                 ),
-                SizedBox(width: 14.w),
+                SizedBox(width: 12.w),
+
+                // Title and Date
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Property Audit Report",
+                        "Property Inspection Report",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.outfit(
-                          fontSize: 17.sp,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
                           color: const Color(0xff101C16),
                           letterSpacing: -0.2,
                         ),
                       ),
-                      SizedBox(height: 7.h),
+                      SizedBox(height: 5.h),
                       Text(
                         displayDate,
                         style: GoogleFonts.outfit(
@@ -428,14 +490,20 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                     ],
                   ),
                 ),
-                SizedBox(width: 10.w),
+
+                SizedBox(width: 8.w),
+
+                // Completed Badge
                 Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 20.w,
+                    horizontal: 18.w,
                     vertical: 5.h,
                   ),
                   decoration: BoxDecoration(
-                    border: Border.all(color: const Color(0xff101C16)),
+                    border: Border.all(
+                      color: const Color(0xff101C16),
+                      width: 1.1,
+                    ),
                     borderRadius: BorderRadius.circular(25.r),
                   ),
                   alignment: Alignment.center,
@@ -450,35 +518,80 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 14.h),
-            const Divider(height: 1, thickness: 1, color: Color(0xff777970)),
-            SizedBox(height: 17.h),
+
+            SizedBox(height: 12.h),
+
+            // Divider
+            Divider(height: 1, thickness: 0.8, color: const Color(0xffD0D2C8)),
+
+            SizedBox(height: 12.h),
+
+            // Inspector & Inspection Date
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: _infoItem(title: "AUDIT TYPE", value: auditTypeText),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "INSPECTOR",
+                        style: GoogleFonts.outfit(
+                          fontSize: 11.5.sp,
+                          fontWeight: FontWeight.w500,
+                          color: const Color.fromRGBO(16, 28, 22, 0.55),
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                      SizedBox(height: 3.h),
+                      Text(
+                        inspectorName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.outfit(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xff101C16),
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(width: 15.w),
+                SizedBox(width: 10.w),
                 Expanded(
-                  child: _infoItem(title: "AUDIT DATE", value: auditDateText),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "INSPECTION DATE",
+                        style: GoogleFonts.outfit(
+                          fontSize: 11.5.sp,
+                          fontWeight: FontWeight.w500,
+                          color: const Color.fromRGBO(16, 28, 22, 0.55),
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                      SizedBox(height: 3.h),
+                      Text(
+                        inspectionDateText,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.outfit(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xff101C16),
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
+
             SizedBox(height: 14.h),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: _infoItem(title: "REPORT STATUS", value: statusText),
-                ),
-                SizedBox(width: 15.w),
-                Expanded(
-                  child: _infoItem(title: "FINDINGS", value: findingsText),
-                ),
-              ],
-            ),
-            SizedBox(height: 14.h),
+
+            // Findings & View Report
             Row(
               children: [
                 Expanded(
@@ -487,27 +600,28 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
-                      fontSize: 14.sp,
+                      fontSize: 13.5.sp,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.heading,
+                      color: const Color(0xff101C16),
                       letterSpacing: -0.2,
                     ),
                   ),
                 ),
+                SizedBox(width: 8.w),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => AuditreportDetailsScreen(
+                        builder: (context) => InspectionReportDetailsScreen(
                           id: item.id?.toString() ?? "",
-                          title: "Property Audit Report",
+                          title: "Property Inspection Report",
                           date: displayDate,
                           property:
                               item.property?.propertyNameNumber ??
                               "Apartment A-204",
-                          auditType: auditTypeText,
-                          auditDate: auditDateText,
+                          inspector: inspectorName,
+                          inspectionDate: inspectionDateText,
                           status: statusText,
                         ),
                       ),
@@ -516,9 +630,9 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
                   child: Text(
                     "View Report →",
                     style: GoogleFonts.outfit(
-                      fontSize: 13.sp,
+                      fontSize: 13.5.sp,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.heading,
+                      color: const Color(0xff101C16),
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -528,80 +642,6 @@ class _AuditreprotScreenState extends ConsumerState<AuditreprotScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _reportFilterButton({
-    required String title,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 7.h, horizontal: 8.w),
-
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          border: Border.all(
-            color: isSelected
-                ? const Color(0xff101C16)
-                : const Color(0xff8B8D84),
-            width: 1.2,
-          ),
-          borderRadius: BorderRadius.circular(25.r),
-        ),
-
-        alignment: Alignment.center,
-
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            title,
-            maxLines: 1,
-            style: GoogleFonts.outfit(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w400,
-              color: isSelected
-                  ? const Color(0xff101C16)
-                  : const Color(0xff777970),
-              letterSpacing: -0.2,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _infoItem({required String title, required String value}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: GoogleFonts.outfit(
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w500,
-            color: Color.fromRGBO(16, 28, 22, 0.6),
-            letterSpacing: -0.2,
-          ),
-        ),
-
-        SizedBox(height: 2.h),
-
-        Text(
-          value,
-          overflow: TextOverflow.ellipsis,
-          style: GoogleFonts.outfit(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w500,
-            color: AppColors.heading,
-            letterSpacing: -0.2,
-          ),
-        ),
-      ],
     );
   }
 }

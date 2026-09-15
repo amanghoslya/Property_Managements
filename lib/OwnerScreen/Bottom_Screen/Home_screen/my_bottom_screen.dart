@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +19,9 @@ import 'package:property_care/OwnerScreen/ServiceRequest_Screen/Service_Request_
 import 'package:property_care/core/constant/appColor.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
+import 'AddPropertyBottomSheet.dart';
 import 'Provider/getPropertyListProvider.dart';
+import 'Provider/selectedPropertyProvider.dart';
 
 class MyBottomScreen extends StatefulWidget {
   const MyBottomScreen({super.key});
@@ -167,8 +171,6 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   void showPropertyPopup() {
-    int selectedProperty = 0;
-
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -180,6 +182,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             return Consumer(
               builder: (context, ref, child) {
                 final getPropertyListState = ref.watch(getPropertyListProvider);
+                final currentSelectedPropertyId = ref.watch(
+                  selectedPropertyIdProvider,
+                );
 
                 return Container(
                   width: double.infinity,
@@ -248,17 +253,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   SizedBox(height: 16.h),
                               itemBuilder: (context, index) {
                                 final property = properties[index];
+                                final isSelected =
+                                    currentSelectedPropertyId != null
+                                    ? property.id == currentSelectedPropertyId
+                                    : (property.isSelected == true ||
+                                          index == 0);
                                 return propertyItem(
                                   property.imageUrl ?? "",
                                   "${property.propertyType ?? ''} ${property.propertyNameNumber ?? ''}",
                                   "${property.complexName ?? ''} - ${property.location ?? ''}",
-                                  selectedProperty == index,
+                                  isSelected,
                                   onTap: () {
-                                    setModalState(() {
-                                      selectedProperty = index;
-                                    });
-                                    print(
-                                      "${property.propertyNameNumber} Selected",
+                                    ref
+                                        .read(
+                                          selectedPropertyIdProvider.notifier,
+                                        )
+                                        .state = property
+                                        .id;
+                                    Navigator.pop(bottomSheetContext);
+                                    log(
+                                      "${property.propertyNameNumber} Selected (ID: ${property.id})",
                                     );
                                   },
                                 );
@@ -267,7 +281,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           SizedBox(height: 16.h),
                           GestureDetector(
                             onTap: () {
-                              print("Add New Property");
+                              Navigator.pop(bottomSheetContext);
+                              showAddPropertyBottomSheet(context);
                             },
                             child: Container(
                               width: double.infinity,
@@ -1691,6 +1706,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           );
         },
         error: (error, stackTrace) {
+          log(error.toString());
+          log(stackTrace.toString());
           return Center(child: Text("Something went wrong"));
         },
         loading: () =>

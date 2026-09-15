@@ -46,7 +46,9 @@ class _NotificationscreenState extends ConsumerState<Notificationscreen> {
 
   @override
   Widget build(BuildContext context) {
-    final getNotificaionState = ref.watch(getNotificaionListProvider);
+    final getNotificaionState = ref.watch(
+      getNotificaionListProvider(defaultFilters[selectedFilter]),
+    );
 
     final apiData = getNotificaionState.valueOrNull?.data;
     final header = apiData?.header;

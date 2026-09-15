@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:property_care/OwnerScreen/login_screen.dart';
 import 'package:property_care/core/Utils/showMessage.dart';
 import 'package:property_care/core/constant/appColor.dart';
-
 import '../../core/AuthService/AuthServiceProvider.dart';
 import 'provider/availableFlatsProvider.dart';
 
@@ -423,7 +421,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                         .text
                                         .trim(),
                                     propertyNameNumber: selectedFlatNameNumber!,
-
                                     role: 'property_owner',
                                   );
                                   if (response.status == true) {

@@ -331,7 +331,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           borderRadius: BorderRadius.circular(8.r),
                         ),
                       ),
-
                       onPressed: isLoading
                           ? null
                           : () async {
@@ -353,6 +352,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 final response = await service.login(
                                   email: emailController.text.trim(),
                                   password: passwordController.text.trim(),
+                                  role: "property_owner",
                                 );
                                 if (response.status == true) {
                                   var box = Hive.box("userdata");
@@ -361,6 +361,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   await box.put(
                                     "name",
                                     response.data!.user!.name,
+                                  );
+                                  await box.put(
+                                    "role",
+                                    response.data!.user!.role,
                                   );
                                   if (context.mounted) {
                                     Navigator.pushAndRemoveUntil(
