@@ -8,14 +8,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 import 'package:property_care/OwnerScreen/AIPropertyAssistant_Screen/AIProperty_Assistant_Screen.dart';
+import 'package:property_care/OwnerScreen/Audit_Report/AuditReprot_Screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Complaint_Screen/Complaints_screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Document_Screen/document_screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/NotificationScreen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/Provider/ownerDashboardProvider.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Profile_Screen/profile_screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Property_Screen/property_screen.dart';
+import 'package:property_care/OwnerScreen/MaintenanceHistory_Screen/MaintenanceHistory_Screen.dart';
 import 'package:property_care/OwnerScreen/MaintenancePaymentStatusScreen/Maintenance_Payment_Status.dart';
 import 'package:property_care/OwnerScreen/ServiceRequest_Screen/Service_Request_Screen.dart';
+import 'package:property_care/OwnerScreen/inspectionReport/inspectionReportScreen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
@@ -1384,6 +1387,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 _infoItem(
                                   "${ownerDashboard.data?.widgets?.pendingIssues ?? "0"}",
                                   "Pending\nIssues",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) =>
+                                            const ServiceRequestScreen(),
+                                      ),
+                                    );
+                                  },
                                 ),
 
                                 _verticalDivider(),
@@ -1391,6 +1403,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 _infoItem(
                                   "${ownerDashboard.data?.widgets?.openMaintenance ?? "0"}",
                                   "Open\nMaintenance",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) =>
+                                            const MaintenancehistoryScreen(),
+                                      ),
+                                    );
+                                  },
                                 ),
 
                                 _verticalDivider(),
@@ -1411,6 +1432,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                         )
                                       : "0",
                                   "Last\nInspection",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) =>
+                                            const InspectionReportScreen(),
+                                      ),
+                                    );
+                                  },
                                 ),
 
                                 _verticalDivider(),
@@ -1418,6 +1448,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 _infoItem(
                                   "${ownerDashboard.data?.widgets?.documentsCount ?? "0"}",
                                   "Documents",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) =>
+                                            const DocumentScreen(),
+                                      ),
+                                    );
+                                  },
                                 ),
 
                                 _verticalDivider(),
@@ -1659,13 +1698,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           Positioned(
                             right: 15.w,
                             bottom: 30.h,
-                            child: Text(
-                              "View Report →",
-                              style: GoogleFonts.outfit(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xffD4B800),
-                                letterSpacing: -0.2,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => AuditreprotScreen(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "View Report →",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xffD4B800),
+                                  letterSpacing: -0.2,
+                                ),
                               ),
                             ),
                           ),
@@ -1716,8 +1765,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _infoItem(String value, String title) {
-    return Column(
+  Widget _infoItem(String value, String title, {VoidCallback? onTap}) {
+    final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -1743,6 +1792,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       ],
     );
+
+    if (onTap != null) {
+      return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: content,
+      );
+    }
+    return content;
   }
 
   Widget _verticalDivider() {
