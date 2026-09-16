@@ -24,6 +24,7 @@ import 'package:property_care/core/Data/Model/ResponseModel/resetPassResModel.da
 import 'package:property_care/core/Data/Model/ResponseModel/verifyOtpResModel.dart';
 import 'package:property_care/core/Network/ApiStateNetwork.dart';
 import '../Data/Model/BodyModel/addPropertyRequestBodyModel.dart';
+import '../Data/Model/BodyModel/aiAssistanceBodyModel.dart';
 import '../Data/Model/BodyModel/changePasswordBodyModel.dart';
 import '../Data/Model/BodyModel/forgotPassBodyModel.dart';
 import '../Data/Model/ResponseModel/addPropertyRequestResModel.dart';
@@ -494,6 +495,18 @@ class AuthService {
   Future<GetPropertyAssistantModel> getPropertyAssistant() async {
     try {
       final response = await api.getPropertyAssistant();
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetPropertyAssistantModel> sendMessageToAi({
+    required String query,
+  }) async {
+    try {
+      final body = AiAssistanceBodyModel(query: query);
+      final response = await api.sendMessageToAi(body);
       return response;
     } catch (e) {
       rethrow;

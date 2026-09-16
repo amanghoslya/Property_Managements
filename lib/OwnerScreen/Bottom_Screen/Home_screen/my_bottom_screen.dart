@@ -681,9 +681,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     letterSpacing: -0.34,
                                   ),
                                 ),
-
                                 SizedBox(height: 5.h),
-
                                 Text(
                                   // "Apartment A-204",
                                   "${ownerDashboard.data?.property?.type} ${ownerDashboard.data?.property?.nameNumber}",

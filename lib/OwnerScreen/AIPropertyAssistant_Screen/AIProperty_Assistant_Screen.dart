@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:property_care/core/AuthService/AuthServiceProvider.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getPropertyAssistantModel.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
@@ -19,23 +19,69 @@ class AipropertyAssistantScreen extends ConsumerStatefulWidget {
 class _AipropertyAssistantScreenState
     extends ConsumerState<AipropertyAssistantScreen> {
   final TextEditingController messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
-  List<String> messages = [];
+  bool isSending = false;
+  String? pendingQuery;
+  GetPropertyAssistantModel? updatedModel;
 
-  void sendMessage() {
-    String message = messageController.text.trim();
-
-    if (message.isEmpty) return;
-
-    setState(() {
-      messages.add(message);
-      messageController.clear();
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
     });
+  }
+
+  Future<void> sendMessage() async {
+    final message = messageController.text.trim();
+
+    if (message.isEmpty || isSending) return;
+
+    messageController.clear();
+    setState(() {
+      isSending = true;
+      pendingQuery = message;
+    });
+    _scrollToBottom();
+
+    try {
+      final response = await ref
+          .read(authServiceProvider)
+          .sendMessageToAi(query: message);
+
+      if (mounted) {
+        setState(() {
+          updatedModel = response;
+          pendingQuery = null;
+          isSending = false;
+        });
+        _scrollToBottom();
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          pendingQuery = null;
+          isSending = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Failed to send message: ${e.toString()}"),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   @override
   void dispose() {
     messageController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -140,7 +186,8 @@ class _AipropertyAssistantScreenState
           ),
         ),
         data: (modelData) {
-          final data = modelData.data;
+          final effectiveData = updatedModel?.data ?? modelData.data;
+          final data = effectiveData;
 
           final rawAssistantStatus = data?.assistant?.status ?? "ready";
           final assistantStatusText = rawAssistantStatus.isNotEmpty
@@ -160,16 +207,46 @@ class _AipropertyAssistantScreenState
               : "Active";
 
           final suggestedPrompts = data?.suggestedPrompts ?? [];
-          final recentHistory = data?.recentHistory != null
-              ? data!.recentHistory!.reversed.toList()
+
+          // Retain history from updated model or modelData, preserving all entries
+          List<RecentHistory> rawHistory = [];
+          if (updatedModel?.data?.recentHistory != null &&
+              updatedModel!.data!.recentHistory!.isNotEmpty) {
+            rawHistory = List.from(updatedModel!.data!.recentHistory!);
+            if (modelData.data?.recentHistory != null) {
+              for (var oldItem in modelData.data!.recentHistory!) {
+                final exists = rawHistory.any(
+                  (item) =>
+                      (item.id != null &&
+                          oldItem.id != null &&
+                          item.id == oldItem.id) ||
+                      (item.query == oldItem.query &&
+                          item.aiResponse == oldItem.aiResponse),
+                );
+                if (!exists) {
+                  rawHistory.add(oldItem);
+                }
+              }
+            }
+          } else if (modelData.data?.recentHistory != null) {
+            rawHistory = List.from(modelData.data!.recentHistory!);
+          }
+
+          final recentHistory = rawHistory.isNotEmpty
+              ? rawHistory.reversed.toList()
               : <RecentHistory>[];
 
           return RefreshIndicator(
             color: const Color(0xff101C16),
             onRefresh: () async {
+              setState(() {
+                updatedModel = null;
+                pendingQuery = null;
+              });
               return ref.refresh(getPropertyAssistantProvider.future);
             },
             child: SingleChildScrollView(
+              controller: _scrollController,
               physics: const AlwaysScrollableScrollPhysics(),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -548,39 +625,79 @@ class _AipropertyAssistantScreenState
                               ],
                             ),
                           ],
-                          if (messages.isNotEmpty) ...[
+                          if (pendingQuery != null) ...[
                             SizedBox(height: 10.h),
-                            ...messages.map((message) {
-                              return Padding(
-                                padding: EdgeInsets.only(bottom: 6.h),
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Container(
-                                    constraints: BoxConstraints(
-                                      maxWidth: 216.w,
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 9.w,
-                                      vertical: 7.h,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: AppColors.heading,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(4.r),
-                                    ),
-                                    child: Text(
-                                      message,
-                                      style: GoogleFonts.outfit(
-                                        fontSize: 11.sp,
-                                        color: AppColors.heading,
-                                      ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                constraints: BoxConstraints(maxWidth: 216.w),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 9.w,
+                                  vertical: 7.h,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFFFFCEF),
+                                  border: Border.all(
+                                    color: AppColors.heading,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(4.r),
+                                ),
+                                child: Text(
+                                  pendingQuery!,
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 11.sp,
+                                    color: AppColors.heading,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10.h),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 17.h,
+                                  width: 17.w,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFB78932),
+                                    borderRadius: BorderRadius.circular(2.r),
+                                  ),
+                                  child: Text(
+                                    "AI",
+                                    style: GoogleFonts.inter(
+                                      fontSize: 7.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ),
-                              );
-                            }),
+                                SizedBox(width: 12.w),
+                                SizedBox(
+                                  height: 12.h,
+                                  width: 12.w,
+                                  child: const CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Color(0xFFB78932),
+                                  ),
+                                ),
+                                SizedBox(width: 8.w),
+                                Text(
+                                  "Thinking...",
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 12.5.sp,
+                                    color: const Color.fromRGBO(
+                                      42,
+                                      41,
+                                      51,
+                                      0.6,
+                                    ),
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ],
                       ),
@@ -596,9 +713,12 @@ class _AipropertyAssistantScreenState
                             cursorHeight: 23.h,
                             cursorColor: AppColors.heading,
                             cursorWidth: 1.5.w,
+                            enabled: !isSending,
                             textInputAction: TextInputAction.send,
                             onSubmitted: (_) {
-                              sendMessage();
+                              if (!isSending) {
+                                sendMessage();
+                              }
                             },
                             decoration: InputDecoration(
                               isDense: true,
@@ -629,7 +749,7 @@ class _AipropertyAssistantScreenState
                         ),
                         SizedBox(width: 9.w),
                         GestureDetector(
-                          onTap: sendMessage,
+                          onTap: isSending ? null : sendMessage,
                           child: Container(
                             height: 47.h,
                             width: 60.w,
@@ -638,11 +758,20 @@ class _AipropertyAssistantScreenState
                               borderRadius: BorderRadius.circular(4.r),
                             ),
                             alignment: Alignment.center,
-                            child: Icon(
-                              Icons.arrow_upward,
-                              color: Colors.white,
-                              size: 14.sp,
-                            ),
+                            child: isSending
+                                ? SizedBox(
+                                    height: 16.h,
+                                    width: 16.w,
+                                    child: const CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Icon(
+                                    Icons.arrow_upward,
+                                    color: Colors.white,
+                                    size: 14.sp,
+                                  ),
                           ),
                         ),
                       ],

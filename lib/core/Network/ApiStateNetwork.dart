@@ -24,6 +24,7 @@ import 'package:property_care/core/Data/Model/ResponseModel/resetPassResModel.da
 import 'package:property_care/core/Data/Model/ResponseModel/verifyOtpResModel.dart';
 import 'package:retrofit/retrofit.dart';
 import '../Data/Model/BodyModel/addPropertyRequestBodyModel.dart';
+import '../Data/Model/BodyModel/aiAssistanceBodyModel.dart';
 import '../Data/Model/BodyModel/changePasswordBodyModel.dart';
 import '../Data/Model/BodyModel/forgotPassBodyModel.dart';
 import '../Data/Model/BodyModel/loginBodyModel.dart';
@@ -229,6 +230,11 @@ abstract class ApiStateNetwork {
 
   @GET("/api/v1/ai/property-assistant")
   Future<GetPropertyAssistantModel> getPropertyAssistant();
+
+  @POST("/api/v1/ai/property-assistant")
+  Future<GetPropertyAssistantModel> sendMessageToAi(
+    @Body() AiAssistanceBodyModel body,
+  );
 
   @POST("/api/v1/owner/properties/request")
   Future<AddPropertyRequestResModel> addPropertyRequest(
