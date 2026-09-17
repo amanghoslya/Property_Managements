@@ -234,7 +234,9 @@ class _AddPropertyBottomSheetState
                             return DropdownMenuItem<String>(
                               value: flat.propertyNameNumber.toString(),
                               child: Text(
-                                flat.propertyNameNumber ?? '',
+                                "${flat.propertyNameNumber ?? ''} (${flat.complex?.name ?? ""})",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.outfit(
                                   fontSize: 15.sp,
                                   fontWeight: FontWeight.w500,
