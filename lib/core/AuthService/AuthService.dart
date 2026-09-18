@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:property_care/core/Data/Model/BodyModel/loginBodyModel.dart';
 import 'package:property_care/core/Data/Model/BodyModel/registerBodyModel.dart';
 import 'package:property_care/core/Data/Model/BodyModel/resetPassBodyModel.dart';
+import 'package:property_care/core/Data/Model/BodyModel/selectPropertyBodyModel.dart';
 import 'package:property_care/core/Data/Model/BodyModel/verifyOtpBodyModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/availableFlatModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/consolidatedStateModel.dart';
@@ -195,6 +196,15 @@ class AuthService {
     }
   }
 
+  Future<void> selectProperty({required int propertyId}) async {
+    try {
+      final body = SelectPropertyBodyModel(propertyId: propertyId);
+      await api.selectProperty(body);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<EditProfileResModel> editProfile({
     required String name,
     required String phone,
@@ -229,6 +239,7 @@ class AuthService {
     required String priority,
     MultipartFile? attachment,
     required String type,
+    int? propertyId,
   }) async {
     try {
       await api.createService(
@@ -241,6 +252,7 @@ class AuthService {
         priority,
         attachment,
         type,
+        propertyId,
       );
     } catch (e) {
       rethrow;

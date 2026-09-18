@@ -29,6 +29,7 @@ import '../Data/Model/BodyModel/changePasswordBodyModel.dart';
 import '../Data/Model/BodyModel/forgotPassBodyModel.dart';
 import '../Data/Model/BodyModel/loginBodyModel.dart';
 import '../Data/Model/BodyModel/registerBodyModel.dart';
+import '../Data/Model/BodyModel/selectPropertyBodyModel.dart';
 import '../Data/Model/ResponseModel/addPropertyRequestResModel.dart';
 import '../Data/Model/ResponseModel/changePassResModel.dart';
 import '../Data/Model/ResponseModel/forgotPassResModel.dart';
@@ -86,6 +87,9 @@ abstract class ApiStateNetwork {
     @Query("selected_id") int? selectedId,
   );
 
+  @POST("/api/v1/owner/properties/select")
+  Future<dynamic> selectProperty(@Body() SelectPropertyBodyModel body);
+
   @GET("/api/v1/property-scores")
   Future<GetPropertyScoreModel> getPropertyScore(
     @Query("property_id") int? propertyId,
@@ -116,6 +120,7 @@ abstract class ApiStateNetwork {
     @Part(name: "priority") String priority,
     @Part(name: "attachment") MultipartFile? attachment,
     @Part(name: "type") String type,
+    @Part(name: "property_id") int? propertyId,
   );
 
   @GET("/api/v1/tickets")

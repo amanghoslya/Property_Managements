@@ -328,6 +328,28 @@ class _ApiStateNetwork implements ApiStateNetwork {
   }
 
   @override
+  Future<dynamic> selectProperty(SelectPropertyBodyModel body) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<dynamic>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/v1/owner/properties/select',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
+    return _value;
+  }
+
+  @override
   Future<GetPropertyScoreModel> getPropertyScore(int? propertyId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'property_id': propertyId};
@@ -438,6 +460,7 @@ class _ApiStateNetwork implements ApiStateNetwork {
     String priority,
     MultipartFile? attachment,
     String type,
+    int? propertyId,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -461,6 +484,9 @@ class _ApiStateNetwork implements ApiStateNetwork {
       _data.files.add(MapEntry('attachment', attachment));
     }
     _data.fields.add(MapEntry('type', type));
+    if (propertyId != null) {
+      _data.fields.add(MapEntry('property_id', propertyId.toString()));
+    }
     final _options = _setStreamType<void>(
       Options(
             method: 'POST',

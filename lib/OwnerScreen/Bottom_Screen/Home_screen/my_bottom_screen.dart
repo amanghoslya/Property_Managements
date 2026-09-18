@@ -19,6 +19,7 @@ import 'package:property_care/OwnerScreen/MaintenanceHistory_Screen/MaintenanceH
 import 'package:property_care/OwnerScreen/MaintenancePaymentStatusScreen/Maintenance_Payment_Status.dart';
 import 'package:property_care/OwnerScreen/ServiceRequest_Screen/Service_Request_Screen.dart';
 import 'package:property_care/OwnerScreen/inspectionReport/inspectionReportScreen.dart';
+import 'package:property_care/core/AuthService/AuthServiceProvider.dart';
 import 'package:property_care/core/constant/appColor.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
@@ -183,9 +184,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         return StatefulBuilder(
           builder: (context, setModalState) {
             return Consumer(
-              builder: (context, ref, child) {
-                final getPropertyListState = ref.watch(getPropertyListProvider);
-                final currentSelectedPropertyId = ref.watch(
+              builder: (context, modalRef, child) {
+                final getPropertyListState = modalRef.watch(
+                  getPropertyListProvider,
+                );
+                final currentSelectedPropertyId = modalRef.watch(
                   selectedPropertyIdProvider,
                 );
 
@@ -256,27 +259,56 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   SizedBox(height: 16.h),
                               itemBuilder: (context, index) {
                                 final property = properties[index];
+                                final hasBackendSelected = properties.any(
+                                  (p) => p.isSelected == true,
+                                );
                                 final isSelected =
                                     currentSelectedPropertyId != null
                                     ? property.id == currentSelectedPropertyId
-                                    : (property.isSelected == true ||
-                                          index == 0);
+                                    : (hasBackendSelected
+                                          ? property.isSelected == true
+                                          : index == 0);
                                 return propertyItem(
                                   property.imageUrl ?? "",
                                   "${property.propertyType ?? ''} ${property.propertyNameNumber ?? ''}",
                                   "${property.complexName ?? ''} - ${property.location ?? ''}",
                                   isSelected,
-                                  onTap: () {
+                                  onTap: () async {
+                                    final propertyId = property.id;
+                                    if (propertyId == null) return;
+
+                                    // 1. Pehle selectedPropertyId state update karein
                                     ref
-                                        .read(
-                                          selectedPropertyIdProvider.notifier,
-                                        )
-                                        .state = property
-                                        .id;
-                                    Navigator.pop(bottomSheetContext);
+                                            .read(
+                                              selectedPropertyIdProvider
+                                                  .notifier,
+                                            )
+                                            .state =
+                                        propertyId;
+
+                                    // 2. Bottom sheet close karein
+                                    if (bottomSheetContext.mounted) {
+                                      Navigator.pop(bottomSheetContext);
+                                    }
+
                                     log(
-                                      "${property.propertyNameNumber} Selected (ID: ${property.id})",
+                                      "${property.propertyNameNumber} Selected (ID: $propertyId)",
                                     );
+
+                                    // 3. POST API hit karein aur dashboard/list refresh karein
+                                    try {
+                                      final service = ref.read(
+                                        authServiceProvider,
+                                      );
+                                      await service.selectProperty(
+                                        propertyId: propertyId,
+                                      );
+
+                                      ref.invalidate(getPropertyListProvider);
+                                      ref.invalidate(ownerDashboardProvider);
+                                    } catch (e) {
+                                      log("Error in selectProperty API: $e");
+                                    }
                                   },
                                 );
                               },

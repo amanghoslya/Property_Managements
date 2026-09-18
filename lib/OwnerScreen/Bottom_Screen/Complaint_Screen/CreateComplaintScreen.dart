@@ -27,8 +27,6 @@ class CreateComplaintScreen extends ConsumerStatefulWidget {
 }
 
 class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
-  String? selectedCategory;
-  String? selectedSubject;
   bool isLoading = false;
 
   final List<String> categories = [
@@ -40,13 +38,96 @@ class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
     "Other",
   ];
 
-  final List<String> subjects = [
-    "Electrical Issue",
-    "Water Leakage",
-    "Lift Maintenance",
-    "Lighting Issue",
-    "Other",
+  final List<Map<String, dynamic>> complaintCategories = [
+    {
+      "id": "plumbing",
+      "label": "plumbing",
+      "types": [
+        "Tap & Faucet Repair / Leakage",
+        "Pipe Leakage / Drainage Blockage",
+        "Toilet & Flush Tank Mechanism Issue",
+        "Water Heater / Geyser Service",
+        "Low Water Pressure / Shower Issue",
+        "Sink & Basin Drainage Issue",
+        "Water Tank / Motor Issue",
+        "Other Plumbing Work",
+      ],
+    },
+    {
+      "id": "electrical",
+      "label": "electrical",
+      "types": [
+        "Light Fixture / Bulb Replacement",
+        "Switch, Socket & Plug Issue",
+        "Circuit Breaker / MCB Tripping",
+        "Ceiling Fan / Exhaust Fan Repair",
+        "Wiring & Short Circuit Inspection",
+        "Doorbell & Intercom Repair",
+        "Appliance Power Connection",
+        "Other Electrical Work",
+      ],
+    },
+    {
+      "id": "housekeeping",
+      "label": "housekeeping",
+      "types": [
+        "Full Deep Apartment Cleaning",
+        "Kitchen & Appliance Deep Cleaning",
+        "Bathroom Deep Sanitization",
+        "Carpet & Sofa Shampooing",
+        "Balcony & Window Glass Cleaning",
+        "Move-in / Move-out Cleaning",
+        "Garbage & Waste Disposal",
+        "Other Housekeeping Work",
+      ],
+    },
+    {
+      "id": "security",
+      "label": "security",
+      "types": [
+        "Main Door Lock & Key Issue",
+        "Access Card & Key Fob Issue",
+        "CCTV & Video Doorbell Issue",
+        "Intercom & Security Screen Repair",
+        "Window Latch & Safety Grill Issue",
+        "Unauthorized Access / Noise Complaint",
+        "Security Guard Assistance",
+        "Other Security Request",
+      ],
+    },
+    {
+      "id": "general",
+      "label": "general",
+      "types": [
+        "Handyman General Repairs",
+        "AC Filter Cleaning & Servicing",
+        "Wall Touch-up & Patch Painting",
+        "Door Hinge & Stopper Alignment",
+        "Curtain Rod & Wall Mounting",
+        "Tile, Grouting & Marble Repair",
+        "Pest Control Inspection",
+        "Other General Maintenance",
+      ],
+    },
   ];
+  String? selectedCategory;
+  String? selectedSubject;
+  final TextEditingController customServiceController = TextEditingController();
+  List<String> customServices = [];
+  List<String> get availableComplaints {
+    if (selectedCategory == null) {
+      return [];
+    }
+    final category = complaintCategories.firstWhere(
+      (item) => item["id"] == selectedCategory,
+    );
+    final List<String> types = List<String>.from(category["types"]);
+    return [...types, ...customServices];
+  }
+
+  String formatCategory(String value) {
+    return value[0].toUpperCase() + value.substring(1);
+  }
 
   int selectedPriority = 1;
 
@@ -261,6 +342,7 @@ class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
           ? propertyListState.valueOrNull!.data!.first
           : Datum(),
     );
+    final proprtyId = activeProperty?.id;
 
     final ticket =
         (serviceState.valueOrNull?.data?.tickets != null &&
@@ -485,12 +567,18 @@ class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
               _buildLabel("Complaint Category *"),
               SizedBox(height: 10.h),
               _buildDropdown(
-                value: selectedCategory,
+                value: selectedCategory == null
+                    ? null
+                    : formatCategory(selectedCategory!),
                 hint: "Select Complain Category",
-                items: categories,
+                items: complaintCategories
+                    .map((item) => formatCategory(item["id"] as String))
+                    .toList(),
                 onChanged: (value) {
                   setState(() {
-                    selectedCategory = value;
+                    selectedCategory = value?.toLowerCase();
+                    // Category change hone par purani service reset
+                    selectedSubject = null;
                   });
                 },
               ),
@@ -499,8 +587,10 @@ class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
               SizedBox(height: 10.h),
               _buildDropdown(
                 value: selectedSubject,
-                hint: "Enter Complaint Subject",
-                items: subjects,
+                hint: selectedCategory == null
+                    ? "Select Complain category first"
+                    : "Select Complain Subject",
+                items: availableComplaints,
                 onChanged: (value) {
                   setState(() {
                     selectedSubject = value;
@@ -699,7 +789,67 @@ class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
                 width: double.infinity,
                 height: 49.h,
                 child: ElevatedButton(
-                  onPressed: _submitForm,
+                  onPressed: () async {
+                    if (selectedCategory == null) {
+                      showErrorSnackBar("Please select a complaint category");
+                      return;
+                    }
+
+                    if (selectedSubject == null) {
+                      showErrorSnackBar("Please select a complaint subject");
+                      return;
+                    }
+                    if (descriptionController.text.trim().isEmpty) {
+                      showErrorSnackBar("Please enter complaint details");
+                      return;
+                    }
+
+                    MultipartFile? attachment;
+                    if (selectedFile != null) {
+                      attachment = await MultipartFile.fromFile(
+                        selectedFile!.path,
+                        filename: selectedFileName,
+                      );
+                    }
+
+                    setState(() {
+                      isLoading = true;
+                    });
+
+                    try {
+                      final service = ref.read(authServiceProvider);
+                      await service.createService(
+                        serviceCategory: selectedCategory!,
+                        title: selectedSubject!,
+                        details: descriptionController.text.trim(),
+                        priority: priorities[selectedPriority],
+                        attachment: attachment,
+                        type: "complaint",
+                        preferredDate: null,
+                        preferredTime: null,
+                        serviceType: null,
+                        propertyId: proprtyId,
+                      );
+                      ref.invalidate(
+                        getServiceRequestProvider((
+                          statusFilter: "",
+                          search: "",
+                          type: "complaint",
+                        )),
+                      );
+                      if (mounted) {
+                        Navigator.pop(context);
+                      }
+                    } catch (e) {
+                      showErrorSnackBar("Failed to submit Complaint.");
+                    } finally {
+                      if (mounted) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                      }
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF101C16),
                     foregroundColor: Colors.white,
@@ -851,67 +1001,6 @@ class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
         );
       }),
     );
-  }
-
-  Future<void> _submitForm() async {
-    if (selectedCategory == null) {
-      showErrorSnackBar("Please select a complaint category");
-      return;
-    }
-
-    if (selectedSubject == null) {
-      showErrorSnackBar("Please select a complaint subject");
-      return;
-    }
-    if (descriptionController.text.trim().isEmpty) {
-      showErrorSnackBar("Please enter complaint details");
-      return;
-    }
-
-    MultipartFile? attachment;
-    if (selectedFile != null) {
-      attachment = await MultipartFile.fromFile(
-        selectedFile!.path,
-        filename: selectedFileName,
-      );
-    }
-
-    setState(() {
-      isLoading = true;
-    });
-
-    try {
-      final service = ref.read(authServiceProvider);
-      await service.createService(
-        serviceCategory: selectedCategory!,
-        title: selectedSubject!,
-        details: descriptionController.text.trim(),
-        priority: priorities[selectedPriority],
-        attachment: attachment,
-        type: "complaint",
-        preferredDate: null,
-        preferredTime: null,
-        serviceType: null,
-      );
-      ref.invalidate(
-        getServiceRequestProvider((
-          statusFilter: "",
-          search: "",
-          type: "complaint",
-        )),
-      );
-      if (mounted) {
-        Navigator.pop(context);
-      }
-    } catch (e) {
-      showErrorSnackBar("Failed to submit Complaint.");
-    } finally {
-      if (mounted) {
-        setState(() {
-          isLoading = false;
-        });
-      }
-    }
   }
 
   Widget _buildInfoBox() {
