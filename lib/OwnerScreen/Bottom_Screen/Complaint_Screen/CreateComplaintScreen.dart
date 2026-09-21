@@ -1,25 +1,35 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:property_care/core/AuthService/AuthServiceProvider.dart';
+import 'package:property_care/core/Utils/showMessage.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
-class CreateComplaintScreen extends StatefulWidget {
+import '../../ServiceRequest_Screen/Provider/getServiceProvider.dart';
+import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/Provider/getPropertyListProvider.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/propertyListModel.dart';
+
+class CreateComplaintScreen extends ConsumerStatefulWidget {
   const CreateComplaintScreen({super.key});
 
   @override
-  State<CreateComplaintScreen> createState() => _CreateComplaintScreenState();
+  ConsumerState<CreateComplaintScreen> createState() =>
+      _CreateComplaintScreenState();
 }
 
-class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
+class _CreateComplaintScreenState extends ConsumerState<CreateComplaintScreen> {
   String? selectedCategory;
   String? selectedSubject;
+  bool isLoading = false;
 
   final List<String> categories = [
     "Electrical",
@@ -182,7 +192,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
       final int fileSize = await file.length();
       const int maxSize = 10 * 1024 * 1024;
       if (fileSize > maxSize) {
-        _showError("Image size must be less than 10 MB.");
+        showErrorSnackBar("Image size must be less than 10 MB.");
         return;
       }
       setState(() {
@@ -191,7 +201,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
         selectedFileType = "image";
       });
     } catch (e) {
-      _showError("Unable to select image.");
+      showErrorSnackBar("Unable to select image.");
     }
   }
 
@@ -206,14 +216,14 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
       }
       final PlatformFile fileData = result.files.single;
       if (fileData.path == null) {
-        _showError("Unable to select document.");
+        showErrorSnackBar("Unable to select document.");
         return;
       }
       final File file = File(fileData.path!);
       final int fileSize = await file.length();
       const int maxSize = 10 * 1024 * 1024;
       if (fileSize > maxSize) {
-        _showError("Document size must be less than 10 MB.");
+        showErrorSnackBar("Document size must be less than 10 MB.");
         return;
       }
       setState(() {
@@ -222,7 +232,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
         selectedFileType = "document";
       });
     } catch (e) {
-      _showError("Unable to select document.");
+      showErrorSnackBar("Unable to select document.");
     }
   }
 
@@ -234,6 +244,48 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final propertyListState = ref.watch(getPropertyListProvider);
+    final serviceState = ref.watch(
+      getServiceRequestProvider((
+        statusFilter: "",
+        search: "",
+        type: "complaint",
+      )),
+    );
+
+    final activeProperty = propertyListState.valueOrNull?.data?.firstWhere(
+      (p) => p.isSelected == true,
+      orElse: () =>
+          (propertyListState.valueOrNull?.data != null &&
+              propertyListState.valueOrNull!.data!.isNotEmpty)
+          ? propertyListState.valueOrNull!.data!.first
+          : Datum(),
+    );
+
+    final ticket =
+        (serviceState.valueOrNull?.data?.tickets != null &&
+            serviceState.valueOrNull!.data!.tickets!.isNotEmpty)
+        ? serviceState.valueOrNull!.data!.tickets!.first
+        : null;
+
+    final propertyName =
+        (activeProperty?.propertyNameNumber?.isNotEmpty == true)
+        ? activeProperty!.propertyNameNumber!
+        : (ticket?.propertyNameNumber?.isNotEmpty == true)
+        ? ticket!.propertyNameNumber!
+        : "Apartment A-204";
+
+    final complexName = (activeProperty?.complexName?.isNotEmpty == true)
+        ? activeProperty!.complexName!
+        : (ticket?.complexName?.isNotEmpty == true)
+        ? ticket!.complexName!
+        : "Green Valley Residency";
+
+    final propertyImage = (activeProperty?.imageUrl?.isNotEmpty == true)
+        ? activeProperty!.imageUrl!
+        : (ticket?.propertyImage?.isNotEmpty == true)
+        ? ticket!.propertyImage!
+        : "";
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -304,79 +356,121 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 13.h),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  border: Border.all(color: const Color(0xff101C16), width: 1),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8.r),
-                      child: Stack(
+              propertyListState.isLoading &&
+                      propertyListState.valueOrNull == null
+                  ? Container(
+                      width: double.infinity,
+                      height: 220.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(
+                          color: const Color(0xff101C16),
+                          width: 1,
+                        ),
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.heading,
+                          strokeWidth: 1.5.w,
+                        ),
+                      ),
+                    )
+                  : Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 14.w,
+                        vertical: 13.h,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(
+                          color: const Color(0xff101C16),
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Image.asset(
-                            "assets/document_img.png",
-                            width: double.infinity,
-                            height: 151.h,
-                            fit: BoxFit.cover,
-                          ),
-                          Positioned(
-                            left: 12.w,
-                            top: 10.h,
-                            child: Container(
-                              width: 72.w,
-                              height: 30.h,
-                              decoration: BoxDecoration(
-                                color: Color(0xff101C16),
-                                borderRadius: BorderRadius.circular(50.r),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "A-204",
-                                  style: GoogleFonts.outfit(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                    fontSize: 14.sp,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.r),
+                            child: Stack(
+                              children: [
+                                propertyImage.isNotEmpty
+                                    ? Image.network(
+                                        propertyImage,
+                                        width: double.infinity,
+                                        height: 151.h,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Image.asset(
+                                                  "assets/document_img.png",
+                                                  width: double.infinity,
+                                                  height: 151.h,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                      )
+                                    : Image.asset(
+                                        "assets/document_img.png",
+                                        width: double.infinity,
+                                        height: 151.h,
+                                        fit: BoxFit.cover,
+                                      ),
+                                Positioned(
+                                  left: 12.w,
+                                  top: 10.h,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 10.w,
+                                      vertical: 6.h,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xff101C16),
+                                      borderRadius: BorderRadius.circular(50.r),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        propertyName,
+                                        style: GoogleFonts.outfit(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
+                          ),
+                          SizedBox(height: 16.h),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Complaint For",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 17.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xff101C16),
+                                  letterSpacing: -0.54,
+                                ),
+                              ),
+                              SizedBox(height: 4.h),
+                              Text(
+                                "$propertyName · $complexName",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color.fromRGBO(42, 41, 51, 0.6),
+                                  letterSpacing: -0.34,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 16.h),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Complaint For",
-                          style: GoogleFonts.outfit(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xff101C16),
-                            letterSpacing: -0.54,
-                          ),
-                        ),
-                        SizedBox(height: 4.h),
-                        Text(
-                          "Apartment A-204 · Green Valley Residency",
-                          style: GoogleFonts.outfit(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(42, 41, 51, 0.6),
-                            letterSpacing: -0.34,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(height: 30.h),
               Text(
                 "Complaint Information",
@@ -547,12 +641,20 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                                     ),
                                     borderRadius: BorderRadius.circular(5.r),
                                   ),
-                                  child: Icon(
-                                    selectedFileType == "image"
-                                        ? Icons.image_outlined
-                                        : Icons.description_outlined,
-                                    size: 20.sp,
-                                    color: const Color(0xff101C16),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(4.r),
+                                    child:
+                                        selectedFileType == "image" &&
+                                            selectedFile != null
+                                        ? Image.file(
+                                            selectedFile!,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Icon(
+                                            Icons.description_outlined,
+                                            size: 20.sp,
+                                            color: const Color(0xff101C16),
+                                          ),
                                   ),
                                 ),
                                 SizedBox(width: 10.w),
@@ -597,7 +699,7 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                 width: double.infinity,
                 height: 49.h,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF101C16),
                     foregroundColor: Colors.white,
@@ -606,15 +708,26 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                   ),
-                  child: Text(
-                    "Submit Complaint",
-                    style: GoogleFonts.outfit(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                      letterSpacing: -0.2,
-                    ),
-                  ),
+                  child: isLoading
+                      ? Center(
+                          child: SizedBox(
+                            width: 20.w,
+                            height: 20.h,
+                            child: CircularProgressIndicator(
+                              color: AppColors.background,
+                              strokeWidth: 1.5.w,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          "Submit Complaint",
+                          style: GoogleFonts.outfit(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                            letterSpacing: -0.2,
+                          ),
+                        ),
                 ),
               ),
               SizedBox(height: 20.h),
@@ -740,14 +853,65 @@ class _CreateComplaintScreenState extends State<CreateComplaintScreen> {
     );
   }
 
-  void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message, style: GoogleFonts.outfit(fontSize: 12.sp)),
-        backgroundColor: const Color(0xff101C16),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
+  Future<void> _submitForm() async {
+    if (selectedCategory == null) {
+      showErrorSnackBar("Please select a complaint category");
+      return;
+    }
+
+    if (selectedSubject == null) {
+      showErrorSnackBar("Please select a complaint subject");
+      return;
+    }
+    if (descriptionController.text.trim().isEmpty) {
+      showErrorSnackBar("Please enter complaint details");
+      return;
+    }
+
+    MultipartFile? attachment;
+    if (selectedFile != null) {
+      attachment = await MultipartFile.fromFile(
+        selectedFile!.path,
+        filename: selectedFileName,
+      );
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final service = ref.read(authServiceProvider);
+      await service.createService(
+        serviceCategory: selectedCategory!,
+        title: selectedSubject!,
+        details: descriptionController.text.trim(),
+        priority: priorities[selectedPriority],
+        attachment: attachment,
+        type: "complaint",
+        preferredDate: null,
+        preferredTime: null,
+        serviceType: null,
+      );
+      ref.invalidate(
+        getServiceRequestProvider((
+          statusFilter: "",
+          search: "",
+          type: "complaint",
+        )),
+      );
+      if (mounted) {
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      showErrorSnackBar("Failed to submit Complaint.");
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   Widget _buildInfoBox() {

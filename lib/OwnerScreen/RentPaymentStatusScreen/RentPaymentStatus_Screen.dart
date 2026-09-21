@@ -1,20 +1,26 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:property_care/OwnerScreen/RentPaymentStatusScreen/provider/getUtilityStatusProvider.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
-class RentpaymentstatusScreen extends StatefulWidget {
-  const RentpaymentstatusScreen({super.key});
+class RentpaymentstatusScreen extends ConsumerStatefulWidget {
+  final String id;
+  const RentpaymentstatusScreen({super.key, required this.id});
 
   @override
-  State<RentpaymentstatusScreen> createState() =>
+  ConsumerState<RentpaymentstatusScreen> createState() =>
       _RentpaymentstatusScreenState();
 }
 
-class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
+class _RentpaymentstatusScreenState
+    extends ConsumerState<RentpaymentstatusScreen> {
   @override
   Widget build(BuildContext context) {
+    final getUtilityPaymentState = ref.watch(
+      getUtilityStatusProvider(widget.id),
+    );
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       appBar: AppBar(
@@ -51,7 +57,8 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "RENT PAYMENT STATUS",
+                    getUtilityPaymentState.value?.data?.header?.screenTitle ??
+                        "RENT PAYMENT STATUS",
                     style: GoogleFonts.outfit(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
@@ -61,11 +68,12 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                   ),
                   SizedBox(height: 2.h),
                   Text(
-                    "Track tenant rent payment information",
+                    getUtilityPaymentState.value?.data?.header?.subtitle ??
+                        "Track utility charge information",
                     style: GoogleFonts.outfit(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(42, 41, 51, 0.6),
+                      color: const Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
                     ),
                   ),
@@ -75,223 +83,371 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 30.h),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.heading),
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                child: Row(
-                  children: [
-                    Column(
+      body: getUtilityPaymentState.when(
+        data: (data) {
+          final propertyDetails = data.data?.propertyDetails;
+          final summary = data.data?.summary;
+          final currentUtilityList = data.data?.currentUtilityStatus ?? [];
+          final historyList = data.data?.utilityPaymentHistory ?? [];
+          final reminder = data.data?.reminder;
+
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 30.h),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 18.w,
+                      vertical: 12.h,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.heading),
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                propertyDetails?.propertyName ?? "N/A",
+                                style: GoogleFonts.outfit(
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.heading,
+                                  fontSize: 17.sp,
+                                  letterSpacing: -0.2,
+                                ),
+                              ),
+                              if (propertyDetails?.complexName != null &&
+                                  propertyDetails!.complexName!.isNotEmpty)
+                                Text(
+                                  propertyDetails.complexName!,
+                                  style: GoogleFonts.outfit(
+                                    fontWeight: FontWeight.w500,
+                                    color: const Color.fromRGBO(
+                                      42,
+                                      41,
+                                      51,
+                                      0.5,
+                                    ),
+                                    fontSize: 13.sp,
+                                    letterSpacing: -0.2,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 25.w,
+                            vertical: 6.h,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.heading),
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                          child: Text(
+                            propertyDetails?.status ?? "Active",
+                            style: GoogleFonts.outfit(
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.heading,
+                              fontSize: 17.sp,
+                              letterSpacing: -0.2,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20.h),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 16.h,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.heading, width: 1),
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Apartment A-204",
+                          "Total Outstanding Utility Charges",
                           style: GoogleFonts.outfit(
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w500,
-                            color: AppColors.heading,
-                            fontSize: 17.sp,
+                            color: const Color(0xFF101C16),
                             letterSpacing: -0.2,
                           ),
                         ),
+                        SizedBox(height: 4.h),
                         Text(
-                          "Green Valley Residency",
+                          summary?.totalOutstanding != null
+                              ? "₹${summary!.totalOutstanding}"
+                              : "₹0",
                           style: GoogleFonts.outfit(
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(42, 41, 51, 0.5),
-                            fontSize: 13.sp,
+                            color: const Color(0xFF101C16),
                             letterSpacing: -0.2,
                           ),
+                        ),
+                        SizedBox(height: 3.h),
+                        Text(
+                          summary?.description ??
+                              "Current unpaid utility charges",
+                          style: GoogleFonts.outfit(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w400,
+                            color: const Color(0xFF101C16),
+                            letterSpacing: -0.2,
+                          ),
+                        ),
+                        SizedBox(height: 18.h),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _utilityInfoBox(
+                                title: "Current Month",
+                                value: summary?.currentMonth ?? "N/A",
+                              ),
+                            ),
+                            SizedBox(width: 18.w),
+                            Expanded(
+                              child: _utilityInfoBox(
+                                title: "Pending Bills",
+                                value: summary?.pendingBillsCount != null
+                                    ? "${summary!.pendingBillsCount}"
+                                    : "0",
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    Spacer(),
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    "Current Utility Status",
+                    style: GoogleFonts.outfit(
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.heading,
+                      fontSize: 17.sp,
+                      letterSpacing: -0.2,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  if (currentUtilityList.isEmpty)
                     Container(
+                      width: double.infinity,
                       padding: EdgeInsets.symmetric(
-                        horizontal: 25.w,
-                        vertical: 6.h,
+                        horizontal: 16.w,
+                        vertical: 20.h,
                       ),
                       decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.heading),
+                        border: Border.all(color: AppColors.heading, width: 1),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "No current utility charges",
+                        style: GoogleFonts.outfit(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(0xFF777777),
+                        ),
+                      ),
+                    )
+                  else
+                    ...currentUtilityList.map((utility) {
+                      final badgeText =
+                          utility.badge ?? utility.status ?? "Pending";
+                      final isPaid =
+                          badgeText.toLowerCase() == "paid" ||
+                          utility.status?.toLowerCase() == "paid";
+
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: 14.h),
+                        child: _utilityCard(
+                          utilityType: utility.utilityType,
+                          title:
+                              utility.utilityType ?? utility.title ?? "Utility",
+                          subtitle: utility.title ?? "",
+                          amount: utility.amount != null
+                              ? "₹${utility.amount}"
+                              : "₹0",
+                          date: utility.dueDate ?? "N/A",
+                          status: utility.status ?? "Pending",
+                          badge: badgeText,
+                          paid: isPaid,
+                        ),
+                      );
+                    }),
+                  SizedBox(height: 10.h),
+                  Text(
+                    "Utility Payment History",
+                    style: GoogleFonts.outfit(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF101C16),
+                      letterSpacing: -0.2,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  if (historyList.isEmpty)
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 20.h,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.heading, width: 1),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "No payment history available",
+                        style: GoogleFonts.outfit(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(0xFF777777),
+                        ),
+                      ),
+                    )
+                  else
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12.w,
+                        vertical: 8.h,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.heading, width: 1),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: Column(
+                        children: historyList.asMap().entries.map((entry) {
+                          final index = entry.key;
+                          final history = entry.value;
+                          final badge =
+                              history.badge ?? history.status ?? "Pending";
+                          final badgeLower = badge.toLowerCase();
+                          final isPaid = badgeLower == "paid";
+                          final isPartiallyPaid = badgeLower.contains(
+                            "partially",
+                          );
+                          final isOverdue =
+                              badgeLower == "overdue" || badgeLower == "unpaid";
+
+                          Color hStatusColor = const Color(0xFFB77B00);
+                          if (isPaid) {
+                            hStatusColor = const Color(0xFF24B56B);
+                          } else if (isOverdue) {
+                            hStatusColor = const Color(0xFFD41F1F);
+                          } else if (isPartiallyPaid) {
+                            hStatusColor = const Color(0xFFB77B00);
+                          }
+
+                          final subtitle =
+                              history.label ??
+                              (isPaid ? "Total Charges" : "Outstanding");
+                          final amountDisplay = history.amount != null
+                              ? "₹${history.amount}"
+                              : "";
+
+                          return _rentHistoryItem(
+                            month: history.month ?? "",
+                            subtitle: subtitle,
+                            status: badge,
+                            amount: amountDisplay,
+                            statusColor: hStatusColor,
+                            showDivider: index < historyList.length - 1,
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  if (reminder != null && reminder.show == true) ...[
+                    SizedBox(height: 20.h),
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(14.w),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFF9E6),
+                        border: Border.all(color: const Color(0xFFE0C475)),
                         borderRadius: BorderRadius.circular(10.r),
                       ),
-                      child: Text(
-                        "Active",
-                        style: GoogleFonts.outfit(
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.heading,
-                          fontSize: 17.sp,
-                          letterSpacing: -0.2,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20.h),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.heading, width: 1),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Total Outstanding Utility Charges",
-                      style: GoogleFonts.outfit(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF101C16),
-                        letterSpacing: -0.2,
-                      ),
-                    ),
-
-                    SizedBox(height: 4.h),
-
-                    Text(
-                      "₹3,240",
-                      style: GoogleFonts.outfit(
-                        fontSize: 17.sp,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF101C16),
-                        letterSpacing: -0.2,
-                      ),
-                    ),
-
-                    SizedBox(height: 3.h),
-
-                    Text(
-                      "Current unpaid utility charges",
-                      style: GoogleFonts.outfit(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xFF101C16),
-                        letterSpacing: -0.2,
-                      ),
-                    ),
-
-                    SizedBox(height: 18.h),
-
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _utilityInfoBox(
-                            title: "Current Month",
-                            value: "August 2026",
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.info_outline,
+                            color: const Color(0xFFB77B00),
+                            size: 20.sp,
                           ),
-                        ),
-
-                        SizedBox(width: 18.w),
-
-                        Expanded(
-                          child: _utilityInfoBox(
-                            title: "Pending Bills",
-                            value: "2",
+                          SizedBox(width: 10.w),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (reminder.title != null &&
+                                    reminder.title!.isNotEmpty)
+                                  Text(
+                                    reminder.title!,
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: const Color(0xFF101C16),
+                                    ),
+                                  ),
+                                if (reminder.title != null &&
+                                    reminder.title!.isNotEmpty)
+                                  SizedBox(height: 4.h),
+                                if (reminder.message != null &&
+                                    reminder.message!.isNotEmpty)
+                                  Text(
+                                    reminder.message!,
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color(0xFF555555),
+                                    ),
+                                  ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
-                ),
+                  SizedBox(height: 20.h),
+                ],
               ),
-              SizedBox(height: 16.h),
-              Text(
-                "Current Utility Status",
-                style: GoogleFonts.outfit(
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.heading,
-                  fontSize: 17.sp,
-                  letterSpacing: -0.2,
-                ),
+            ),
+          );
+        },
+        error: (error, stackTrace) {
+          return Center(
+            child: Text(
+              "Error Loading Data",
+              style: GoogleFonts.outfit(
+                fontSize: 16.sp,
+                color: AppColors.heading,
               ),
-              SizedBox(height: 16.h),
-              _utilityCard(
-                title: "Electricity",
-                subtitle: "Monthly electricity charge",
-                amount: "₹2,100",
-                date: "28 Aug",
-                status: "Pending",
-                paid: false,
-              ),
-              SizedBox(height: 14.h),
-              _utilityCard(
-                title: "Water",
-                subtitle: "Monthly water charge",
-                amount: "₹2,100",
-                date: "08 Aug",
-                status: "Paid",
-                paid: true,
-              ),
-              SizedBox(height: 24.h),
-              Text(
-                "Utility Payment History",
-                style: GoogleFonts.outfit(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w500,
-                  color: const Color(0xFF101C16),
-                  letterSpacing: -0.2,
-                ),
-              ),
-              SizedBox(height: 16.h),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.heading, width: 1),
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                child: Column(
-                  children: [
-                    _rentHistoryItem(
-                      month: "September 2026",
-                      subtitle: "Rent",
-                      status: "Pending",
-                      amount: "₹18,000",
-                      statusColor: const Color(0xFFB77B00),
-                    ),
-
-                    _rentHistoryItem(
-                      month: "August 2026",
-                      subtitle: "Paid On",
-                      status: "Paid",
-                      amount: "05 Aug 2026",
-                      statusColor: AppColors.heading,
-                    ),
-
-                    _rentHistoryItem(
-                      month: "July 2026",
-                      subtitle: "Paid On",
-                      status: "Paid",
-                      amount: "05 Jul 2026",
-                      statusColor: AppColors.heading,
-                    ),
-
-                    _rentHistoryItem(
-                      month: "June 2026",
-                      subtitle: "Recorded Status",
-                      status: "Overdue",
-                      amount: "Overdue",
-                      statusColor: const Color(0xFFB77B00),
-                      showDivider: false,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20.h),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
+        loading: () {
+          return Center(
+            child: CircularProgressIndicator(color: AppColors.heading),
+          );
+        },
       ),
     );
   }
@@ -315,9 +471,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
               color: const Color(0xFF101C16),
             ),
           ),
-
           SizedBox(height: 4.h),
-
           Text(
             value,
             style: GoogleFonts.outfit(
@@ -337,8 +491,17 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
     required String amount,
     required String date,
     required String status,
+    required String badge,
     required bool paid,
+    String? utilityType,
   }) {
+    IconData getUtilityIcon(String? type) {
+      final t = type?.toLowerCase() ?? "";
+      if (t.contains("water")) return Icons.water_drop_outlined;
+      if (t.contains("gas")) return Icons.local_fire_department_outlined;
+      return Icons.bolt;
+    }
+
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
@@ -356,7 +519,11 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                   border: Border.all(color: AppColors.heading),
                   borderRadius: BorderRadius.circular(3.r),
                 ),
-                child: Icon(Icons.bolt, size: 16.sp, color: AppColors.heading),
+                child: Icon(
+                  getUtilityIcon(utilityType),
+                  size: 16.sp,
+                  color: AppColors.heading,
+                ),
               ),
               SizedBox(width: 8.w),
               Expanded(
@@ -389,7 +556,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(
-                  paid ? "Paid" : "Unpaid",
+                  badge,
                   style: GoogleFonts.outfit(
                     fontSize: 13.sp,
                     color: paid ? AppColors.heading : Colors.red,
@@ -398,13 +565,9 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
               ),
             ],
           ),
-
           SizedBox(height: 12.h),
-
           Divider(color: AppColors.heading, height: 1),
-
           SizedBox(height: 14.h),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -466,9 +629,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                         letterSpacing: -0.2,
                       ),
                     ),
-
                     SizedBox(height: 4.h),
-
                     Text(
                       subtitle,
                       style: GoogleFonts.outfit(
@@ -503,9 +664,7 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
                       ),
                     ),
                   ),
-
                   SizedBox(height: 3.h),
-
                   Text(
                     amount,
                     style: GoogleFonts.outfit(
@@ -520,9 +679,8 @@ class _RentpaymentstatusScreenState extends State<RentpaymentstatusScreen> {
             ],
           ),
         ),
-
         if (showDivider)
-          Divider(height: 1, thickness: 0.8, color: const Color(0xFF999999)),
+          Divider(thickness: 0.8, color: const Color(0xFF999999)),
       ],
     );
   }

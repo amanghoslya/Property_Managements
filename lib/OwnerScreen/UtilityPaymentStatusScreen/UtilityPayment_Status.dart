@@ -1,20 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:property_care/OwnerScreen/RentPaymentStatusScreen/RentPaymentStatus_Screen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
-class UtilitypaymentStatus extends StatefulWidget {
-  const UtilitypaymentStatus({super.key});
+import 'provider/getTenantPaymentProvider.dart';
+
+class UtilitypaymentStatus extends ConsumerStatefulWidget {
+  final String id;
+  const UtilitypaymentStatus({super.key, required this.id});
 
   @override
-  State<UtilitypaymentStatus> createState() => _UtilitypaymentStatusState();
+  ConsumerState<UtilitypaymentStatus> createState() =>
+      _UtilitypaymentStatusState();
 }
 
-class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
+class _UtilitypaymentStatusState extends ConsumerState<UtilitypaymentStatus> {
   @override
   Widget build(BuildContext context) {
+    final tenantsData = ref.watch(getTenantPaymentProvider(widget.id));
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       appBar: AppBar(
@@ -75,241 +81,230 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 30.h),
-              Container(
-                padding: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.heading),
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                child: Column(
-                  children: [
-                    Row(
+      body: tenantsData.when(
+        data: (data) {
+          final tenant = data.data;
+          final currentRent = tenant?.currentRentStatus;
+          final historyList = tenant?.rentPaymentHistory ?? [];
+
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 30.h),
+                  Container(
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.heading),
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    child: Column(
                       children: [
-                        Container(
-                          width: 51.w,
-                          height: 51.w,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xffF1F1EC),
-                          ),
-                          child: ClipOval(
-                            child: Image.asset(
-                              "assets/tenantImg.png",
-                              fit: BoxFit.cover,
+                        Row(
+                          children: [
+                            Container(
+                              width: 51.w,
+                              height: 51.w,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xffF1F1EC),
+                              ),
+                              child: ClipOval(
+                                child:
+                                    (tenant?.tenantImageUrl != null &&
+                                        tenant!.tenantImageUrl
+                                            .toString()
+                                            .trim()
+                                            .isNotEmpty)
+                                    ? Image.network(
+                                        tenant.tenantImageUrl.toString().trim(),
+                                        width: 51.w,
+                                        height: 51.w,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Container(
+                                                  width: 51.w,
+                                                  height: 51.w,
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Color(0xffF1F1EC),
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.person,
+                                                    color: Colors.grey[400],
+                                                    size: 30.sp,
+                                                  ),
+                                                ),
+                                      )
+                                    : Container(
+                                        width: 51.w,
+                                        height: 51.w,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Color(0xffF1F1EC),
+                                        ),
+                                        child: Icon(
+                                          Icons.person,
+                                          color: Colors.grey[400],
+                                          size: 30.sp,
+                                        ),
+                                      ),
+                              ),
                             ),
-                          ),
-                        ),
-                        SizedBox(width: 10.w),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Arjun Kapoor",
+                            SizedBox(width: 10.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    tenant?.tenantName ?? "N/A",
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.heading,
+                                      letterSpacing: -0.2,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5.h),
+                                  Text(
+                                    tenant?.tenantType ?? "Primary Tenant",
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color.fromRGBO(0, 0, 0, 0.6),
+                                      letterSpacing: -0.2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 2.h,
+                                horizontal: 22.w,
+                              ),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: AppColors.heading),
+                                borderRadius: BorderRadius.circular(50.r),
+                              ),
+                              child: Text(
+                                tenant?.tenantStatus ?? "Active",
                                 style: GoogleFonts.outfit(
-                                  fontSize: 17.sp,
+                                  fontSize: 14.sp,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.heading,
                                   letterSpacing: -0.2,
                                 ),
                               ),
-
-                              SizedBox(height: 5.h),
-
-                              Text(
-                                "Primary Tenant",
-                                style: GoogleFonts.outfit(
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromRGBO(0, 0, 0, 0.6),
-                                  letterSpacing: -0.2,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 2.h,
-                            horizontal: 22.w,
-                          ),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.heading),
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                          child: Text(
-                            "Active",
-                            style: GoogleFonts.outfit(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.heading,
-                              letterSpacing: -0.2,
                             ),
-                          ),
+                          ],
+                        ),
+                        SizedBox(height: 10.h),
+                        Container(
+                          width: double.infinity,
+                          height: 1.h,
+                          color: const Color(0xff999999),
+                        ),
+                        SizedBox(height: 12.h),
+                        Row(
+                          children: [
+                            Text(
+                              "Property",
+                              style: GoogleFonts.outfit(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.heading,
+                                letterSpacing: -0.2,
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              tenant?.propertyName ?? "N/A",
+                              style: GoogleFonts.outfit(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.heading,
+                                letterSpacing: -0.2,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    SizedBox(height: 10.h),
-                    Container(
-                      width: double.infinity,
-                      height: 1.h,
-                      color: const Color(0xff999999),
+                  ),
+                  SizedBox(height: 20.h),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 16.h,
                     ),
-
-                    SizedBox(height: 12.h),
-                    Row(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.heading, width: 1),
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Property",
+                          "Current Outstanding Rent",
                           style: GoogleFonts.outfit(
-                            fontSize: 15.sp,
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.w500,
-                            color: AppColors.heading,
+                            color: const Color(0xFF777777),
+                          ),
+                        ),
+                        SizedBox(height: 4.h),
+                        Text(
+                          tenant?.currentOutstanding != null
+                              ? "₹${tenant!.currentOutstanding}"
+                              : "₹0",
+                          style: GoogleFonts.outfit(
+                            fontSize: 19.sp,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF101C16),
                             letterSpacing: -0.2,
                           ),
                         ),
-                        Spacer(),
+                        SizedBox(height: 6.h),
                         Text(
-                          "Apartment A-204",
+                          "Utility amount currently pending",
                           style: GoogleFonts.outfit(
-                            fontSize: 15.sp,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
-                            color: AppColors.heading,
-                            letterSpacing: -0.2,
+                            color: const Color.fromRGBO(42, 41, 51, 0.6),
                           ),
+                        ),
+                        SizedBox(height: 16.h),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _rentInfoBox(
+                                title: "Monthly Rent",
+                                value: tenant?.monthlyRent != null
+                                    ? "₹${tenant!.monthlyRent}"
+                                    : "₹0",
+                              ),
+                            ),
+                            SizedBox(width: 14.w),
+                            Expanded(
+                              child: _rentInfoBox(
+                                title: "Due Date",
+                                value: tenant?.dueDate ?? "N/A",
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20.h),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.heading, width: 1),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Current Outstanding Rent",
-                      style: GoogleFonts.outfit(
-                        fontSize: 17.sp,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF777777),
-                      ),
-                    ),
-
-                    SizedBox(height: 4.h),
-
-                    Text(
-                      "₹18,000",
-                      style: GoogleFonts.outfit(
-                        fontSize: 19.sp,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF101C16),
-                        letterSpacing: -0.2,
-                      ),
-                    ),
-
-                    SizedBox(height: 6.h),
-
-                    Text(
-                      "Utility amount currently pending",
-                      style: GoogleFonts.outfit(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Color.fromRGBO(42, 41, 51, 0.6),
-                      ),
-                    ),
-
-                    SizedBox(height: 16.h),
-
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _rentInfoBox(
-                            title: "Monthly Rent",
-                            value: "₹18,000",
-                          ),
-                        ),
-
-                        SizedBox(width: 14.w),
-
-                        Expanded(
-                          child: _rentInfoBox(
-                            title: "Due Date",
-                            value: "05 Sep 2026",
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20.h),
-              Text(
-                "Current Utility Status",
-                style: GoogleFonts.outfit(
-                  fontSize: 17.sp,
-                  fontWeight: FontWeight.w500,
-                  color: const Color(0xFF101C16),
-                  letterSpacing: -0.2,
-                ),
-              ),
-              SizedBox(height: 10.h),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.heading),
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                child: Column(
-                  children: [
-                    _documentRow(
-                      title: "Month",
-                      value: "September 2026",
-                      color: AppColors.heading,
-                    ),
-                    _documentRow(
-                      title: "Amount",
-                      value: "₹18,000",
-                      color: AppColors.heading,
-                    ),
-                    _documentRow(
-                      title: "Due Date",
-                      value: "05 Sep 2026",
-                      color: AppColors.heading,
-                    ),
-                    _documentRow(
-                      title: "Payment Status",
-                      value: "Unpaid",
-                      color: Color(0xffD41F1F),
-                    ),
-                    _documentRow(
-                      title: "Last Updated",
-                      value: "05 Aug 2026",
-                      color: AppColors.heading,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 16.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                  ),
+                  SizedBox(height: 20.h),
                   Text(
-                    "Rent Payment History",
+                    "Current Utility Status",
                     style: GoogleFonts.outfit(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
@@ -317,76 +312,181 @@ class _UtilitypaymentStatusState extends State<UtilitypaymentStatus> {
                       letterSpacing: -0.2,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) => RentpaymentstatusScreen(),
+                  SizedBox(height: 10.h),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.heading),
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    child: Column(
+                      children: [
+                        _documentRow(
+                          title: "Month",
+                          value: currentRent?.month ?? "N/A",
+                          color: AppColors.heading,
                         ),
-                      );
-                    },
-                    child: Text(
-                      "View Details →",
-                      style: GoogleFonts.outfit(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF101C16),
-                        letterSpacing: -0.2,
-                      ),
+                        _documentRow(
+                          title: "Amount",
+                          value: currentRent?.rentAmount != null
+                              ? "₹${currentRent!.rentAmount}"
+                              : "₹0",
+                          color: AppColors.heading,
+                        ),
+                        _documentRow(
+                          title: "Due Date",
+                          value: currentRent?.dueDate ?? "N/A",
+                          color: AppColors.heading,
+                        ),
+                        _documentRow(
+                          title: "Payment Status",
+                          value: currentRent?.paymentStatus ?? "Unpaid",
+                          color:
+                              (currentRent?.paymentStatus?.toLowerCase() ==
+                                  "paid")
+                              ? const Color(0xFF24B56B)
+                              : (currentRent?.paymentStatus?.toLowerCase() ==
+                                    "pending")
+                              ? const Color(0xFFB77B00)
+                              : const Color(0xffD41F1F),
+                        ),
+                        _documentRow(
+                          title: "Last Updated",
+                          value: currentRent?.lastPayment ?? "N/A",
+                          color: AppColors.heading,
+                          showBottomBorder: false,
+                        ),
+                      ],
                     ),
                   ),
+                  SizedBox(height: 16.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Rent Payment History",
+                        style: GoogleFonts.outfit(
+                          fontSize: 17.sp,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF101C16),
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => RentpaymentstatusScreen(
+                                id: widget.id.isNotEmpty ? widget.id : "",
+                              ),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "View Details →",
+                          style: GoogleFonts.outfit(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF101C16),
+                            letterSpacing: -0.2,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.h),
+                  if (historyList.isEmpty)
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 20.h,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.heading, width: 1),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "No payment history available",
+                        style: GoogleFonts.outfit(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(0xFF777777),
+                        ),
+                      ),
+                    )
+                  else
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12.w,
+                        vertical: 8.h,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.heading, width: 1),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: Column(
+                        children: historyList.asMap().entries.map((entry) {
+                          final index = entry.key;
+                          final history = entry.value;
+                          final hStatus = history.status?.toLowerCase() ?? "";
+                          final isPaid = hStatus == "paid";
+                          final isOverdue = hStatus == "overdue";
+
+                          Color hStatusColor = const Color(0xFFB77B00);
+                          if (isPaid) {
+                            hStatusColor = const Color(0xFF24B56B);
+                          } else if (isOverdue) {
+                            hStatusColor = const Color(0xFFD41F1F);
+                          }
+
+                          final subtitle = isPaid ? "Paid On" : "Rent";
+                          final amountDisplay = isPaid
+                              ? (history.paidOn != null &&
+                                        history.paidOn.toString().isNotEmpty
+                                    ? history.paidOn.toString()
+                                    : (history.rentAmount != null
+                                          ? "₹${history.rentAmount}"
+                                          : ""))
+                              : (history.rentAmount != null
+                                    ? "₹${history.rentAmount}"
+                                    : "");
+
+                          return _rentHistoryItem(
+                            month: history.month ?? "",
+                            subtitle: subtitle,
+                            status: history.status ?? "Pending",
+                            amount: amountDisplay,
+                            statusColor: hStatusColor,
+                            showDivider: index < historyList.length - 1,
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  SizedBox(height: 20.h),
                 ],
               ),
-              SizedBox(height: 16.h),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.heading, width: 1),
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                child: Column(
-                  children: [
-                    _rentHistoryItem(
-                      month: "September 2026",
-                      subtitle: "Rent",
-                      status: "Pending",
-                      amount: "₹18,000",
-                      statusColor: const Color(0xFFB77B00),
-                    ),
-
-                    _rentHistoryItem(
-                      month: "August 2026",
-                      subtitle: "Paid On",
-                      status: "Paid",
-                      amount: "05 Aug 2026",
-                      statusColor: AppColors.heading,
-                    ),
-
-                    _rentHistoryItem(
-                      month: "July 2026",
-                      subtitle: "Paid On",
-                      status: "Paid",
-                      amount: "05 Jul 2026",
-                      statusColor: AppColors.heading,
-                    ),
-
-                    _rentHistoryItem(
-                      month: "June 2026",
-                      subtitle: "Recorded Status",
-                      status: "Overdue",
-                      amount: "Overdue",
-                      statusColor: const Color(0xFFB77B00),
-                      showDivider: false,
-                    ),
-                  ],
-                ),
+            ),
+          );
+        },
+        error: (error, stackTrace) {
+          return Center(
+            child: Text(
+              "Error Loading Data",
+              style: GoogleFonts.outfit(
+                fontSize: 16.sp,
+                color: AppColors.heading,
               ),
-              SizedBox(height: 20.h),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
+        loading: () {
+          return Center(
+            child: CircularProgressIndicator(color: AppColors.heading),
+          );
+        },
       ),
     );
   }
