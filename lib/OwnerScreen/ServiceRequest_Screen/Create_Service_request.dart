@@ -32,7 +32,6 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
 
   final List<String> priorities = ["Low", "Medium", "High"];
   int selectedIndex = -1;
-  String? selectedCategory;
 
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
@@ -45,6 +44,97 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
     "Security",
     "Other",
   ];
+
+  final List<Map<String, dynamic>> serviceCategories = [
+    {
+      "id": "plumbing",
+      "label": "plumbing",
+      "types": [
+        "Tap & Faucet Repair / Leakage",
+        "Pipe Leakage / Drainage Blockage",
+        "Toilet & Flush Tank Mechanism Issue",
+        "Water Heater / Geyser Service",
+        "Low Water Pressure / Shower Issue",
+        "Sink & Basin Drainage Issue",
+        "Water Tank / Motor Issue",
+        "Other Plumbing Work",
+      ],
+    },
+    {
+      "id": "electrical",
+      "label": "electrical",
+      "types": [
+        "Light Fixture / Bulb Replacement",
+        "Switch, Socket & Plug Issue",
+        "Circuit Breaker / MCB Tripping",
+        "Ceiling Fan / Exhaust Fan Repair",
+        "Wiring & Short Circuit Inspection",
+        "Doorbell & Intercom Repair",
+        "Appliance Power Connection",
+        "Other Electrical Work",
+      ],
+    },
+    {
+      "id": "housekeeping",
+      "label": "housekeeping",
+      "types": [
+        "Full Deep Apartment Cleaning",
+        "Kitchen & Appliance Deep Cleaning",
+        "Bathroom Deep Sanitization",
+        "Carpet & Sofa Shampooing",
+        "Balcony & Window Glass Cleaning",
+        "Move-in / Move-out Cleaning",
+        "Garbage & Waste Disposal",
+        "Other Housekeeping Work",
+      ],
+    },
+    {
+      "id": "security",
+      "label": "security",
+      "types": [
+        "Main Door Lock & Key Issue",
+        "Access Card & Key Fob Issue",
+        "CCTV & Video Doorbell Issue",
+        "Intercom & Security Screen Repair",
+        "Window Latch & Safety Grill Issue",
+        "Unauthorized Access / Noise Complaint",
+        "Security Guard Assistance",
+        "Other Security Request",
+      ],
+    },
+    {
+      "id": "general",
+      "label": "general",
+      "types": [
+        "Handyman General Repairs",
+        "AC Filter Cleaning & Servicing",
+        "Wall Touch-up & Patch Painting",
+        "Door Hinge & Stopper Alignment",
+        "Curtain Rod & Wall Mounting",
+        "Tile, Grouting & Marble Repair",
+        "Pest Control Inspection",
+        "Other General Maintenance",
+      ],
+    },
+  ];
+  String? selectedCategory;
+  String? selectedService;
+  final TextEditingController customServiceController = TextEditingController();
+  List<String> customServices = [];
+  List<String> get availableServices {
+    if (selectedCategory == null) {
+      return [];
+    }
+    final category = serviceCategories.firstWhere(
+      (item) => item["id"] == selectedCategory,
+    );
+    final List<String> types = List<String>.from(category["types"]);
+    return [...types, ...customServices];
+  }
+
+  String formatCategory(String value) {
+    return value[0].toUpperCase() + value.substring(1);
+  }
 
   File? selectedFile;
   String? selectedFileName;
@@ -248,6 +338,8 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
           : Datum(),
     );
 
+    final propertyId = activeProperty?.id;
+
     final propertyName =
         (activeProperty?.propertyNameNumber?.isNotEmpty == true)
         ? activeProperty!.propertyNameNumber!
@@ -450,12 +542,19 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
               ),
               SizedBox(height: 10.h),
               _buildDropdown(
-                value: selectedCategory,
-                hint: "Select Complain Category",
-                items: categories,
+                value: selectedCategory == null
+                    ? null
+                    : formatCategory(selectedCategory!),
+                hint: "Select Service Category",
+                items: serviceCategories
+                    .map((item) => formatCategory(item["id"] as String))
+                    .toList(),
                 onChanged: (value) {
                   setState(() {
-                    selectedCategory = value;
+                    selectedCategory = value?.toLowerCase();
+
+                    // Category change hone par purani service reset
+                    selectedService = null;
                   });
                 },
               ),
@@ -470,147 +569,152 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
                 ),
               ),
               SizedBox(height: 10.h),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 4,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 22.w,
-                  mainAxisSpacing: 18.h,
-                  childAspectRatio: 2.35,
-                ),
-                itemBuilder: (context, index) {
-                  final List<Map<String, dynamic>> services = [
-                    {
-                      "title": "Plumbing",
-                      "subtitle": "Repair/service",
-                      "icon": Icons.plumbing_outlined,
-                      "color": const Color(0xff292832),
-                    },
-                    {
-                      "title": "Electrical",
-                      "subtitle": "Repair / Inspection",
-                      "icon": Icons.bolt_outlined,
-                      "color": const Color(0xff292832),
-                    },
-                    {
-                      "title": "AC Service",
-                      "subtitle": "Maintenance",
-                      "icon": Icons.article_outlined,
-                      "color": const Color(0xff292832),
-                    },
-                    {
-                      "title": "General",
-                      "subtitle": "Property Service",
-                      "icon": Icons.home_outlined,
-                      "color": const Color(0xff292832),
-                    },
-                  ];
-
-                  final service = services[index];
-
-                  final bool isSelected = selectedIndex == index;
-
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedIndex = index;
-                      });
-
-                      print("Selected Service: ${service["title"]}");
-
-                      // Yahan navigation bhi kar sakte ho
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => NextScreen(),
-                      //   ),
-                      // );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 11.w,
-                        vertical: 10.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? const Color(0xffFFF5D6)
-                            : const Color(0xffFFFCEF),
-                        border: Border.all(
-                          color: isSelected
-                              ? const Color(0xffC58A20)
-                              : service["color"],
-                          width: isSelected ? 1.5 : 1.2,
-                        ),
-                        borderRadius: BorderRadius.circular(3.r),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 45.w,
-                            height: 45.h,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: const Color(0xffFFFCEF),
-                              border: Border.all(
-                                color: service["color"],
-                                width: 1.1,
-                              ),
-                              borderRadius: BorderRadius.circular(4.r),
-                            ),
-                            child: Icon(
-                              service["icon"],
-                              size: 23.sp,
-                              color: service["color"],
-                            ),
-                          ),
-
-                          SizedBox(width: 10.w),
-
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  service["title"],
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.outfit(
-                                    fontSize: 17.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: service["color"],
-                                    letterSpacing: -0.3,
-                                  ),
-                                ),
-
-                                SizedBox(height: 1.h),
-
-                                Text(
-                                  service["subtitle"],
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.outfit(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color:
-                                        service["color"] ==
-                                            const Color(0xffC58A20)
-                                        ? const Color(0xffC58A20)
-                                        : const Color.fromRGBO(42, 41, 51, 0.6),
-                                    letterSpacing: -0.2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+              _buildDropdown(
+                value: selectedService,
+                hint: selectedCategory == null
+                    ? "Select category first"
+                    : "Select Service",
+                items: availableServices,
+                onChanged: (value) {
+                  setState(() {
+                    selectedService = value;
+                    titleController.text = value ?? "";
+                  });
                 },
               ),
+              SizedBox(height: 10.h),
+              // GridView.builder(
+              //   shrinkWrap: true,
+              //   physics: const NeverScrollableScrollPhysics(),
+              //   itemCount: 4,
+              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //     crossAxisCount: 2,
+              //     crossAxisSpacing: 22.w,
+              //     mainAxisSpacing: 18.h,
+              //     childAspectRatio: 2.35,
+              //   ),
+              //   itemBuilder: (context, index) {
+              //     final List<Map<String, dynamic>> services = [
+              //       {
+              //         "title": "Plumbing",
+              //         "subtitle": "Repair/service",
+              //         "icon": Icons.plumbing_outlined,
+              //         "color": const Color(0xff292832),
+              //       },
+              //       {
+              //         "title": "Electrical",
+              //         "subtitle": "Repair / Inspection",
+              //         "icon": Icons.bolt_outlined,
+              //         "color": const Color(0xff292832),
+              //       },
+              //       {
+              //         "title": "AC Service",
+              //         "subtitle": "Maintenance",
+              //         "icon": Icons.article_outlined,
+              //         "color": const Color(0xff292832),
+              //       },
+              //       {
+              //         "title": "General",
+              //         "subtitle": "Property Service",
+              //         "icon": Icons.home_outlined,
+              //         "color": const Color(0xff292832),
+              //       },
+              //     ];
+              //     final service = services[index];
+              //     final bool isSelected = selectedIndex == index;
+              //     return GestureDetector(
+              //       onTap: () {
+              //         setState(() {
+              //           selectedIndex = index;
+              //         });
+              //         print("Selected Service: ${service["title"]}");
+              //         // Yahan navigation bhi kar sakte ho
+              //         // Navigator.push(
+              //         //   context,
+              //         //   MaterialPageRoute(
+              //         //     builder: (context) => NextScreen(),
+              //         //   ),
+              //         // );
+              //       },
+              //       child: Container(
+              //         padding: EdgeInsets.symmetric(
+              //           horizontal: 11.w,
+              //           vertical: 10.h,
+              //         ),
+              //         decoration: BoxDecoration(
+              //           color: isSelected
+              //               ? const Color(0xffFFF5D6)
+              //               : const Color(0xffFFFCEF),
+              //           border: Border.all(
+              //             color: isSelected
+              //                 ? const Color(0xffC58A20)
+              //                 : service["color"],
+              //             width: isSelected ? 1.5 : 1.2,
+              //           ),
+              //           borderRadius: BorderRadius.circular(3.r),
+              //         ),
+              //         child: Row(
+              //           children: [
+              //             Container(
+              //               width: 45.w,
+              //               height: 45.h,
+              //               alignment: Alignment.center,
+              //               decoration: BoxDecoration(
+              //                 color: const Color(0xffFFFCEF),
+              //                 border: Border.all(
+              //                   color: service["color"],
+              //                   width: 1.1,
+              //                 ),
+              //                 borderRadius: BorderRadius.circular(4.r),
+              //               ),
+              //               child: Icon(
+              //                 service["icon"],
+              //                 size: 23.sp,
+              //                 color: service["color"],
+              //               ),
+              //             )
+              //             SizedBox(width: 10.w),
+              //             Expanded(
+              //               child: Column(
+              //                 mainAxisAlignment: MainAxisAlignment.center,
+              //                 crossAxisAlignment: CrossAxisAlignment.start,
+              //                 children: [
+              //                   Text(
+              //                     service["title"],
+              //                     maxLines: 1,
+              //                     overflow: TextOverflow.ellipsis,
+              //                     style: GoogleFonts.outfit(
+              //                       fontSize: 17.sp,
+              //                       fontWeight: FontWeight.w500,
+              //                       color: service["color"],
+              //                       letterSpacing: -0.3,
+              //                     ),
+              //                   ),
+              //                   SizedBox(height: 1.h),
+              //                   Text(
+              //                     service["subtitle"],
+              //                     maxLines: 1,
+              //                     overflow: TextOverflow.ellipsis,
+              //                     style: GoogleFonts.outfit(
+              //                       fontSize: 14.sp,
+              //                       fontWeight: FontWeight.w400,
+              //                       color:
+              //                           service["color"] ==
+              //                               const Color(0xffC58A20)
+              //                           ? const Color(0xffC58A20)
+              //                           : const Color.fromRGBO(42, 41, 51, 0.6),
+              //                       letterSpacing: -0.2,
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     );
+              //   },
+              // ),
               SizedBox(height: 16.h),
               Text(
                 "Service Request Title *",
@@ -633,6 +737,12 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
                 ),
                 child: Center(
                   child: TextField(
+                    style: GoogleFonts.outfit(
+                      fontSize: 17.sp,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF101C16),
+                      letterSpacing: -0.2,
+                    ),
                     controller: titleController,
                     textAlignVertical: TextAlignVertical.center,
                     decoration: InputDecoration(
@@ -645,7 +755,6 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
                       border: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
-
                       // Exact vertical center
                       contentPadding: EdgeInsets.zero,
                       isDense: true,
@@ -673,6 +782,12 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
                   border: Border.all(color: const Color(0xff101C16), width: 1),
                 ),
                 child: TextField(
+                  style: GoogleFonts.outfit(
+                    fontSize: 17.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF101C16),
+                    letterSpacing: -0.2,
+                  ),
                   controller: descriptionController,
                   minLines: 5,
                   maxLines: 7,
@@ -974,7 +1089,93 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
                 width: double.infinity,
                 height: 49.h,
                 child: ElevatedButton(
-                  onPressed: _submitForm,
+                  onPressed: () async {
+                    if (selectedCategory == null) {
+                      showErrorSnackBar("Please select a service category");
+                      return;
+                    }
+                    // if (selectedIndex == -1) {
+                    //   showErrorSnackBar("Please select a service type");
+                    //   return;
+                    // }
+                    if (selectedService == null) {
+                      showErrorSnackBar("Please select a service");
+                      return;
+                    }
+                    if (titleController.text.trim().isEmpty) {
+                      showErrorSnackBar("Please enter a service title");
+                      return;
+                    }
+                    if (descriptionController.text.trim().isEmpty) {
+                      showErrorSnackBar("Please enter service details");
+                      return;
+                    }
+                    if (selectedDate == null) {
+                      showErrorSnackBar("Please select a preferred date");
+                      return;
+                    }
+                    if (selectedTime == null) {
+                      showErrorSnackBar("Please select a preferred time");
+                      return;
+                    }
+
+                    final servicesList = [
+                      "Plumbing",
+                      "Electrical",
+                      "AC Service",
+                      "General",
+                    ];
+
+                    String formattedDate =
+                        "${selectedDate!.year}-"
+                        "${selectedDate!.month.toString().padLeft(2, '0')}-"
+                        "${selectedDate!.day.toString().padLeft(2, '0')}";
+                    String formattedTime = selectedTime!.format(context);
+
+                    MultipartFile? attachment;
+                    if (selectedFile != null) {
+                      attachment = await MultipartFile.fromFile(
+                        selectedFile!.path,
+                        filename: selectedFileName,
+                      );
+                    }
+
+                    setState(() {
+                      isLoading = true;
+                    });
+
+                    try {
+                      final service = ref.read(authServiceProvider);
+                      await service.createService(
+                        // serviceCategory: selectedCategory!,
+                        // serviceType: servicesList[selectedIndex],
+                        serviceCategory: selectedCategory!,
+                        serviceType: selectedService!,
+                        title: titleController.text.trim(),
+                        details: descriptionController.text.trim(),
+                        preferredDate: formattedDate,
+                        preferredTime: formattedTime,
+                        priority: priorities[selectedPriority],
+                        attachment: attachment,
+                        type: "service_request",
+                        propertyId: propertyId,
+                      );
+                      ref.invalidate(
+                        getServiceRequestProvider((
+                          statusFilter: "",
+                          search: "",
+                          type: "service_request",
+                        )),
+                      );
+                      Navigator.pop(context);
+                    } catch (e) {
+                      showErrorSnackBar("Failed to submit request.");
+                    } finally {
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF101C16),
                     foregroundColor: Colors.white,
@@ -989,13 +1190,13 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
                             width: 20.w,
                             height: 20.h,
                             child: CircularProgressIndicator(
-                              color: AppColors.heading,
+                              color: AppColors.scaffoldBg,
                               strokeWidth: 1.5,
                             ),
                           ),
                         )
                       : Text(
-                          "Submit Complaint",
+                          "Submit",
                           style: GoogleFonts.outfit(
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w700,
@@ -1011,82 +1212,6 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
         ),
       ),
     );
-  }
-
-  Future<void> _submitForm() async {
-    if (selectedCategory == null) {
-      showErrorSnackBar("Please select a service category");
-      return;
-    }
-    if (selectedIndex == -1) {
-      showErrorSnackBar("Please select a service type");
-      return;
-    }
-    if (titleController.text.trim().isEmpty) {
-      showErrorSnackBar("Please enter a service title");
-      return;
-    }
-    if (descriptionController.text.trim().isEmpty) {
-      showErrorSnackBar("Please enter service details");
-      return;
-    }
-    if (selectedDate == null) {
-      showErrorSnackBar("Please select a preferred date");
-      return;
-    }
-    if (selectedTime == null) {
-      showErrorSnackBar("Please select a preferred time");
-      return;
-    }
-
-    final servicesList = ["Plumbing", "Electrical", "AC Service", "General"];
-
-    String formattedDate =
-        "${selectedDate!.year}-"
-        "${selectedDate!.month.toString().padLeft(2, '0')}-"
-        "${selectedDate!.day.toString().padLeft(2, '0')}";
-    String formattedTime = selectedTime!.format(context);
-
-    MultipartFile? attachment;
-    if (selectedFile != null) {
-      attachment = await MultipartFile.fromFile(
-        selectedFile!.path,
-        filename: selectedFileName,
-      );
-    }
-
-    setState(() {
-      isLoading = true;
-    });
-
-    try {
-      final service = ref.read(authServiceProvider);
-      await service.createService(
-        serviceCategory: selectedCategory!,
-        serviceType: servicesList[selectedIndex],
-        title: titleController.text.trim(),
-        details: descriptionController.text.trim(),
-        preferredDate: formattedDate,
-        preferredTime: formattedTime,
-        priority: priorities[selectedPriority],
-        attachment: attachment,
-        type: "service_request",
-      );
-      ref.invalidate(
-        getServiceRequestProvider((
-          statusFilter: "",
-          search: "",
-          type: "service_request",
-        )),
-      );
-      Navigator.pop(context);
-    } catch (e) {
-      showErrorSnackBar("Failed to submit request.");
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
   }
 
   Widget _buildInfoBox() {
@@ -1111,8 +1236,8 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
           SizedBox(width: 5.w),
           Expanded(
             child: Text(
-              "After submission, a unique complaint ID will be generated. "
-              "You can use it to track the complaint status and resolution progress.",
+              "After submission, a unique service request ID will be generated. "
+              "You can use it to track your service request status and resolution progress.",
               style: GoogleFonts.outfit(
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w400,
@@ -1166,10 +1291,10 @@ class _CreateServiceRequestState extends ConsumerState<CreateServiceRequest> {
               child: Text(
                 item,
                 style: GoogleFonts.outfit(
-                  fontSize: 15.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF101C16),
-                  letterSpacing: -0.3,
+                  letterSpacing: -0.2,
                 ),
               ),
             );

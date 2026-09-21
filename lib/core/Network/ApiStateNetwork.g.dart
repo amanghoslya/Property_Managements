@@ -189,9 +189,10 @@ class _ApiStateNetwork implements ApiStateNetwork {
   }
 
   @override
-  Future<GetProfileModel> getProfileData() async {
+  Future<GetProfileModel> getProfileData(int? propertyId) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'property_id': propertyId};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<GetProfileModel>(
@@ -216,9 +217,10 @@ class _ApiStateNetwork implements ApiStateNetwork {
   }
 
   @override
-  Future<OwnerDashboardModel> getOwnerDashboardData() async {
+  Future<OwnerDashboardModel> getOwnerDashboardData(int? propertyId) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'property_id': propertyId};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<OwnerDashboardModel>(
@@ -243,9 +245,10 @@ class _ApiStateNetwork implements ApiStateNetwork {
   }
 
   @override
-  Future<PropertyDetailsModel> propertyDetails() async {
+  Future<PropertyDetailsModel> propertyDetails(int? propertyId) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'property_id': propertyId};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<PropertyDetailsModel>(
@@ -297,9 +300,10 @@ class _ApiStateNetwork implements ApiStateNetwork {
   }
 
   @override
-  Future<PropertyListModel> getProperyList() async {
+  Future<PropertyListModel> getProperyList(int? selectedId) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'selected_id': selectedId};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<PropertyListModel>(
@@ -324,9 +328,32 @@ class _ApiStateNetwork implements ApiStateNetwork {
   }
 
   @override
-  Future<GetPropertyScoreModel> getPropertyScore() async {
+  Future<dynamic> selectProperty(SelectPropertyBodyModel body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<dynamic>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/v1/owner/properties/select',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
+    return _value;
+  }
+
+  @override
+  Future<GetPropertyScoreModel> getPropertyScore(int? propertyId) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'property_id': propertyId};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<GetPropertyScoreModel>(
@@ -351,9 +378,12 @@ class _ApiStateNetwork implements ApiStateNetwork {
   }
 
   @override
-  Future<ConsolidatedStatusModel> propertyConsolidateStatus() async {
+  Future<ConsolidatedStatusModel> propertyConsolidateStatus(
+    int? propertyId,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'property_id': propertyId};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<ConsolidatedStatusModel>(
@@ -430,6 +460,7 @@ class _ApiStateNetwork implements ApiStateNetwork {
     String priority,
     MultipartFile? attachment,
     String type,
+    int? propertyId,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -453,6 +484,9 @@ class _ApiStateNetwork implements ApiStateNetwork {
       _data.files.add(MapEntry('attachment', attachment));
     }
     _data.fields.add(MapEntry('type', type));
+    if (propertyId != null) {
+      _data.fields.add(MapEntry('property_id', propertyId.toString()));
+    }
     final _options = _setStreamType<void>(
       Options(
             method: 'POST',
@@ -476,13 +510,16 @@ class _ApiStateNetwork implements ApiStateNetwork {
     String statusFilter,
     String search,
     String type,
+    int? propertyId,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'status_filter': statusFilter,
       r'search': search,
       r'type': type,
+      r'property_id': propertyId,
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<GetServiceRequestModel>(
@@ -536,9 +573,16 @@ class _ApiStateNetwork implements ApiStateNetwork {
   }
 
   @override
-  Future<GetDocumentListModel> getDocumentList(String category) async {
+  Future<GetDocumentListModel> getDocumentList(
+    String category,
+    int? propertyId,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'category': category};
+    final queryParameters = <String, dynamic>{
+      r'category': category,
+      r'property_id': propertyId,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<GetDocumentListModel>(
@@ -642,9 +686,10 @@ class _ApiStateNetwork implements ApiStateNetwork {
   }
 
   @override
-  Future<GetTenantListModel> getTenantList() async {
+  Future<GetTenantListModel> getTenantList(int? propertyId) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'property_id': propertyId};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<GetTenantListModel>(
@@ -669,9 +714,13 @@ class _ApiStateNetwork implements ApiStateNetwork {
   }
 
   @override
-  Future<GetTenantDetailsModel> getTenantDetails(String id) async {
+  Future<GetTenantDetailsModel> getTenantDetails(
+    String id,
+    int? propertyId,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'property_id': propertyId};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<GetTenantDetailsModel>(
@@ -835,9 +884,14 @@ class _ApiStateNetwork implements ApiStateNetwork {
   @override
   Future<GetMaintenanceHistoryModel> getMaintenanceHistory(
     String filter,
+    int? propertyId,
   ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'filter': filter};
+    final queryParameters = <String, dynamic>{
+      r'filter': filter,
+      r'property_id': propertyId,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<GetMaintenanceHistoryModel>(
@@ -891,9 +945,12 @@ class _ApiStateNetwork implements ApiStateNetwork {
   }
 
   @override
-  Future<MaintenancePaymentStatusModel> maintenancePaymentStatus() async {
+  Future<MaintenancePaymentStatusModel> maintenancePaymentStatus(
+    int? propertyId,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'property_id': propertyId};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<MaintenancePaymentStatusModel>(
@@ -918,9 +975,9 @@ class _ApiStateNetwork implements ApiStateNetwork {
   }
 
   @override
-  Future<GetNotificaionListModel> getNotificaionList() async {
+  Future<GetNotificaionListModel> getNotificaionList(String filter) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'filter': filter};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<GetNotificaionListModel>(
@@ -937,6 +994,158 @@ class _ApiStateNetwork implements ApiStateNetwork {
     late GetNotificaionListModel _value;
     try {
       _value = GetNotificaionListModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<GetInspectionReportModel> getInspectionReport(
+    String filter,
+    String type,
+    int? propertyId,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'filter': filter,
+      r'type': type,
+      r'property_id': propertyId,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<GetInspectionReportModel>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/v1/inspections',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GetInspectionReportModel _value;
+    try {
+      _value = GetInspectionReportModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<GetInspectionReportDetailsModel> getInpectionReportDetails(
+    String id,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<GetInspectionReportDetailsModel>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/v1/inspections/${id}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GetInspectionReportDetailsModel _value;
+    try {
+      _value = GetInspectionReportDetailsModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<GetPropertyAssistantModel> getPropertyAssistant() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<GetPropertyAssistantModel>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/v1/ai/property-assistant',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GetPropertyAssistantModel _value;
+    try {
+      _value = GetPropertyAssistantModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<GetPropertyAssistantModel> sendMessageToAi(
+    AiAssistanceBodyModel body,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<GetPropertyAssistantModel>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/v1/ai/property-assistant',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GetPropertyAssistantModel _value;
+    try {
+      _value = GetPropertyAssistantModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<AddPropertyRequestResModel> addPropertyRequest(
+    AddPropertyRequestBodyModel body,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<AddPropertyRequestResModel>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/v1/owner/properties/request',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late AddPropertyRequestResModel _value;
+    try {
+      _value = AddPropertyRequestResModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

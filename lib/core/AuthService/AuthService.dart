@@ -1,13 +1,17 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:property_care/core/Data/Model/BodyModel/loginBodyModel.dart';
 import 'package:property_care/core/Data/Model/BodyModel/registerBodyModel.dart';
 import 'package:property_care/core/Data/Model/BodyModel/resetPassBodyModel.dart';
+import 'package:property_care/core/Data/Model/BodyModel/selectPropertyBodyModel.dart';
 import 'package:property_care/core/Data/Model/BodyModel/verifyOtpBodyModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/availableFlatModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/consolidatedStateModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/documentDetialsModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/forgotPassResModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getDocumentListModel.dart';
+import 'package:property_care/core/Data/Model/ResponseModel/getInspectionReportModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getProfileModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getServiceRequestDetailsModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/getServiceRequestModel.dart';
@@ -20,13 +24,18 @@ import 'package:property_care/core/Data/Model/ResponseModel/propertyListModel.da
 import 'package:property_care/core/Data/Model/ResponseModel/resetPassResModel.dart';
 import 'package:property_care/core/Data/Model/ResponseModel/verifyOtpResModel.dart';
 import 'package:property_care/core/Network/ApiStateNetwork.dart';
+import '../Data/Model/BodyModel/addPropertyRequestBodyModel.dart';
+import '../Data/Model/BodyModel/aiAssistanceBodyModel.dart';
 import '../Data/Model/BodyModel/changePasswordBodyModel.dart';
 import '../Data/Model/BodyModel/forgotPassBodyModel.dart';
+import '../Data/Model/ResponseModel/addPropertyRequestResModel.dart';
 import '../Data/Model/ResponseModel/changePassResModel.dart';
 import '../Data/Model/ResponseModel/editProfileResModel.dart';
+import '../Data/Model/ResponseModel/getInpectoinReportDetailsModel.dart';
 import '../Data/Model/ResponseModel/getMaintenanceHistoryDetailsModel.dart';
 import '../Data/Model/ResponseModel/getMaintenanceHistoryModel.dart';
 import '../Data/Model/ResponseModel/getNotificaionListModel.dart';
+import '../Data/Model/ResponseModel/getPropertyAssistantModel.dart';
 import '../Data/Model/ResponseModel/getPropertyScoreModel.dart';
 import '../Data/Model/ResponseModel/getTenantPaymentModel.dart';
 import '../Data/Model/ResponseModel/gtUtilityStatusModel.dart';
@@ -77,9 +86,10 @@ class AuthService {
   Future<LoginResModel> login({
     required String email,
     required String password,
+    required String role,
   }) async {
     try {
-      final body = LoginBodyModel(login: email, password: password);
+      final body = LoginBodyModel(login: email, password: password, role: role);
       final response = await api.login(body);
       return response;
     } catch (e) {
@@ -128,27 +138,31 @@ class AuthService {
     }
   }
 
-  Future<GetProfileModel> getProfileData() async {
+  Future<GetProfileModel> getProfileData({dynamic propertyId}) async {
     try {
-      final response = await api.getProfileData();
+      final response = await api.getProfileData(propertyId);
       return response;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<OwnerDashboardModel> getOwnerDashboardData() async {
+  Future<OwnerDashboardModel> getOwnerDashboardData({
+    dynamic propertyId,
+  }) async {
     try {
-      final response = await api.getOwnerDashboardData();
+      final response = await api.getOwnerDashboardData(propertyId);
       return response;
-    } catch (e) {
+    } catch (e, st) {
+      log(st.toString());
+      log(e.toString());
       rethrow;
     }
   }
 
-  Future<PropertyDetailsModel> propertyDetails() async {
+  Future<PropertyDetailsModel> propertyDetails({dynamic propertyId}) async {
     try {
-      final response = await api.propertyDetails();
+      final response = await api.propertyDetails(propertyId);
       return response;
     } catch (e) {
       rethrow;
@@ -164,19 +178,28 @@ class AuthService {
     }
   }
 
-  Future<PropertyListModel> getPropertyList() async {
+  Future<PropertyListModel> getPropertyList({dynamic selectedId}) async {
     try {
-      final response = await api.getProperyList();
+      final response = await api.getProperyList(selectedId);
       return response;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<GetPropertyScoreModel> getPropertyScore() async {
+  Future<GetPropertyScoreModel> getPropertyScore({dynamic propertyId}) async {
     try {
-      final response = await api.getPropertyScore();
+      final response = await api.getPropertyScore(propertyId);
       return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> selectProperty({required int propertyId}) async {
+    try {
+      final body = SelectPropertyBodyModel(propertyId: propertyId);
+      await api.selectProperty(body);
     } catch (e) {
       rethrow;
     }
@@ -195,9 +218,11 @@ class AuthService {
     }
   }
 
-  Future<ConsolidatedStatusModel> propertyConsolidateStatus() async {
+  Future<ConsolidatedStatusModel> propertyConsolidateStatus({
+    dynamic propertyId,
+  }) async {
     try {
-      final response = await api.propertyConsolidateStatus();
+      final response = await api.propertyConsolidateStatus(propertyId);
       return response;
     } catch (e) {
       rethrow;
@@ -214,6 +239,7 @@ class AuthService {
     required String priority,
     MultipartFile? attachment,
     required String type,
+    int? propertyId,
   }) async {
     try {
       await api.createService(
@@ -226,6 +252,7 @@ class AuthService {
         priority,
         attachment,
         type,
+        propertyId,
       );
     } catch (e) {
       rethrow;
@@ -236,9 +263,15 @@ class AuthService {
     required String statusFilter,
     required String search,
     required String type,
+    dynamic propertyId,
   }) async {
     try {
-      final response = await api.getServiceRequest(statusFilter, search, type);
+      final response = await api.getServiceRequest(
+        statusFilter,
+        search,
+        type,
+        propertyId,
+      );
       return response;
     } catch (e) {
       rethrow;
@@ -258,9 +291,10 @@ class AuthService {
 
   Future<GetDocumentListModel> getDocumentList({
     required String category,
+    dynamic propertyId,
   }) async {
     try {
-      final response = await api.getDocumentList(category);
+      final response = await api.getDocumentList(category, propertyId);
       return response;
     } catch (e) {
       rethrow;
@@ -309,18 +343,21 @@ class AuthService {
     }
   }
 
-  Future<GetTenantListModel> getTenantList() async {
+  Future<GetTenantListModel> getTenantList({dynamic propertyId}) async {
     try {
-      final response = await api.getTenantList();
+      final response = await api.getTenantList(propertyId);
       return response;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<GetTenantDetailsModel> getTenantDetails({required String id}) async {
+  Future<GetTenantDetailsModel> getTenantDetails({
+    required String id,
+    dynamic propertyId,
+  }) async {
     try {
-      final response = await api.getTenantDetails(id);
+      final response = await api.getTenantDetails(id, propertyId);
       return response;
     } catch (e) {
       rethrow;
@@ -400,9 +437,10 @@ class AuthService {
 
   Future<GetMaintenanceHistoryModel> maintenanceHistory({
     required String filter,
+    dynamic propertyId,
   }) async {
     try {
-      final response = await api.getMaintenanceHistory(filter);
+      final response = await api.getMaintenanceHistory(filter, propertyId);
       return response;
     } catch (e) {
       rethrow;
@@ -420,18 +458,91 @@ class AuthService {
     }
   }
 
-   Future<MaintenancePaymentStatusModel> maintenancePaymentStatus() async {
+  Future<MaintenancePaymentStatusModel> maintenancePaymentStatus({
+    dynamic propertyId,
+  }) async {
     try {
-      final response = await api.maintenancePaymentStatus();
+      final response = await api.maintenancePaymentStatus(propertyId);
       return response;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<GetNotificaionListModel> getNotificaionList() async {
+  Future<GetNotificaionListModel> getNotificaionList({
+    required String filter,
+  }) async {
     try {
-      final response = await api.getNotificaionList();
+      final response = await api.getNotificaionList(filter);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetInspectionReportModel> getInspectionReport({
+    required String filter,
+    required String type,
+    dynamic propertyId,
+  }) async {
+    try {
+      final response = await api.getInspectionReport(filter, type, propertyId);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetInspectionReportDetailsModel> getInspectionReportDetails({
+    required String id,
+  }) async {
+    try {
+      final response = await api.getInpectionReportDetails(id);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetPropertyAssistantModel> getPropertyAssistant() async {
+    try {
+      final response = await api.getPropertyAssistant();
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetPropertyAssistantModel> sendMessageToAi({
+    required String query,
+  }) async {
+    try {
+      final body = AiAssistanceBodyModel(query: query);
+      final response = await api.sendMessageToAi(body);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<AddPropertyRequestResModel> addProperyRequest({
+    required String propertyNameNumber,
+    required String propertyType,
+    required String location,
+    required String area,
+    required String carePackage,
+    required String complexes,
+  }) async {
+    try {
+      final body = AddPropertyRequestBodyModel(
+        propertyNameNumber: propertyNameNumber,
+        propertyType: propertyType,
+        location: location,
+        area: area,
+        carePackage: carePackage,
+        complexes: complexes,
+      );
+      final response = await api.addPropertyRequest(body);
       return response;
     } catch (e) {
       rethrow;

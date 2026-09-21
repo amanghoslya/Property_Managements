@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:property_care/OwnerScreen/login_screen.dart';
 import 'package:property_care/core/Utils/showMessage.dart';
 import 'package:property_care/core/constant/appColor.dart';
-
 import '../../core/AuthService/AuthServiceProvider.dart';
 import 'provider/availableFlatsProvider.dart';
 
@@ -248,6 +246,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     getAvailableFlatState.when(
                       data: (data) {
                         return DropdownButtonFormField<String>(
+                          isExpanded: true,
                           value: selectedFlatNameNumber,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -318,9 +317,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             return DropdownMenuItem<String>(
                               value: flat.propertyNameNumber.toString(),
                               child: Text(
-                                flat.propertyNameNumber ?? '',
+                                "${flat.propertyNameNumber ?? ''} (${flat.complex?.name ?? ''})",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.outfit(
-                                  fontSize: 18.sp,
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.heading,
                                   letterSpacing: -0.2,
@@ -423,7 +424,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                         .text
                                         .trim(),
                                     propertyNameNumber: selectedFlatNameNumber!,
-
                                     role: 'property_owner',
                                   );
                                   if (response.status == true) {

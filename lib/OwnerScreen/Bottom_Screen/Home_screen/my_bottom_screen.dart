@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,18 +8,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 import 'package:property_care/OwnerScreen/AIPropertyAssistant_Screen/AIProperty_Assistant_Screen.dart';
+import 'package:property_care/OwnerScreen/Audit_Report/AuditReprot_Screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Complaint_Screen/Complaints_screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Document_Screen/document_screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/NotificationScreen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Home_screen/Provider/ownerDashboardProvider.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Profile_Screen/profile_screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Property_Screen/property_screen.dart';
+import 'package:property_care/OwnerScreen/MaintenanceHistory_Screen/MaintenanceHistory_Screen.dart';
 import 'package:property_care/OwnerScreen/MaintenancePaymentStatusScreen/Maintenance_Payment_Status.dart';
 import 'package:property_care/OwnerScreen/ServiceRequest_Screen/Service_Request_Screen.dart';
+import 'package:property_care/OwnerScreen/inspectionReport/inspectionReportScreen.dart';
+import 'package:property_care/core/AuthService/AuthServiceProvider.dart';
 import 'package:property_care/core/constant/appColor.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
+import 'AddPropertyBottomSheet.dart';
 import 'Provider/getPropertyListProvider.dart';
+import 'Provider/selectedPropertyProvider.dart';
 
 class MyBottomScreen extends StatefulWidget {
   const MyBottomScreen({super.key});
@@ -167,8 +175,6 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   void showPropertyPopup() {
-    int selectedProperty = 0;
-
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -178,8 +184,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         return StatefulBuilder(
           builder: (context, setModalState) {
             return Consumer(
-              builder: (context, ref, child) {
-                final getPropertyListState = ref.watch(getPropertyListProvider);
+              builder: (context, modalRef, child) {
+                final getPropertyListState = modalRef.watch(
+                  getPropertyListProvider,
+                );
+                final currentSelectedPropertyId = modalRef.watch(
+                  selectedPropertyIdProvider,
+                );
 
                 return Container(
                   width: double.infinity,
@@ -248,18 +259,56 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   SizedBox(height: 16.h),
                               itemBuilder: (context, index) {
                                 final property = properties[index];
+                                final hasBackendSelected = properties.any(
+                                  (p) => p.isSelected == true,
+                                );
+                                final isSelected =
+                                    currentSelectedPropertyId != null
+                                    ? property.id == currentSelectedPropertyId
+                                    : (hasBackendSelected
+                                          ? property.isSelected == true
+                                          : index == 0);
                                 return propertyItem(
                                   property.imageUrl ?? "",
                                   "${property.propertyType ?? ''} ${property.propertyNameNumber ?? ''}",
                                   "${property.complexName ?? ''} - ${property.location ?? ''}",
-                                  selectedProperty == index,
-                                  onTap: () {
-                                    setModalState(() {
-                                      selectedProperty = index;
-                                    });
-                                    print(
-                                      "${property.propertyNameNumber} Selected",
+                                  isSelected,
+                                  onTap: () async {
+                                    final propertyId = property.id;
+                                    if (propertyId == null) return;
+
+                                    // 1. Pehle selectedPropertyId state update karein
+                                    ref
+                                            .read(
+                                              selectedPropertyIdProvider
+                                                  .notifier,
+                                            )
+                                            .state =
+                                        propertyId;
+
+                                    // 2. Bottom sheet close karein
+                                    if (bottomSheetContext.mounted) {
+                                      Navigator.pop(bottomSheetContext);
+                                    }
+
+                                    log(
+                                      "${property.propertyNameNumber} Selected (ID: $propertyId)",
                                     );
+
+                                    // 3. POST API hit karein aur dashboard/list refresh karein
+                                    try {
+                                      final service = ref.read(
+                                        authServiceProvider,
+                                      );
+                                      await service.selectProperty(
+                                        propertyId: propertyId,
+                                      );
+
+                                      ref.invalidate(getPropertyListProvider);
+                                      ref.invalidate(ownerDashboardProvider);
+                                    } catch (e) {
+                                      log("Error in selectProperty API: $e");
+                                    }
                                   },
                                 );
                               },
@@ -267,7 +316,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           SizedBox(height: 16.h),
                           GestureDetector(
                             onTap: () {
-                              print("Add New Property");
+                              Navigator.pop(bottomSheetContext);
+                              showAddPropertyBottomSheet(context);
                             },
                             child: Container(
                               width: double.infinity,
@@ -663,9 +713,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     letterSpacing: -0.34,
                                   ),
                                 ),
-
                                 SizedBox(height: 5.h),
-
                                 Text(
                                   // "Apartment A-204",
                                   "${ownerDashboard.data?.property?.type} ${ownerDashboard.data?.property?.nameNumber}",
@@ -1369,6 +1417,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 _infoItem(
                                   "${ownerDashboard.data?.widgets?.pendingIssues ?? "0"}",
                                   "Pending\nIssues",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) =>
+                                            const ServiceRequestScreen(),
+                                      ),
+                                    );
+                                  },
                                 ),
 
                                 _verticalDivider(),
@@ -1376,6 +1433,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 _infoItem(
                                   "${ownerDashboard.data?.widgets?.openMaintenance ?? "0"}",
                                   "Open\nMaintenance",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) =>
+                                            const MaintenancehistoryScreen(),
+                                      ),
+                                    );
+                                  },
                                 ),
 
                                 _verticalDivider(),
@@ -1396,6 +1462,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                         )
                                       : "0",
                                   "Last\nInspection",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) =>
+                                            const InspectionReportScreen(),
+                                      ),
+                                    );
+                                  },
                                 ),
 
                                 _verticalDivider(),
@@ -1403,6 +1478,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 _infoItem(
                                   "${ownerDashboard.data?.widgets?.documentsCount ?? "0"}",
                                   "Documents",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) =>
+                                            const DocumentScreen(),
+                                      ),
+                                    );
+                                  },
                                 ),
 
                                 _verticalDivider(),
@@ -1644,13 +1728,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           Positioned(
                             right: 15.w,
                             bottom: 30.h,
-                            child: Text(
-                              "View Report →",
-                              style: GoogleFonts.outfit(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xffD4B800),
-                                letterSpacing: -0.2,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => AuditreprotScreen(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "View Report →",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xffD4B800),
+                                  letterSpacing: -0.2,
+                                ),
                               ),
                             ),
                           ),
@@ -1691,6 +1785,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           );
         },
         error: (error, stackTrace) {
+          log(error.toString());
+          log(stackTrace.toString());
           return Center(child: Text("Something went wrong"));
         },
         loading: () =>
@@ -1699,8 +1795,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _infoItem(String value, String title) {
-    return Column(
+  Widget _infoItem(String value, String title, {VoidCallback? onTap}) {
+    final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -1726,6 +1822,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       ],
     );
+
+    if (onTap != null) {
+      return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: content,
+      );
+    }
+    return content;
   }
 
   Widget _verticalDivider() {

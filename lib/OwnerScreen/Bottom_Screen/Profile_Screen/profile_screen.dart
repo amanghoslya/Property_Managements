@@ -12,6 +12,7 @@ import 'package:property_care/OwnerScreen/MaintenanceHistory_Screen/MaintenanceH
 import 'package:property_care/OwnerScreen/Tenant_Management_Screen/TenantManagement_Screen.dart';
 import 'package:property_care/OwnerScreen/login_screen.dart';
 import 'package:property_care/core/Utils/showMessage.dart';
+import 'package:property_care/OwnerScreen/inspectionReport/inspectionReportScreen.dart';
 import 'package:property_care/core/constant/appColor.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -460,7 +461,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           image: "assets/SvgImage/inspection.svg",
                           name: "Inspection Reports",
                           title: "Property inspection history",
-                          callback: () {},
+                          callback: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) =>
+                                    const InspectionReportScreen(),
+                              ),
+                            );
+                          },
                         ),
                         Divider(color: Color.fromRGBO(42, 41, 51, 0.6)),
                         _accountSettingTab(

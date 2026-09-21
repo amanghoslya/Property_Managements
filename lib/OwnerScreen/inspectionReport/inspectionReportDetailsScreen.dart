@@ -5,42 +5,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:property_care/core/Utils/showMessage.dart';
 import 'package:property_care/core/constant/appColor.dart';
 
-import '../inspectionReport/Provider/getInspectionReportDeailsProvider.dart';
+import 'Provider/getInspectionReportDeailsProvider.dart';
 
-class AuditreportDetailsScreen extends ConsumerStatefulWidget {
+class InspectionReportDetailsScreen extends ConsumerStatefulWidget {
   final String id;
   final String? title;
   final String? date;
   final String? property;
-  final String? auditType;
-  final String? auditDate;
+  final String? inspector;
+  final String? inspectionDate;
   final String? status;
 
-  const AuditreportDetailsScreen({
+  const InspectionReportDetailsScreen({
     super.key,
     required this.id,
     this.title,
     this.date,
     this.property,
-    this.auditType,
-    this.auditDate,
+    this.inspector,
+    this.inspectionDate,
     this.status,
   });
 
   @override
-  ConsumerState<AuditreportDetailsScreen> createState() =>
-      _AuditreportDetailsScreenState();
+  ConsumerState<InspectionReportDetailsScreen> createState() =>
+      _InspectionReportDetailsScreenState();
 }
 
-class _AuditreportDetailsScreenState
-    extends ConsumerState<AuditreportDetailsScreen> {
+class _InspectionReportDetailsScreenState
+    extends ConsumerState<InspectionReportDetailsScreen> {
   bool _isDownloading = false;
 
   Future<void> _handlePdfAction({
@@ -48,7 +47,7 @@ class _AuditreportDetailsScreenState
     required bool openImmediately,
   }) async {
     if (url == null || url.trim().isEmpty) {
-      showErrorSnackBar("Audit report PDF is not available");
+      showErrorSnackBar("Inspection report PDF is not available");
       return;
     }
 
@@ -62,7 +61,7 @@ class _AuditreportDetailsScreenState
       final uri = Uri.tryParse(url);
       final resolvedFileName = uri != null && uri.pathSegments.isNotEmpty
           ? uri.pathSegments.last.replaceAll(RegExp(r'[^\w\s\.-]'), '_')
-          : 'audit_report_${widget.id}.pdf';
+          : 'inspection_report_${widget.id}.pdf';
 
       Directory? targetDir;
       if (Platform.isAndroid) {
@@ -89,7 +88,7 @@ class _AuditreportDetailsScreenState
 
       if (await file.exists() && await file.length() > 0) {
         if (openImmediately) {
-          showSuccessSnackBar("Opening audit report...");
+          showSuccessSnackBar("Opening inspection report...");
           await OpenFilex.open(savePath);
         } else {
           showSuccessSnackBar("Report downloaded to ${targetDir.path}");
@@ -120,7 +119,7 @@ class _AuditreportDetailsScreenState
         await OpenFilex.open(savePath);
       }
     } catch (e) {
-      showErrorSnackBar("Failed to load audit report PDF");
+      showErrorSnackBar("Failed to load inspection report PDF");
     } finally {
       if (mounted) {
         setState(() {
@@ -186,6 +185,7 @@ class _AuditreportDetailsScreenState
       backgroundColor: AppColors.scaffoldBg,
       appBar: AppBar(
         backgroundColor: AppColors.scaffoldBg,
+        elevation: 0,
         automaticallyImplyLeading: false,
         titleSpacing: 20.w,
         title: Align(
@@ -218,19 +218,19 @@ class _AuditreportDetailsScreenState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Audit Report Details",
+                    "INSPECTION REPORTS",
                     style: GoogleFonts.outfit(
                       fontSize: 17.sp,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: const Color(0xff292832),
                       letterSpacing: -0.64,
                     ),
                   ),
                   SizedBox(height: 2.h),
                   Text(
-                    "COMPLETE AUDIT REPORT",
+                    "INSPECTION REPORT DETAILS",
                     style: GoogleFonts.outfit(
-                      fontSize: 14.sp,
+                      fontSize: 13.sp,
                       fontWeight: FontWeight.w400,
                       color: const Color.fromRGBO(42, 41, 51, 0.6),
                       letterSpacing: -0.24,
@@ -251,7 +251,7 @@ class _AuditreportDetailsScreenState
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Failed to load audit details",
+                "Failed to load inspection details",
                 style: GoogleFonts.outfit(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
@@ -282,44 +282,25 @@ class _AuditreportDetailsScreenState
         data: (modelData) {
           final data = modelData.data;
 
-          final title = widget.title ?? "Property Audit Report";
-
-          final rawDate = data?.inspectionDate ?? widget.date;
-          String headerDate = "12 August 2026";
-          String auditDate = "12 Aug 2026";
-          if (rawDate != null && rawDate.isNotEmpty) {
-            final parsed = DateTime.tryParse(rawDate);
-            if (parsed != null) {
-              headerDate = DateFormat("dd MMMM yyyy").format(parsed);
-              auditDate = DateFormat("dd MMM yyyy").format(parsed);
-            } else {
-              headerDate = rawDate;
-              auditDate = rawDate;
-            }
-          }
-
+          final title = widget.title ?? "Property Inspection Report";
+          final headerDate =
+              data?.inspectionDate ?? widget.date ?? "15 August 2026";
           final property =
               data?.propertyName ?? widget.property ?? "Apartment A-204";
-          final auditType =
-              (data?.auditType != null &&
-                  data!.auditType.toString().trim().isNotEmpty)
-              ? data.auditType.toString()
-              : (widget.auditType ?? "Property Audit");
+          final inspector =
+              data?.inspector?.name ?? widget.inspector ?? "Rajesh Sharma";
+          final inspectionDate =
+              data?.inspectionDate ?? widget.inspectionDate ?? "15 Aug 2026";
           final rawStatus = data?.status ?? widget.status ?? "Completed";
           final status = rawStatus.isNotEmpty
               ? "${rawStatus[0].toUpperCase()}${rawStatus.substring(1)}"
               : "Completed";
 
-          final overviewText =
-              (data?.findings != null && data!.findings!.trim().isNotEmpty)
-              ? data.findings!
-              : "This audit report provides the recorded audit findings, observations and recommendations for the property.";
-
           final recommendationsText =
               (data?.recommendations != null &&
                   data!.recommendations!.trim().isNotEmpty)
               ? data.recommendations!
-              : "Recommended actions based on the audit findings are available for review.";
+              : "Recommended actions and priority items are available based on the inspection findings.";
 
           final checklist = data?.digitalChecklist ?? [];
           final pdfUrl = data?.attachments?.pdf;
@@ -337,18 +318,21 @@ class _AuditreportDetailsScreenState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 12.h),
+
+                    // Overview Card
                     Container(
                       width: double.infinity,
                       padding: EdgeInsets.symmetric(
-                        horizontal: 11.w,
-                        vertical: 15.h,
+                        horizontal: 14.w,
+                        vertical: 14.h,
                       ),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: const Color(0xff101C16),
-                          width: 1.2,
+                          width: 1.1,
                         ),
-                        borderRadius: BorderRadius.circular(13.r),
+                        borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -357,24 +341,24 @@ class _AuditreportDetailsScreenState
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                width: 49.w,
-                                height: 51.h,
+                                width: 44.w,
+                                height: 44.h,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: const Color(0xff101C16),
                                     width: 1.1,
                                   ),
-                                  borderRadius: BorderRadius.circular(4.r),
+                                  borderRadius: BorderRadius.circular(5.r),
                                 ),
                                 child: Center(
                                   child: Icon(
                                     Icons.article_outlined,
-                                    size: 22.sp,
+                                    size: 20.sp,
                                     color: const Color(0xff101C16),
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 14.w),
+                              SizedBox(width: 12.w),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -384,13 +368,13 @@ class _AuditreportDetailsScreenState
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: GoogleFonts.outfit(
-                                        fontSize: 17.sp,
-                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w600,
                                         color: const Color(0xff101C16),
                                         letterSpacing: -0.2,
                                       ),
                                     ),
-                                    SizedBox(height: 7.h),
+                                    SizedBox(height: 5.h),
                                     Text(
                                       headerDate,
                                       style: GoogleFonts.outfit(
@@ -408,15 +392,16 @@ class _AuditreportDetailsScreenState
                                   ],
                                 ),
                               ),
-                              SizedBox(width: 10.w),
+                              SizedBox(width: 8.w),
                               Container(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: 20.w,
+                                  horizontal: 18.w,
                                   vertical: 5.h,
                                 ),
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: const Color(0xff101C16),
+                                    width: 1.1,
                                   ),
                                   borderRadius: BorderRadius.circular(25.r),
                                 ),
@@ -432,15 +417,17 @@ class _AuditreportDetailsScreenState
                               ),
                             ],
                           ),
-                          SizedBox(height: 14.h),
-                          const Divider(
+
+                          SizedBox(height: 12.h),
+                          Divider(
                             height: 1,
-                            thickness: 1,
-                            color: Color(0xff777970),
+                            thickness: 0.8,
+                            color: const Color(0xffD0D2C8),
                           ),
-                          SizedBox(height: 17.h),
+                          SizedBox(height: 12.h),
+
+                          // Grid details: PROPERTY & INSPECTOR
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
                                 child: _infoItem(
@@ -448,26 +435,28 @@ class _AuditreportDetailsScreenState
                                   value: property,
                                 ),
                               ),
-                              SizedBox(width: 15.w),
+                              SizedBox(width: 10.w),
                               Expanded(
                                 child: _infoItem(
-                                  title: "AUDIT TYPE",
-                                  value: auditType,
+                                  title: "INSPECTOR",
+                                  value: inspector,
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 14.h),
+
+                          SizedBox(height: 12.h),
+
+                          // Grid details: INSPECTION DATE & STATUS
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
                                 child: _infoItem(
-                                  title: "AUDIT DATE",
-                                  value: auditDate,
+                                  title: "INSPECTION DATE",
+                                  value: inspectionDate,
                                 ),
                               ),
-                              SizedBox(width: 15.w),
+                              SizedBox(width: 10.w),
                               Expanded(
                                 child: _infoItem(
                                   title: "STATUS",
@@ -479,62 +468,34 @@ class _AuditreportDetailsScreenState
                         ],
                       ),
                     ),
-                    SizedBox(height: 20.h),
+
+                    SizedBox(height: 24.h),
+
+                    // Inspection Findings Header
                     Text(
-                      "Audit Overview",
+                      "Inspection Findings",
                       style: GoogleFonts.outfit(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.heading,
-                        fontSize: 18.sp,
-                        letterSpacing: -0.2,
-                      ),
-                    ),
-                    SizedBox(height: 7.h),
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 15.w,
-                        vertical: 10.h,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color.fromRGBO(42, 41, 51, 0.6),
-                        ),
-                        borderRadius: BorderRadius.circular(5.r),
-                      ),
-                      child: Text(
-                        overviewText,
-                        style: GoogleFonts.outfit(
-                          fontWeight: FontWeight.w500,
-                          color: const Color.fromRGBO(42, 41, 51, 0.6),
-                          fontSize: 14.sp,
-                          letterSpacing: -0.2,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 30.h),
-                    Text(
-                      "Audit Findings",
-                      style: GoogleFonts.outfit(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.heading,
                         fontSize: 17.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.heading,
                         letterSpacing: -0.2,
                       ),
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 12.h),
+
+                    // Findings Box
                     Container(
                       width: double.infinity,
                       padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 17.h,
+                        horizontal: 14.w,
+                        vertical: 14.h,
                       ),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: const Color(0xff999999),
-                          width: 1.5,
+                          width: 1.1,
                         ),
-                        borderRadius: BorderRadius.circular(18.r),
+                        borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: checklist.isNotEmpty
                           ? ListView.separated(
@@ -544,10 +505,10 @@ class _AuditreportDetailsScreenState
                               separatorBuilder: (context, index) => Column(
                                 children: [
                                   SizedBox(height: 12.h),
-                                  Container(
-                                    width: double.infinity,
-                                    height: 1.h,
-                                    color: const Color(0xff202820),
+                                  Divider(
+                                    height: 1,
+                                    thickness: 0.8,
+                                    color: const Color(0xff777970),
                                   ),
                                   SizedBox(height: 12.h),
                                 ],
@@ -559,71 +520,79 @@ class _AuditreportDetailsScreenState
                                       "pass",
                                     ) ??
                                     true;
-                                return _auditItem(
-                                  icon: isPass ? "✓" : "!",
-                                  title: checkItem.itemName ?? "Audit Item",
-                                  description:
-                                      checkItem.remarks ??
-                                      "Observations recorded in the audit.",
+                                return _findingItem(
+                                  iconType: isPass
+                                      ? _IconBadgeType.check
+                                      : _IconBadgeType.warning,
+                                  title: checkItem.itemName ?? "",
+                                  subtitle: checkItem.remarks ?? "",
                                 );
                               },
                             )
                           : Column(
                               children: [
-                                _auditItem(
-                                  icon: "✓",
-                                  title: "Property Condition",
-                                  description:
-                                      "Overall property condition was reviewed during the scheduled audit.",
+                                _findingItem(
+                                  iconType: _IconBadgeType.check,
+                                  title: "General Property Condition",
+                                  subtitle:
+                                      "Property condition reviewed during the scheduled inspection.",
                                 ),
                                 SizedBox(height: 12.h),
-                                Container(
-                                  width: double.infinity,
-                                  height: 1.h,
-                                  color: const Color(0xff202820),
+                                Divider(
+                                  height: 1,
+                                  thickness: 0.8,
+                                  color: const Color(0xff777970),
                                 ),
                                 SizedBox(height: 12.h),
-                                _auditItem(
-                                  icon: "!",
+                                _findingItem(
+                                  iconType: _IconBadgeType.warning,
                                   title: "Maintenance Observation",
-                                  description:
-                                      "Maintenance observations identified during the audit are\nrecorded in the report.",
+                                  subtitle:
+                                      "Minor maintenance attention is recommended for the identified area.",
                                 ),
                                 SizedBox(height: 12.h),
-                                Container(
-                                  width: double.infinity,
-                                  height: 1.h,
-                                  color: const Color(0xff202820),
+                                Divider(
+                                  height: 1,
+                                  thickness: 0.8,
+                                  color: const Color(0xff777970),
                                 ),
                                 SizedBox(height: 12.h),
-                                _auditItem(
-                                  icon: "✓",
-                                  title: "Compliance Check",
-                                  description:
-                                      "Relevant property audit checks and observations have been recorded.",
+                                _findingItem(
+                                  iconType: _IconBadgeType.check,
+                                  title: "Safety Check",
+                                  subtitle:
+                                      "Safety-related observations recorded in the inspection report.",
                                 ),
                               ],
                             ),
                     ),
-                    SizedBox(height: 30.h),
+
+                    SizedBox(height: 24.h),
+
+                    // Recommendations Header
                     Text(
                       "Recommendations",
                       style: GoogleFonts.outfit(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.heading,
                         fontSize: 17.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.heading,
                         letterSpacing: -0.2,
                       ),
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 12.h),
+
+                    // Recommendations Card
                     Container(
                       width: double.infinity,
                       padding: EdgeInsets.symmetric(
-                        vertical: 18.h,
-                        horizontal: 15.w,
+                        horizontal: 14.w,
+                        vertical: 14.h,
                       ),
                       decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.heading),
+                        border: Border.all(
+                          color: const Color(0xff101C16),
+                          width: 1.1,
+                        ),
                         borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: Column(
@@ -632,49 +601,60 @@ class _AuditreportDetailsScreenState
                           Text(
                             recommendationsText,
                             style: GoogleFonts.outfit(
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.heading,
-                              fontSize: 13.sp,
+                              fontSize: 12.5.sp,
+                              fontWeight: FontWeight.w400,
+                              color: const Color.fromRGBO(16, 28, 22, 0.75),
                               letterSpacing: -0.2,
+                              height: 1.35,
                             ),
                           ),
-                          SizedBox(height: 14.h),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 5.h,
-                              horizontal: 21.w,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.heading),
-                              borderRadius: BorderRadius.circular(50.r),
-                            ),
-                            child: Text(
-                              "Review Recommended Actions",
-                              style: GoogleFonts.outfit(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.heading,
-                                fontSize: 13.sp,
-                                letterSpacing: -0.2,
+                          SizedBox(height: 12.h),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 18.w,
+                                vertical: 7.h,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: const Color(0xff101C16),
+                                  width: 1.1,
+                                ),
+                                borderRadius: BorderRadius.circular(25.r),
+                              ),
+                              child: Text(
+                                "Review Recommended Actions",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xff101C16),
+                                ),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 30.h),
+
+                    SizedBox(height: 24.h),
+
+                    // Attached Documents / Images Header
                     Text(
-                      "Attached Documents",
+                      "Attached Documents / Images",
                       style: GoogleFonts.outfit(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.heading,
                         fontSize: 17.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.heading,
                         letterSpacing: -0.2,
                       ),
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 12.h),
+
+                    // Document & Images Row
                     Row(
                       children: [
-                        // PDF Box
+                        // PDF Document Card
                         Expanded(
                           child: GestureDetector(
                             onTap: () => _handlePdfAction(
@@ -683,13 +663,13 @@ class _AuditreportDetailsScreenState
                             ),
                             child: Container(
                               padding: EdgeInsets.symmetric(
-                                horizontal: 16.w,
-                                vertical: 14.h,
+                                vertical: 18.h,
+                                horizontal: 12.w,
                               ),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: AppColors.heading,
-                                  width: 1,
+                                  color: const Color(0xff101C16),
+                                  width: 1.1,
                                 ),
                                 borderRadius: BorderRadius.circular(10.r),
                               ),
@@ -697,37 +677,40 @@ class _AuditreportDetailsScreenState
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
-                                    width: 32.w,
-                                    height: 32.h,
+                                    width: 28.w,
+                                    height: 28.h,
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: AppColors.heading,
+                                        color: const Color(0xff101C16),
+                                        width: 1.2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(2.r),
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.picture_as_pdf_outlined,
+                                        size: 16.sp,
+                                        color: const Color(0xff101C16),
                                       ),
                                     ),
-                                    child: const Icon(
-                                      Icons.description_outlined,
-                                      size: 16,
-                                      color: Color(0xff17231F),
-                                    ),
                                   ),
-                                  SizedBox(height: 5.h),
+                                  SizedBox(height: 10.h),
                                   Text(
-                                    "Audit Report",
+                                    "Inspection Report",
                                     textAlign: TextAlign.center,
-                                    style: GoogleFonts.inter(
-                                      fontSize: 16.sp,
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.w500,
-                                      color: AppColors.heading,
+                                      color: const Color(0xff101C16),
                                     ),
                                   ),
                                   Text(
                                     "PDF",
                                     textAlign: TextAlign.center,
-                                    style: GoogleFonts.inter(
-                                      fontSize: 16.sp,
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.w500,
-                                      color: AppColors.heading,
-                                      letterSpacing: -0.2,
+                                      color: const Color(0xff101C16),
                                     ),
                                   ),
                                 ],
@@ -735,86 +718,110 @@ class _AuditreportDetailsScreenState
                             ),
                           ),
                         ),
-                        SizedBox(width: 20.w),
-                        // Audit Images Box
+                        SizedBox(width: 14.w),
+
+                        // Inspection Images Card
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
                               if (images.isNotEmpty) {
                                 _showImagePreview(images.first);
                               } else {
-                                showErrorSnackBar("No audit images available");
+                                showErrorSnackBar(
+                                  "No inspection images available",
+                                );
                               }
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(
-                                horizontal: 16.w,
-                                vertical: 14.h,
+                                vertical: 18.h,
+                                horizontal: 12.w,
                               ),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: AppColors.heading,
-                                  width: 1,
+                                  color: const Color(0xff101C16),
+                                  width: 1.1,
                                 ),
                                 borderRadius: BorderRadius.circular(10.r),
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    width: 32.w,
-                                    height: 32.h,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: AppColors.heading,
-                                        width: 1.5,
+                                  if (images.isNotEmpty)
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(4.r),
+                                      child: Image.network(
+                                        images.first,
+                                        width: 28.w,
+                                        height: 28.h,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Container(
+                                                  width: 28.w,
+                                                  height: 28.h,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color: const Color(
+                                                        0xff101C16,
+                                                      ),
+                                                      width: 1.2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          2.r,
+                                                        ),
+                                                  ),
+                                                  child: Center(
+                                                    child: Container(
+                                                      width: 8.w,
+                                                      height: 8.h,
+                                                      color: const Color(
+                                                        0xff101C16,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                      ),
+                                    )
+                                  else
+                                    Container(
+                                      width: 28.w,
+                                      height: 28.h,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: const Color(0xff101C16),
+                                          width: 1.2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                          2.r,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Container(
+                                          width: 8.w,
+                                          height: 8.h,
+                                          color: const Color(0xff101C16),
+                                        ),
                                       ),
                                     ),
-                                    child: Center(
-                                      child: images.isNotEmpty
-                                          ? ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(2.r),
-                                              child: Image.network(
-                                                images.first,
-                                                width: 18.w,
-                                                height: 18.h,
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (c, e, s) =>
-                                                    Container(
-                                                      height: 6.h,
-                                                      width: 6.w,
-                                                      color: AppColors.heading,
-                                                    ),
-                                              ),
-                                            )
-                                          : Container(
-                                              height: 6.h,
-                                              width: 6.w,
-                                              decoration: BoxDecoration(
-                                                color: AppColors.heading,
-                                              ),
-                                            ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 5.h),
+                                  SizedBox(height: 10.h),
                                   Text(
-                                    "Audit Images",
+                                    "Inspection Images",
                                     textAlign: TextAlign.center,
-                                    style: GoogleFonts.inter(
-                                      fontSize: 16.sp,
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.w500,
-                                      color: AppColors.heading,
+                                      color: const Color(0xff101C16),
                                     ),
                                   ),
                                   Text(
                                     "Images",
                                     textAlign: TextAlign.center,
-                                    style: GoogleFonts.inter(
-                                      fontSize: 16.sp,
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.w500,
-                                      color: AppColors.heading,
-                                      letterSpacing: -0.2,
+                                      color: const Color(0xff101C16),
                                     ),
                                   ),
                                 ],
@@ -824,18 +831,24 @@ class _AuditreportDetailsScreenState
                         ),
                       ],
                     ),
-                    SizedBox(height: 30.h),
+
+                    SizedBox(height: 20.h),
+
+                    // Bottom Action Buttons
                     Row(
                       children: [
                         Expanded(
                           child: SizedBox(
-                            width: double.infinity,
-                            height: 41.h,
+                            height: 44.h,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.scaffoldBg,
+                                elevation: 0,
                                 shape: RoundedRectangleBorder(
-                                  side: BorderSide(color: AppColors.heading),
+                                  side: const BorderSide(
+                                    color: Color(0xff101C16),
+                                    width: 1.1,
+                                  ),
                                   borderRadius: BorderRadius.circular(8.r),
                                 ),
                               ),
@@ -847,8 +860,8 @@ class _AuditreportDetailsScreenState
                                     ),
                               child: _isDownloading
                                   ? SizedBox(
-                                      width: 16.w,
-                                      height: 16.h,
+                                      width: 18.w,
+                                      height: 18.h,
                                       child: const CircularProgressIndicator(
                                         strokeWidth: 2,
                                         color: Color(0xff101C16),
@@ -857,23 +870,23 @@ class _AuditreportDetailsScreenState
                                   : Text(
                                       "View Full Report",
                                       style: GoogleFonts.outfit(
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.heading,
-                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color(0xff101C16),
+                                        fontSize: 13.5.sp,
                                         letterSpacing: -0.2,
                                       ),
                                     ),
                             ),
                           ),
                         ),
-                        SizedBox(width: 20.w),
+                        SizedBox(width: 14.w),
                         Expanded(
                           child: SizedBox(
-                            width: double.infinity,
-                            height: 41.h,
+                            height: 44.h,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.heading,
+                                backgroundColor: const Color(0xff101C16),
+                                elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8.r),
                                 ),
@@ -887,9 +900,9 @@ class _AuditreportDetailsScreenState
                               child: Text(
                                 "Download Report",
                                 style: GoogleFonts.outfit(
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   color: Colors.white,
-                                  fontSize: 12.sp,
+                                  fontSize: 13.5.sp,
                                   letterSpacing: -0.2,
                                 ),
                               ),
@@ -898,6 +911,7 @@ class _AuditreportDetailsScreenState
                         ),
                       ],
                     ),
+
                     SizedBox(height: 30.h),
                   ],
                 ),
@@ -916,20 +930,21 @@ class _AuditreportDetailsScreenState
         Text(
           title,
           style: GoogleFonts.outfit(
-            fontSize: 12.sp,
+            fontSize: 11.5.sp,
             fontWeight: FontWeight.w500,
-            color: const Color.fromRGBO(16, 28, 22, 0.6),
+            color: const Color.fromRGBO(16, 28, 22, 0.55),
             letterSpacing: -0.2,
           ),
         ),
-        SizedBox(height: 2.h),
+        SizedBox(height: 3.h),
         Text(
           value,
+          maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: GoogleFonts.outfit(
             fontSize: 15.sp,
-            fontWeight: FontWeight.w500,
-            color: AppColors.heading,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xff101C16),
             letterSpacing: -0.2,
           ),
         ),
@@ -937,56 +952,55 @@ class _AuditreportDetailsScreenState
     );
   }
 
-  Widget _auditItem({
-    required String icon,
+  Widget _findingItem({
+    required _IconBadgeType iconType,
     required String title,
-    required String description,
+    required String subtitle,
   }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          width: 36.w,
-          height: 36.h,
+          width: 34.w,
+          height: 34.h,
           decoration: BoxDecoration(
-            color: const Color.fromRGBO(16, 28, 22, 0.2),
-            borderRadius: BorderRadius.circular(3.r),
+            color: const Color(0xffD9DCD3),
+            borderRadius: BorderRadius.circular(4.r),
           ),
-          alignment: Alignment.center,
-          child: Text(
-            icon,
-            style: GoogleFonts.outfit(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w500,
-              color: AppColors.heading,
-            ),
+          child: Center(
+            child: iconType == _IconBadgeType.check
+                ? Icon(Icons.check, size: 18.sp, color: const Color(0xff101C16))
+                : Text(
+                    "!",
+                    style: GoogleFonts.outfit(
+                      fontSize: 17.sp,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xff101C16),
+                    ),
+                  ),
           ),
         ),
-        SizedBox(width: 8.w),
+        SizedBox(width: 12.w),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.outfit(
-                  fontSize: 17.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.heading,
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xff101C16),
                   letterSpacing: -0.2,
                 ),
               ),
-              SizedBox(height: 4.h),
+              SizedBox(height: 2.h),
               Text(
-                description,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+                subtitle,
                 style: GoogleFonts.outfit(
-                  fontSize: 11.sp,
-                  fontWeight: FontWeight.w500,
-                  color: const Color.fromRGBO(42, 41, 51, 0.5),
+                  fontSize: 12.5.sp,
+                  fontWeight: FontWeight.w400,
+                  color: const Color.fromRGBO(16, 28, 22, 0.6),
                   letterSpacing: -0.2,
                 ),
               ),
@@ -997,3 +1011,5 @@ class _AuditreportDetailsScreenState
     );
   }
 }
+
+enum _IconBadgeType { check, warning }

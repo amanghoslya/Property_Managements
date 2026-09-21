@@ -414,7 +414,7 @@ class _MaintenancehistoryScreenState
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "AC Servicing",
+                                        records[index].title ?? "",
                                         style: GoogleFonts.outfit(
                                           fontSize: 17.sp,
                                           fontWeight: FontWeight.w500,
@@ -426,7 +426,7 @@ class _MaintenancehistoryScreenState
                                       SizedBox(height: 5.h),
 
                                       Text(
-                                        "05 Jul 2026 • MR-1987",
+                                        records[index].headerSubtitle ?? "",
                                         style: GoogleFonts.outfit(
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w500,
@@ -456,7 +456,7 @@ class _MaintenancehistoryScreenState
                                     borderRadius: BorderRadius.circular(50.r),
                                   ),
                                   child: Text(
-                                    "Completed",
+                                    records![index].status ?? "",
                                     style: GoogleFonts.outfit(
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w500,
@@ -482,14 +482,14 @@ class _MaintenancehistoryScreenState
                                 Expanded(
                                   child: _detailItem(
                                     title: "Category",
-                                    value: "HVAC",
+                                    value: records![index].category ?? "",
                                   ),
                                 ),
 
                                 Expanded(
                                   child: _detailItem(
                                     title: "Performed By",
-                                    value: "Service Team",
+                                    value: records![index].performedBy ?? "",
                                   ),
                                 ),
                               ],
@@ -502,14 +502,14 @@ class _MaintenancehistoryScreenState
                                 Expanded(
                                   child: _detailItem(
                                     title: "Work Type",
-                                    value: "Preventive",
+                                    value: records![index].workType ?? "",
                                   ),
                                 ),
 
                                 Expanded(
                                   child: _detailItem(
                                     title: "Completed On",
-                                    value: "05 Jul 2026",
+                                    value: records![index].completedOn ?? "",
                                   ),
                                 ),
                               ],
@@ -523,7 +523,9 @@ class _MaintenancehistoryScreenState
                                   context,
                                   CupertinoPageRoute(
                                     builder: (context) =>
-                                        MaintenancedetailsScreen(id: '18'),
+                                        MaintenancedetailsScreen(
+                                          id: records[index].id.toString(),
+                                        ),
                                   ),
                                 );
                               },

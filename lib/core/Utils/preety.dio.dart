@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -77,35 +78,64 @@ Dio createDio() {
         }
         String message = "Something went wrong";
 
-        try {
-          final responseData = error.response?.data;
+        switch (error.type) {
+          case DioExceptionType.connectionError:
+            message =
+                "No Internet Connection or Server is unreachable. Please check your network.";
+            break;
 
-          log("ERROR RESPONSE: $responseData");
+          case DioExceptionType.connectionTimeout:
+          case DioExceptionType.sendTimeout:
+          case DioExceptionType.receiveTimeout:
+            message =
+                "Connection timed out. Server is taking too long to respond.";
+            break;
 
-          if (responseData is Map) {
-            // --------------------------------
-            // Case 1: Validation errors (Prioritized)
-            // --------------------------------
-            if (responseData['errors'] is Map) {
-              final errors = responseData['errors'] as Map;
-              if (errors.isNotEmpty) {
-                final firstError = errors.values.first;
-                if (firstError is List && firstError.isNotEmpty) {
-                  message = firstError.first.toString();
-                } else if (firstError != null) {
-                  message = firstError.toString();
+          case DioExceptionType.cancel:
+            message = "Request was cancelled.";
+            break;
+
+          case DioExceptionType.badResponse:
+            try {
+              final responseData = error.response?.data;
+
+              log("ERROR RESPONSE: $responseData");
+
+              if (responseData is Map) {
+                // --------------------------------
+                // Case 1: Validation errors (Prioritized)
+                // --------------------------------
+                if (responseData['errors'] is Map) {
+                  final errors = responseData['errors'] as Map;
+                  if (errors.isNotEmpty) {
+                    final firstError = errors.values.first;
+                    if (firstError is List && firstError.isNotEmpty) {
+                      message = firstError.first.toString();
+                    } else if (firstError != null) {
+                      message = firstError.toString();
+                    }
+                  }
+                }
+                // --------------------------------
+                // Case 2: Normal message fallback
+                // --------------------------------
+                else if (responseData['message'] != null) {
+                  message = responseData['message'].toString();
                 }
               }
+            } catch (e) {
+              log("Error while parsing DioException message: $e");
             }
-            // --------------------------------
-            // Case 2: Normal message fallback
-            // --------------------------------
-            else if (responseData['message'] != null) {
-              message = responseData['message'].toString();
+            break;
+
+          default:
+            if (error.error is SocketException) {
+              message =
+                  "No Internet Connection or Server is unreachable. Please check your network.";
+            } else {
+              message = "Something went wrong. Please try again.";
             }
-          }
-        } catch (e) {
-          log("Error while parsing DioException message: $e");
+            break;
         }
 
         log("FINAL API ERROR MESSAGE: $message");
