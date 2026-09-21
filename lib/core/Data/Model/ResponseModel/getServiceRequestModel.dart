@@ -52,23 +52,27 @@ class SummaryCounts {
     String? totalRequests;
     String? inProgress;
     String? completed;
+    String? open;
 
     SummaryCounts({
         this.totalRequests,
         this.inProgress,
         this.completed,
+        this.open
     });
 
     factory SummaryCounts.fromJson(Map<String, dynamic> json) => SummaryCounts(
         totalRequests: json["total_requests"],
         inProgress: json["in_progress"],
         completed: json["completed"],
+        open : json["open"]
     );
 
     Map<String, dynamic> toJson() => {
         "total_requests": totalRequests,
         "in_progress": inProgress,
         "completed": completed,
+        "open"  : open
     };
 }
 
@@ -86,7 +90,7 @@ class Ticket {
     String? propertyImage;
     String? propertyNameNumber;
     String? complexName;
-
+ 
     Ticket({
         this.id,
         this.iconType,

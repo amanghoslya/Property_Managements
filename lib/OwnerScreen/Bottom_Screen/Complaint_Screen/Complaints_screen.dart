@@ -75,7 +75,7 @@ class _ComplaintsScreenState extends ConsumerState<ComplaintsScreen> {
 
     final summary = state.valueOrNull?.data?.summaryCounts;
     final total = summary?.totalRequests ?? "0";
-    final open = summary?. ?? "0";
+    final open = summary?.open ?? "0";
     final resolved = summary?.completed ?? "0";
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
