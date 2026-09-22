@@ -44,6 +44,11 @@ class _MyBottomScreenState extends State<MyBottomScreen> {
           selectIndex = 4;
         });
       },
+      onDocumentTap: () {
+        setState(() {
+          selectIndex = 3;
+        });
+      },
     ),
     PropertyScreen(),
     ComplaintsScreen(),
@@ -167,7 +172,12 @@ class _MyBottomScreenState extends State<MyBottomScreen> {
 
 class HomeScreen extends ConsumerStatefulWidget {
   final VoidCallback onProfileTap;
-  const HomeScreen({super.key, required this.onProfileTap});
+  final VoidCallback onDocumentTap;
+  const HomeScreen({
+    super.key,
+    required this.onProfileTap,
+    required this.onDocumentTap,
+  });
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
@@ -651,25 +661,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               ),
                             ),
                           ),
-                          Spacer(),
-                          Container(
-                            width: 57.w,
-                            height: 29.h,
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(20, 30, 25, 0.4),
-                              borderRadius: BorderRadius.circular(50.r),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "01 / 05",
-                                style: GoogleFonts.outfit(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                  fontSize: 12.sp,
-                                ),
-                              ),
-                            ),
-                          ),
+                          // Spacer(),
+                          // Container(
+                          //   width: 57.w,
+                          //   height: 29.h,
+                          //   decoration: BoxDecoration(
+                          //     color: Color.fromRGBO(20, 30, 25, 0.4),
+                          //     borderRadius: BorderRadius.circular(50.r),
+                          //   ),
+                          //   child: Center(
+                          //     child: Text(
+                          //       "01 / 05",
+                          //       style: GoogleFonts.outfit(
+                          //         fontWeight: FontWeight.w500,
+                          //         color: Colors.white,
+                          //         fontSize: 12.sp,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -1478,15 +1488,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 _infoItem(
                                   "${ownerDashboard.data?.widgets?.documentsCount ?? "0"}",
                                   "Documents",
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      CupertinoPageRoute(
-                                        builder: (context) =>
-                                            const DocumentScreen(),
-                                      ),
-                                    );
-                                  },
+                                  onTap: widget.onDocumentTap,
+
+                                  // () {
+                                  //   Navigator.push(
+                                  //     context,
+                                  //     CupertinoPageRoute(
+                                  //       builder: (context) =>
+                                  //           const DocumentScreen(),
+                                  //     ),
+                                  //   );
+                                  // },
                                 ),
 
                                 _verticalDivider(),
