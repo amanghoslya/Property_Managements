@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -429,10 +431,11 @@ class _PropertyScreenState extends ConsumerState<PropertyScreen> {
                             child: Center(
                               child: Text(
                                 // propertyDetails.data?.overallScore ?? "86",
-                                double.tryParse(
-                                      propertyDetails.data?.overallScore ?? "0",
-                                    )?.toStringAsFixed(1) ??
-                                    "0.0",
+                                propertyDetails.data?.overallScore?.toStringAsFixed(1) ?? "0",
+                                // double.tryParse(
+                                //       propertyDetails.data?.overallScore ?? "0",
+                                //     )?.toStringAsFixed(1) ??
+                                //     "0.0",
                                 style: GoogleFonts.outfit(
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.heading,
@@ -554,6 +557,8 @@ class _PropertyScreenState extends ConsumerState<PropertyScreen> {
           );
         },
         error: (error, stackTrace) {
+          log(error.toString());
+          log(stackTrace.toString());
           return Center(child: Text("Something went wrong"));
         },
         loading: () =>

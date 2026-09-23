@@ -60,6 +60,7 @@ class _AipropertyAssistantScreenState
           pendingQuery = null;
           isSending = false;
         });
+        ref.invalidate(getPropertyAssistantProvider);
         _scrollToBottom();
       }
     } catch (e) {
@@ -708,6 +709,12 @@ class _AipropertyAssistantScreenState
                       children: [
                         Expanded(
                           child: TextField(
+                            style: GoogleFonts.outfit(
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: -0.2,
+                              color: AppColors.heading,
+                              fontSize: 16.sp,
+                            ),
                             controller: messageController,
                             textAlignVertical: TextAlignVertical.center,
                             cursorHeight: 23.h,

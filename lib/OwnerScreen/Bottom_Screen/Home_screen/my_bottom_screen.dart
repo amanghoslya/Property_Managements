@@ -1655,14 +1655,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     ),
                                   ),
                                   child: Text(
-                                    double.tryParse(
-                                          ownerDashboard
-                                                  .data
-                                                  ?.property
-                                                  ?.overallScore ??
-                                              "0",
-                                        )?.toStringAsFixed(1) ??
-                                        "0.0",
+                                    ownerDashboard.data?.property?.overallScore
+                                            ?.toStringAsFixed(1) ??
+                                        "0",
                                     style: GoogleFonts.outfit(
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w500,
