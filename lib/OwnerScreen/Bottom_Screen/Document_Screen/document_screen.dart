@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:property_care/OwnerScreen/AIDocumentAssistant_Screen/AIDocumentAssistant_Screen.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Document_Screen/Provider/getDocumentListProvider.dart';
 import 'package:property_care/core/constant/appColor.dart';
 import 'package:property_care/OwnerScreen/Bottom_Screen/Document_Screen/document_details_screen.dart';
@@ -48,32 +49,82 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
           color: AppColors.background,
           child: SafeArea(
             child: Padding(
-              padding: EdgeInsets.only(left: 20.w),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Row(
                 children: [
-                  Text(
-                    "PROPERTY DOCUMENTS",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.outfit(
-                      fontSize: 17.sp,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xff292832),
-                      letterSpacing: -0.64,
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "PROPERTY DOCUMENTS",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.outfit(
+                            fontSize: 17.sp,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xff292832),
+                            letterSpacing: -0.64,
+                          ),
+                        ),
+                        SizedBox(height: 2.h),
+                        Text(
+                          "ALL PROPERTY RECORDS IN ONE PLACE",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.outfit(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            color: Color.fromRGBO(42, 41, 51, 0.6),
+                            letterSpacing: -0.24,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 2.h),
-                  Text(
-                    "ALL PROPERTY RECORDS IN ONE PLACE",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.outfit(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(42, 41, 51, 0.6),
-                      letterSpacing: -0.24,
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) =>
+                              const AIDocumentAssistantScreen(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 6.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xff101C16),
+                        borderRadius: BorderRadius.circular(6.r),
+                        border: Border.all(
+                          color: const Color(0xFFB8860B),
+                          width: 1.w,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.auto_awesome,
+                            size: 14.sp,
+                            color: const Color(0xFFE5C058),
+                          ),
+                          SizedBox(width: 4.w),
+                          Text(
+                            "AI Assistant",
+                            style: GoogleFonts.outfit(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFFFFFCEB),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

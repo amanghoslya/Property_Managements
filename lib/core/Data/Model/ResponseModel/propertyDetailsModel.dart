@@ -35,7 +35,7 @@ class Data {
   String? imageUrl;
   String? carePackage;
   String? carePackageLabel;
-  String? overallScore;
+  num? overallScore;
   dynamic caretaker;
   Complex? complex;
   Widgets? widgets;

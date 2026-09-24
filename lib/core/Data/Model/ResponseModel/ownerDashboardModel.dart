@@ -52,7 +52,7 @@ class Property {
   String? area;
   String? status;
   CarePackage? carePackage;
-  String? overallScore;
+  num? overallScore;
   String? imageUrl;
   Complex? complex;
   Caretaker? caretaker;

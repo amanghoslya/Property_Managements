@@ -661,25 +661,46 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               ),
                             ),
                           ),
-                          // Spacer(),
-                          // Container(
-                          //   width: 57.w,
-                          //   height: 29.h,
-                          //   decoration: BoxDecoration(
-                          //     color: Color.fromRGBO(20, 30, 25, 0.4),
-                          //     borderRadius: BorderRadius.circular(50.r),
-                          //   ),
-                          //   child: Center(
-                          //     child: Text(
-                          //       "01 / 05",
-                          //       style: GoogleFonts.outfit(
-                          //         fontWeight: FontWeight.w500,
-                          //         color: Colors.white,
-                          //         fontSize: 12.sp,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
+                          if (ownerDashboard
+                                      .data?.property?.carePackage?.label !=
+                                  null &&
+                              ownerDashboard.data!.property!.carePackage!.label!
+                                  .isNotEmpty) ...[
+                            const Spacer(),
+                            Container(
+                              height: 31.h,
+                              padding: EdgeInsets.symmetric(horizontal: 12.w),
+                              decoration: BoxDecoration(
+                                color: const Color(0xff101C16),
+                                borderRadius: BorderRadius.circular(50.r),
+                                border: Border.all(
+                                  color: const Color(0xFFB8860B),
+                                  width: 1.2,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.workspace_premium_outlined,
+                                    size: 14.sp,
+                                    color: const Color(0xFFE5C058),
+                                  ),
+                                  SizedBox(width: 4.w),
+                                  Text(
+                                    ownerDashboard
+                                        .data!.property!.carePackage!.label!,
+                                    style: GoogleFonts.outfit(
+                                      fontWeight: FontWeight.w600,
+                                      color: const Color(0xFFFFFCEB),
+                                      fontSize: 12.sp,
+                                      letterSpacing: -0.2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ],
                       ),
                     ),
@@ -1653,14 +1674,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     ),
                                   ),
                                   child: Text(
-                                    double.tryParse(
-                                          ownerDashboard
-                                                  .data
-                                                  ?.property
-                                                  ?.overallScore ??
-                                              "0",
-                                        )?.toStringAsFixed(1) ??
-                                        "0.0",
+                                    ownerDashboard.data?.property?.overallScore
+                                            ?.toStringAsFixed(1) ??
+                                        "0",
                                     style: GoogleFonts.outfit(
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w500,
