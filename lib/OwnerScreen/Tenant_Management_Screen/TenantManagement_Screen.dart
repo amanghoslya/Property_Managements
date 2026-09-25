@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -428,34 +430,38 @@ class _TenantmanagementScreenState
             ),
           );
         },
-        error: (error, stackTrace) => Center(
-          child: Padding(
-            padding: EdgeInsets.all(20.w),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Failed to load tenant details",
-                  style: GoogleFonts.outfit(
-                    fontSize: 16.sp,
-                    color: AppColors.heading,
+        error: (error, stackTrace) {
+          log(error.toString());
+          log(stackTrace.toString());
+          return Center(
+            child: Padding(
+              padding: EdgeInsets.all(20.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Failed to load tenant details",
+                    style: GoogleFonts.outfit(
+                      fontSize: 16.sp,
+                      color: AppColors.heading,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10.h),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.heading,
+                  SizedBox(height: 10.h),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.heading,
+                    ),
+                    onPressed: () => ref.invalidate(getTenantListProvider),
+                    child: const Text(
+                      "Retry",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-                  onPressed: () => ref.invalidate(getTenantListProvider),
-                  child: const Text(
-                    "Retry",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
         loading: () =>
             Center(child: CircularProgressIndicator(color: AppColors.heading)),
       ),
