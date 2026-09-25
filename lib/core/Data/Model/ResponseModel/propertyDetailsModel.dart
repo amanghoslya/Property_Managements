@@ -35,7 +35,10 @@ class Data {
   String? imageUrl;
   String? carePackage;
   String? carePackageLabel;
-  num? overallScore;
+  double? overallScore;
+  double? overallScoreOutOf10;
+  bool? isIndependent;
+  bool? hasMmc;
   dynamic caretaker;
   Complex? complex;
   Widgets? widgets;
@@ -51,8 +54,12 @@ class Data {
     this.carePackage,
     this.carePackageLabel,
     this.overallScore,
+    this.overallScoreOutOf10,
+    this.isIndependent,
+    this.hasMmc,
     this.caretaker,
     this.complex,
+    this.widgets,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -65,9 +72,13 @@ class Data {
     imageUrl: json["image_url"],
     carePackage: json["care_package"],
     carePackageLabel: json["care_package_label"],
-    overallScore: json["overall_score"],
+    overallScore: json["overall_score"]?.toDouble(),
+    overallScoreOutOf10: json["overall_score_out_of_10"]?.toDouble(),
+    isIndependent: json["is_independent"],
+    hasMmc: json["has_mmc"],
     caretaker: json["caretaker"],
     complex: json["complex"] == null ? null : Complex.fromJson(json["complex"]),
+    widgets: json["widgets"] == null ? null : Widgets.fromJson(json["widgets"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -81,8 +92,12 @@ class Data {
     "care_package": carePackage,
     "care_package_label": carePackageLabel,
     "overall_score": overallScore,
+    "overall_score_out_of_10": overallScoreOutOf10,
+    "is_independent": isIndependent,
+    "has_mmc": hasMmc,
     "caretaker": caretaker,
     "complex": complex?.toJson(),
+    "widgets": widgets?.toJson(),
   };
 }
 
@@ -115,13 +130,19 @@ class Complex {
 
 class Widgets {
   int? pendingIssues;
+  Complaints? serviceRequests;
+  Complaints? complaints;
+  MaintenancePayment? maintenancePayment;
   int? openMaintenance;
   int? documentsCount;
   LatestInspection? latestInspection;
-  LatestAudit? latestAudit;
+  dynamic latestAudit;
 
   Widgets({
     this.pendingIssues,
+    this.serviceRequests,
+    this.complaints,
+    this.maintenancePayment,
     this.openMaintenance,
     this.documentsCount,
     this.latestInspection,
@@ -130,76 +151,117 @@ class Widgets {
 
   factory Widgets.fromJson(Map<String, dynamic> json) => Widgets(
     pendingIssues: json["pending_issues"],
+    serviceRequests: json["service_requests"] == null
+        ? null
+        : Complaints.fromJson(json["service_requests"]),
+    complaints: json["complaints"] == null
+        ? null
+        : Complaints.fromJson(json["complaints"]),
+    maintenancePayment: json["maintenance_payment"] == null
+        ? null
+        : MaintenancePayment.fromJson(json["maintenance_payment"]),
     openMaintenance: json["open_maintenance"],
     documentsCount: json["documents_count"],
     latestInspection: json["latest_inspection"] == null
         ? null
         : LatestInspection.fromJson(json["latest_inspection"]),
-    latestAudit: json["latest_audit"] == null
-        ? null
-        : LatestAudit.fromJson(json["latest_audit"]),
+    latestAudit: json["latest_audit"],
   );
 
   Map<String, dynamic> toJson() => {
     "pending_issues": pendingIssues,
+    "service_requests": serviceRequests?.toJson(),
+    "complaints": complaints?.toJson(),
+    "maintenance_payment": maintenancePayment?.toJson(),
     "open_maintenance": openMaintenance,
     "documents_count": documentsCount,
     "latest_inspection": latestInspection?.toJson(),
-    "latest_audit": latestAudit?.toJson(),
+    "latest_audit": latestAudit,
   };
 }
 
-class LatestAudit {
-  int? id;
-  String? title;
-  DateTime? createdAt;
+class Complaints {
+  int? active;
+  int? inProgress;
 
-  LatestAudit({this.id, this.title, this.createdAt});
+  Complaints({this.active, this.inProgress});
 
-  factory LatestAudit.fromJson(Map<String, dynamic> json) => LatestAudit(
-    id: json["id"],
-    title: json["title"],
-    createdAt: json["created_at"] == null
-        ? null
-        : DateTime.parse(json["created_at"]),
-  );
+  factory Complaints.fromJson(Map<String, dynamic> json) =>
+      Complaints(active: json["active"], inProgress: json["in_progress"]);
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "created_at": createdAt == null
-        ? null
-        : "${createdAt!.year.toString().padLeft(4, '0')}-${createdAt!.month.toString().padLeft(2, '0')}-${createdAt!.day.toString().padLeft(2, '0')}",
+    "active": active,
+    "in_progress": inProgress,
   };
 }
 
 class LatestInspection {
   int? id;
   DateTime? date;
-  num? score;
+  double? score;
   String? status;
 
   LatestInspection({this.id, this.date, this.score, this.status});
 
-  factory LatestInspection.fromJson(Map<String, dynamic> json) {
-    return LatestInspection(
-      id: json["id"],
-      date: json["date"] == null
-          ? null
-          : DateTime.tryParse(json["date"].toString()),
-      score: json["score"],
-      status: json["status"],
-    );
-  }
+  factory LatestInspection.fromJson(Map<String, dynamic> json) =>
+      LatestInspection(
+        id: json["id"],
+        date: json["date"] == null ? null : DateTime.parse(json["date"]),
+        score: json["score"]?.toDouble(),
+        status: json["status"],
+      );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "date": date == null
         ? null
-        : "${date!.year.toString().padLeft(4, '0')}-"
-              "${date!.month.toString().padLeft(2, '0')}-"
-              "${date!.day.toString().padLeft(2, '0')}",
+        : "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
     "score": score,
     "status": status,
+  };
+}
+
+class MaintenancePayment {
+  bool? isApplicable;
+  String? status;
+  String? reason;
+  String? message;
+  int? outstanding;
+  int? upcoming;
+  int? overdue;
+  int? remaining;
+
+  MaintenancePayment({
+    this.isApplicable,
+    this.status,
+    this.reason,
+    this.message,
+    this.outstanding,
+    this.upcoming,
+    this.overdue,
+    this.remaining,
+  });
+
+  factory MaintenancePayment.fromJson(Map<String, dynamic> json) =>
+      MaintenancePayment(
+        isApplicable: json["is_applicable"],
+        status: json["status"],
+        reason: json["reason"],
+        message: json["message"],
+        outstanding: json["outstanding"],
+        upcoming: json["upcoming"],
+        overdue: json["overdue"],
+        remaining: json["remaining"],
+      );
+
+  Map<String, dynamic> toJson() => {
+    "is_applicable": isApplicable,
+    "status": status,
+    "reason": reason,
+    "message": message,
+    "outstanding": outstanding,
+    "upcoming": upcoming,
+    "overdue": overdue,
+    "remaining": remaining,
   };
 }

@@ -342,7 +342,6 @@ class _PropertyScreenState extends ConsumerState<PropertyScreen> {
                             : "0",
                         subtitle: "Last Inspection",
                       ),
-
                       _infoCard(
                         icon: Icons.crop_square,
                         title:
