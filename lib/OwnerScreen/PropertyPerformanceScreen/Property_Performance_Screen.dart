@@ -158,8 +158,8 @@ class _PropertyPerformanceScreenState
                   ),
                   SizedBox(height: 23.h),
                   propertyScoreCard(
-                    score: data.overallPropertyScore?.score ?? 0,
-                    scoreOutOf: data.overallPropertyScore?.total ?? 100,
+                    score: data.overallPropertyScore?.score?.toInt() ?? 0,
+                    scoreOutOf: data.overallPropertyScore?.total ?? 0,
                     performanceLabel:
                         data.overallPropertyScore?.performanceLabel ?? "",
                     lastUpdated: data.overallPropertyScore?.lastUpdated ?? "",

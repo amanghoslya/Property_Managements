@@ -14,33 +14,22 @@ class GetInspectionReportModel {
   bool? status;
   List<Datum>? data;
 
-  GetInspectionReportModel({
-    this.status,
-    this.data,
-  });
+  GetInspectionReportModel({this.status, this.data});
 
   factory GetInspectionReportModel.fromJson(Map<String, dynamic> json) =>
       GetInspectionReportModel(
         status: json["status"],
         data: json["data"] == null
             ? []
-            : List<Datum>.from(
-                json["data"].map(
-                  (x) => Datum.fromJson(x),
-                ),
-              ),
+            : List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "status": status,
-        "data": data == null
-            ? []
-            : List<dynamic>.from(
-                data!.map(
-                  (x) => x.toJson(),
-                ),
-              ),
-      };
+    "status": status,
+    "data": data == null
+        ? []
+        : List<dynamic>.from(data!.map((x) => x.toJson())),
+  };
 }
 
 class Datum {
@@ -79,84 +68,71 @@ class Datum {
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        id: json["id"],
-        propertyId: json["property_id"],
-        inspectorId: json["inspector_id"],
-        reportType: json["report_type"],
-        auditType: json["audit_type"],
-        inspectionDate: json["inspection_date"] == null
-            ? null
-            : DateTime.parse(json["inspection_date"]),
-        findings: json["findings"],
-        recommendations: json["recommendations"],
-        score: json["score"]?.toString(),
-        status: json["status"],
-        attachments: json["attachments"] == null
-            ? null
-            : Attachments.fromJson(json["attachments"]),
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
-        inspector: json["inspector"] == null
-            ? null
-            : Inspector.fromJson(json["inspector"]),
-        property: json["property"] == null
-            ? null
-            : Property.fromJson(json["property"]),
-      );
+    id: json["id"],
+    propertyId: json["property_id"],
+    inspectorId: json["inspector_id"],
+    reportType: json["report_type"],
+    auditType: json["audit_type"],
+    inspectionDate: json["inspection_date"] == null
+        ? null
+        : DateTime.parse(json["inspection_date"]),
+    findings: json["findings"],
+    recommendations: json["recommendations"],
+    score: json["score"]?.toString(),
+    status: json["status"],
+    attachments: json["attachments"] == null
+        ? null
+        : Attachments.fromJson(json["attachments"]),
+    createdAt: json["created_at"] == null
+        ? null
+        : DateTime.parse(json["created_at"]),
+    updatedAt: json["updated_at"] == null
+        ? null
+        : DateTime.parse(json["updated_at"]),
+    inspector: json["inspector"] == null
+        ? null
+        : Inspector.fromJson(json["inspector"]),
+    property: json["property"] == null
+        ? null
+        : Property.fromJson(json["property"]),
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "property_id": propertyId,
-        "inspector_id": inspectorId,
-        "report_type": reportType,
-        "audit_type": auditType,
-        "inspection_date": inspectionDate?.toIso8601String(),
-        "findings": findings,
-        "recommendations": recommendations,
-        "score": score,
-        "status": status,
-        "attachments": attachments?.toJson(),
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
-        "inspector": inspector?.toJson(),
-        "property": property?.toJson(),
-      };
+    "id": id,
+    "property_id": propertyId,
+    "inspector_id": inspectorId,
+    "report_type": reportType,
+    "audit_type": auditType,
+    "inspection_date": inspectionDate?.toIso8601String(),
+    "findings": findings,
+    "recommendations": recommendations,
+    "score": score,
+    "status": status,
+    "attachments": attachments?.toJson(),
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+    "inspector": inspector?.toJson(),
+    "property": property?.toJson(),
+  };
 }
 
 class Attachments {
   String? pdf;
   List<String>? images;
 
-  Attachments({
-    this.pdf,
-    this.images,
-  });
+  Attachments({this.pdf, this.images});
 
   factory Attachments.fromJson(Map<String, dynamic> json) => Attachments(
-        pdf: json["pdf"]?.toString(),
-        images: json["images"] == null
-            ? []
-            : List<String>.from(
-                json["images"].map(
-                  (x) => x.toString(),
-                ),
-              ),
-      );
+    pdf: json["pdf"]?.toString(),
+    images: json["images"] == null
+        ? []
+        : List<String>.from(json["images"].map((x) => x.toString())),
+  );
 
   Map<String, dynamic> toJson() => {
-        "pdf": pdf,
-        "images": images == null
-            ? []
-            : List<dynamic>.from(
-                images!.map(
-                  (x) => x,
-                ),
-              ),
-      };
+    "pdf": pdf,
+    "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
+  };
 }
 
 class Inspector {
@@ -191,40 +167,40 @@ class Inspector {
   });
 
   factory Inspector.fromJson(Map<String, dynamic> json) => Inspector(
-        id: json["id"],
-        name: json["name"],
-        email: json["email"],
-        role: json["role"],
-        phone: json["phone"],
-        avatar: json["avatar"],
-        status: json["status"],
-        subscriptionStatus: json["subscription_status"],
-        fcmToken: json["fcm_token"],
-        emailVerifiedAt: json["email_verified_at"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
-        unitId: json["unit_id"],
-      );
+    id: json["id"],
+    name: json["name"],
+    email: json["email"],
+    role: json["role"],
+    phone: json["phone"],
+    avatar: json["avatar"],
+    status: json["status"],
+    subscriptionStatus: json["subscription_status"],
+    fcmToken: json["fcm_token"],
+    emailVerifiedAt: json["email_verified_at"],
+    createdAt: json["created_at"] == null
+        ? null
+        : DateTime.parse(json["created_at"]),
+    updatedAt: json["updated_at"] == null
+        ? null
+        : DateTime.parse(json["updated_at"]),
+    unitId: json["unit_id"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "email": email,
-        "role": role,
-        "phone": phone,
-        "avatar": avatar,
-        "status": status,
-        "subscription_status": subscriptionStatus,
-        "fcm_token": fcmToken,
-        "email_verified_at": emailVerifiedAt,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
-        "unit_id": unitId,
-      };
+    "id": id,
+    "name": name,
+    "email": email,
+    "role": role,
+    "phone": phone,
+    "avatar": avatar,
+    "status": status,
+    "subscription_status": subscriptionStatus,
+    "fcm_token": fcmToken,
+    "email_verified_at": emailVerifiedAt,
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+    "unit_id": unitId,
+  };
 }
 
 class Property {
@@ -240,7 +216,7 @@ class Property {
   String? area;
   String? status;
   String? carePackage;
-  double? overallScore;
+  num? overallScore;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -263,44 +239,44 @@ class Property {
   });
 
   factory Property.fromJson(Map<String, dynamic> json) => Property(
-        id: json["id"],
-        complexId: json["complex_id"],
-        complexUnitId: json["complex_unit_id"],
-        ownerId: json["owner_id"],
-        caretakerId: json["caretaker_id"],
-        propertyNameNumber: json["property_name_number"],
-        propertyType: json["property_type"],
-        image: json["image"],
-        location: json["location"],
-        area: json["area"],
-        status: json["status"],
-        carePackage: json["care_package"],
-        overallScore: json["overall_score"] == null
-            ? null
-            : (json["overall_score"] as num).toDouble(),
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
-      );
+    id: json["id"],
+    complexId: json["complex_id"],
+    complexUnitId: json["complex_unit_id"],
+    ownerId: json["owner_id"],
+    caretakerId: json["caretaker_id"],
+    propertyNameNumber: json["property_name_number"],
+    propertyType: json["property_type"],
+    image: json["image"],
+    location: json["location"],
+    area: json["area"],
+    status: json["status"],
+    carePackage: json["care_package"],
+    overallScore: json["overall_score"] == null
+        ? null
+        : (json["overall_score"] as num).toDouble(),
+    createdAt: json["created_at"] == null
+        ? null
+        : DateTime.parse(json["created_at"]),
+    updatedAt: json["updated_at"] == null
+        ? null
+        : DateTime.parse(json["updated_at"]),
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "complex_id": complexId,
-        "complex_unit_id": complexUnitId,
-        "owner_id": ownerId,
-        "caretaker_id": caretakerId,
-        "property_name_number": propertyNameNumber,
-        "property_type": propertyType,
-        "image": image,
-        "location": location,
-        "area": area,
-        "status": status,
-        "care_package": carePackage,
-        "overall_score": overallScore,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
-      };
+    "id": id,
+    "complex_id": complexId,
+    "complex_unit_id": complexUnitId,
+    "owner_id": ownerId,
+    "caretaker_id": caretakerId,
+    "property_name_number": propertyNameNumber,
+    "property_type": propertyType,
+    "image": image,
+    "location": location,
+    "area": area,
+    "status": status,
+    "care_package": carePackage,
+    "overall_score": overallScore,
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+  };
 }

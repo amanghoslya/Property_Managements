@@ -9,7 +9,8 @@ import 'package:property_care/core/constant/appColor.dart';
 import 'package:property_care/OwnerScreen/ServiceRequest_Screen/Provider/getServiceProvider.dart';
 
 class ComplaintsScreen extends ConsumerStatefulWidget {
-  const ComplaintsScreen({super.key});
+  final bool isShowBackButton;
+  const ComplaintsScreen({super.key, this.isShowBackButton = false});
 
   @override
   ConsumerState<ComplaintsScreen> createState() => _ComplaintsScreenState();
@@ -83,33 +84,59 @@ class _ComplaintsScreenState extends ConsumerState<ComplaintsScreen> {
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.scaffoldBg,
         titleSpacing: 20.w,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        title: Row(
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "COMPLAINTS",
-                  style: GoogleFonts.outfit(
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xff292832),
-                    letterSpacing: -0.64,
+            if (widget.isShowBackButton)
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  width: 41.w,
+                  height: 41.h,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: const Color.fromRGBO(16, 28, 22, 0.3),
+                    ),
+                    borderRadius: BorderRadius.circular(4.r),
+                  ),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: const Color(0xff101C16),
+                    size: 16.sp,
                   ),
                 ),
-                SizedBox(height: 2.h),
-                Text(
-                  "PROPERTY COMPLAINTS & QUERIES",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.outfit(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    color: Color.fromRGBO(42, 41, 51, 0.6),
-                    letterSpacing: -0.24,
-                  ),
+              ),
+            SizedBox(width: 10.w),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "COMPLAINTS",
+                      style: GoogleFonts.outfit(
+                        fontSize: 17.sp,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xff292832),
+                        letterSpacing: -0.64,
+                      ),
+                    ),
+                    SizedBox(height: 2.h),
+                    Text(
+                      "PROPERTY COMPLAINTS & QUERIES",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.outfit(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromRGBO(42, 41, 51, 0.6),
+                        letterSpacing: -0.24,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

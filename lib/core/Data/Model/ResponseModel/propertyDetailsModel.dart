@@ -114,85 +114,92 @@ class Complex {
 }
 
 class Widgets {
-    int? pendingIssues;
-    int? openMaintenance;
-    int? documentsCount;
-    LatestInspection? latestInspection;
-    LatestAudit? latestAudit;
+  int? pendingIssues;
+  int? openMaintenance;
+  int? documentsCount;
+  LatestInspection? latestInspection;
+  LatestAudit? latestAudit;
 
-    Widgets({
-        this.pendingIssues,
-        this.openMaintenance,
-        this.documentsCount,
-        this.latestInspection,
-        this.latestAudit,
-    });
+  Widgets({
+    this.pendingIssues,
+    this.openMaintenance,
+    this.documentsCount,
+    this.latestInspection,
+    this.latestAudit,
+  });
 
-    factory Widgets.fromJson(Map<String, dynamic> json) => Widgets(
-        pendingIssues: json["pending_issues"],
-        openMaintenance: json["open_maintenance"],
-        documentsCount: json["documents_count"],
-        latestInspection: json["latest_inspection"] == null ? null : LatestInspection.fromJson(json["latest_inspection"]),
-        latestAudit: json["latest_audit"] == null ? null : LatestAudit.fromJson(json["latest_audit"]),
-    );
+  factory Widgets.fromJson(Map<String, dynamic> json) => Widgets(
+    pendingIssues: json["pending_issues"],
+    openMaintenance: json["open_maintenance"],
+    documentsCount: json["documents_count"],
+    latestInspection: json["latest_inspection"] == null
+        ? null
+        : LatestInspection.fromJson(json["latest_inspection"]),
+    latestAudit: json["latest_audit"] == null
+        ? null
+        : LatestAudit.fromJson(json["latest_audit"]),
+  );
 
-    Map<String, dynamic> toJson() => {
-        "pending_issues": pendingIssues,
-        "open_maintenance": openMaintenance,
-        "documents_count": documentsCount,
-        "latest_inspection": latestInspection?.toJson(),
-        "latest_audit": latestAudit?.toJson(),
-    };
+  Map<String, dynamic> toJson() => {
+    "pending_issues": pendingIssues,
+    "open_maintenance": openMaintenance,
+    "documents_count": documentsCount,
+    "latest_inspection": latestInspection?.toJson(),
+    "latest_audit": latestAudit?.toJson(),
+  };
 }
 
 class LatestAudit {
-    int? id;
-    String? title;
-    DateTime? createdAt;
+  int? id;
+  String? title;
+  DateTime? createdAt;
 
-    LatestAudit({
-        this.id,
-        this.title,
-        this.createdAt,
-    });
+  LatestAudit({this.id, this.title, this.createdAt});
 
-    factory LatestAudit.fromJson(Map<String, dynamic> json) => LatestAudit(
-        id: json["id"],
-        title: json["title"],
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    );
+  factory LatestAudit.fromJson(Map<String, dynamic> json) => LatestAudit(
+    id: json["id"],
+    title: json["title"],
+    createdAt: json["created_at"] == null
+        ? null
+        : DateTime.parse(json["created_at"]),
+  );
 
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "created_at": createdAt == null ? null : "${createdAt!.year.toString().padLeft(4, '0')}-${createdAt!.month.toString().padLeft(2, '0')}-${createdAt!.day.toString().padLeft(2, '0')}",
-    };
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "title": title,
+    "created_at": createdAt == null
+        ? null
+        : "${createdAt!.year.toString().padLeft(4, '0')}-${createdAt!.month.toString().padLeft(2, '0')}-${createdAt!.day.toString().padLeft(2, '0')}",
+  };
 }
 
 class LatestInspection {
-    int? id;
-    DateTime? date;
-    String? score;
-    String? status;
+  int? id;
+  DateTime? date;
+  num? score;
+  String? status;
 
-    LatestInspection({
-        this.id,
-        this.date,
-        this.score,
-        this.status,
-    });
+  LatestInspection({this.id, this.date, this.score, this.status});
 
-    factory LatestInspection.fromJson(Map<String, dynamic> json) => LatestInspection(
-        id: json["id"],
-        date: json["date"] == null ? null : DateTime.parse(json["date"]),
-        score: json["score"],
-        status: json["status"],
+  factory LatestInspection.fromJson(Map<String, dynamic> json) {
+    return LatestInspection(
+      id: json["id"],
+      date: json["date"] == null
+          ? null
+          : DateTime.tryParse(json["date"].toString()),
+      score: json["score"],
+      status: json["status"],
     );
+  }
 
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "date": date == null ? null : "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
-        "score": score,
-        "status": status,
-    };
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "date": date == null
+        ? null
+        : "${date!.year.toString().padLeft(4, '0')}-"
+              "${date!.month.toString().padLeft(2, '0')}-"
+              "${date!.day.toString().padLeft(2, '0')}",
+    "score": score,
+    "status": status,
+  };
 }

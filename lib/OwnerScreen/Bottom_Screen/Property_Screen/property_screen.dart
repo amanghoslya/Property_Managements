@@ -132,6 +132,53 @@ class _PropertyScreenState extends ConsumerState<PropertyScreen> {
                           ),
                         ),
                       ),
+                      if ((propertyDetails.data?.carePackageLabel != null &&
+                              propertyDetails
+                                  .data!
+                                  .carePackageLabel!
+                                  .isNotEmpty) ||
+                          (propertyDetails.data?.carePackage != null &&
+                              propertyDetails.data!.carePackage!.isNotEmpty))
+                        Positioned(
+                          right: 14.w,
+                          top: 14.h,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 5.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xff101C16),
+                              borderRadius: BorderRadius.circular(50.r),
+                              border: Border.all(
+                                color: const Color(0xFFB8860B),
+                                width: 1.2,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.workspace_premium_outlined,
+                                  size: 14.sp,
+                                  color: const Color(0xFFE5C058),
+                                ),
+                                SizedBox(width: 4.w),
+                                Text(
+                                  propertyDetails.data?.carePackageLabel ??
+                                      propertyDetails.data?.carePackage ??
+                                      "",
+                                  style: GoogleFonts.outfit(
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFFFFFCEB),
+                                    fontSize: 12.sp,
+                                    letterSpacing: -0.2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       Positioned(
                         left: 16.w,
                         bottom: 17.h,
@@ -186,16 +233,16 @@ class _PropertyScreenState extends ConsumerState<PropertyScreen> {
                           letterSpacing: -0.34,
                         ),
                       ),
-                      Spacer(),
-                      Text(
-                        "View All",
-                        style: GoogleFonts.outfit(
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.heading,
-                          fontSize: 14.sp,
-                          letterSpacing: -0.34,
-                        ),
-                      ),
+                      // Spacer(),
+                      // Text(
+                      //   "View All",
+                      //   style: GoogleFonts.outfit(
+                      //     fontWeight: FontWeight.w500,
+                      //     color: AppColors.heading,
+                      //     fontSize: 14.sp,
+                      //     letterSpacing: -0.34,
+                      //   ),
+                      // ),
                     ],
                   ),
                   SizedBox(height: 16.h),
@@ -227,6 +274,20 @@ class _PropertyScreenState extends ConsumerState<PropertyScreen> {
                           title: "Property Status",
                           value: propertyDetails.data?.status ?? "N/A",
                         ),
+                        if ((propertyDetails.data?.carePackageLabel != null &&
+                                propertyDetails
+                                    .data!
+                                    .carePackageLabel!
+                                    .isNotEmpty) ||
+                            (propertyDetails.data?.carePackage != null &&
+                                propertyDetails.data!.carePackage!.isNotEmpty))
+                          _documentRow(
+                            title: "Care Package",
+                            value:
+                                propertyDetails.data?.carePackageLabel ??
+                                propertyDetails.data?.carePackage ??
+                                "N/A",
+                          ),
                       ],
                     ),
                   ),
@@ -264,7 +325,6 @@ class _PropertyScreenState extends ConsumerState<PropertyScreen> {
 
                       _infoCard(
                         icon: Icons.access_time_outlined,
-                        // title: "15 Aug",
                         title:
                             propertyDetails
                                     .data
@@ -431,7 +491,9 @@ class _PropertyScreenState extends ConsumerState<PropertyScreen> {
                             child: Center(
                               child: Text(
                                 // propertyDetails.data?.overallScore ?? "86",
-                                propertyDetails.data?.overallScore?.toStringAsFixed(1) ?? "0",
+                                propertyDetails.data?.overallScore
+                                        ?.toStringAsFixed(1) ??
+                                    "0",
                                 // double.tryParse(
                                 //       propertyDetails.data?.overallScore ?? "0",
                                 //     )?.toStringAsFixed(1) ??

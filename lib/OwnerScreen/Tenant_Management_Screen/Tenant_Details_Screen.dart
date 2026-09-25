@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:property_care/OwnerScreen/RentPaymentStatusScreen/RentPaymentStatus_Screen.dart';
 import 'package:property_care/OwnerScreen/UtilityPaymentStatusScreen/UtilityPayment_Status.dart';
 import 'package:property_care/core/constant/appColor.dart';
 import 'package:svg_flutter/svg.dart';
@@ -497,24 +498,53 @@ class _TenantDetailsScreenState extends ConsumerState<TenantDetailsScreen> {
                               ),
                             ),
 
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 13.w,
-                                vertical: 4.h,
-                              ),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: AppColors.heading),
-                                borderRadius: BorderRadius.circular(20.r),
-                              ),
-                              child: Text(
-                                tenantDetailsData
-                                        .data
-                                        ?.tenantDetails
-                                        ?.rentPaymentStatus ??
-                                    "Paid",
-                                style: GoogleFonts.outfit(
-                                  fontSize: 14.sp,
-                                  color: const Color(0xFF101C16),
+                            InkWell(
+                              onTap: () {
+                                final tid =
+                                    tenantDetailsData.data?.tenantDetails?.id
+                                        ?.toString() ??
+                                    widget.tenantId;
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) =>
+                                        RentpaymentstatusScreen(id: tid),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 13.w,
+                                  vertical: 4.h,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF101C16)
+                                      .withOpacity(0.06),
+                                  border: Border.all(color: AppColors.heading),
+                                  borderRadius: BorderRadius.circular(20.r),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      tenantDetailsData
+                                              .data
+                                              ?.tenantDetails
+                                              ?.rentPaymentStatus ??
+                                          "Paid",
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xFF101C16),
+                                      ),
+                                    ),
+                                    SizedBox(width: 4.w),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 11.sp,
+                                      color: const Color(0xFF101C16),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

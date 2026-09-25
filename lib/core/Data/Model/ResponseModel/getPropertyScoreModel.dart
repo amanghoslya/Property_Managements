@@ -65,7 +65,7 @@ class Data {
 }
 
 class OverallPropertyScore {
-    int? score;
+    dynamic score;
     int? total;
     String? performanceLabel;
     String? lastUpdated;
@@ -214,7 +214,7 @@ class ScoreTrend {
 
 class ChartDatum {
     String? month;
-    int? score;
+    dynamic score;
 
     ChartDatum({
         this.month,
